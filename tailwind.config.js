@@ -12,6 +12,7 @@ export default {
       },
       aspectRatio: {
         'wide': '18 / 5',
+        '4/3': '4 / 3',
       }
     },
   },

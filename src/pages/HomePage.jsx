@@ -25,7 +25,7 @@ import Footer from '../components/general/Footer';
 export default function HomePage() {
 	return (
 		<div className=' flex flex-col w-full '>
-			<Header />
+			<Header current="home" />
 			<div className=' w-full aspect-w-16 aspect-h-9 relative'>
 				<img src={mainImage} className=' w-full h-full object-cover' ></img>
 				<div className=' absolute left-0 top-0 w-full h-full flex flex-col justify-center'>

@@ -10,12 +10,12 @@ import Footer from '../components/general/Footer';
 export default function AboutUs() {
   return (
     <div className=' flex flex-col w-full '>
-      <Header />
+      <Header current="about" />
       <WideImage image={mainImage} text="About Us" />
 
-      <div className=' w-full flex flex-col mt-[120px] px-[40px] md:px-[50px] lg:px-[100px]'>
+      <div className=' w-full flex flex-col px-[40px] md:px-[50px] lg:px-[100px]'>
         {/* Mission Statement */}
-        <div className=' grid grid-cols-1 md:grid-cols-2 gap-[40px]'>
+        <div className=' grid grid-cols-1 mt-[120px]  md:grid-cols-2 gap-[40px]'>
           <div className=' flex flex-col justify-center '>
             <div className=' md:pr-[50px] lg:pr-[100px] flex flex-col items-start gap-[20px]'>
               <p className=' text-[48px] font-poppins font-extrabold text-left leading-none'>Mission Statement</p>

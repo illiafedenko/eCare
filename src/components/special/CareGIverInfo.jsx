@@ -11,7 +11,6 @@ export default function CareGIverInfo(props) {
       <div className=' w-full h-[144px] overflow-ellipsis'>
         <p className=' mt-[16px] w-full h-full line-clamp-6  text-left font-poppins text-[16px] text-gray-600'>{props.description}</p>
       </div>
-
     </div>
   )
 }

@@ -11,25 +11,64 @@ import caregiver6Image from '../assets/images/caregiver6.png';
 import caregiver7Image from '../assets/images/caregiver7.png';
 import caregiver8Image from '../assets/images/caregiver8.png';
 
+import dish1Image from '../assets/images/dish1.png';
+import dish2Image from '../assets/images/dish2.png';
+import dish3Image from '../assets/images/dish3.png';
+
+import socialActivity1Image from '../assets/images/social1.png'
+import socialActivity2Image from '../assets/images/social2.png'
+import socialActivity3Image from '../assets/images/social3.png'
+import socialActivity4Image from '../assets/images/social4.png'
+
+
 
 
 const dummyData = {
+
 	servicesData: [
 		{
 			name: "Resident Care",
 			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+			details: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. Eu adipiscing massa ut proin mauris orci tincidunt ac in. Augue non malesuada placerat faucibus nam purus sem.",
+			offers: [
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+			],
 		},
 		{
 			name: "Elderly Nutrition",
 			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+			details: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. Eu adipiscing massa ut proin mauris orci tincidunt ac in. Augue non malesuada placerat faucibus nam purus sem.",
+			offers: [
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+			],
 		},
 		{
 			name: "Skilled Nursing",
 			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+			details: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. Eu adipiscing massa ut proin mauris orci tincidunt ac in. Augue non malesuada placerat faucibus nam purus sem.",
+			offers: [
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+			],
 		},
 		{
 			name: "Caring Staff",
 			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+			details: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. Eu adipiscing massa ut proin mauris orci tincidunt ac in. Augue non malesuada placerat faucibus nam purus sem.",
+			offers: [
+				"Name of the Service Offerings",
+				"Name of the Service Offerings",
+			],
 		},
 	],
 	clientReviews: [
@@ -139,6 +178,61 @@ const dummyData = {
 			location: "califonia",
 			gender: "female"
 		},
+	],
+	dietData: [
+		{
+			name: "Meal Plan #1",
+			image: dish1Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+		{
+			name: "Meal Plan #2",
+			image: dish2Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+		{
+			name: "Meal Plan #3",
+			image: dish3Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+	],
+
+	socialActivitys: [
+		{
+			name: "Yoga",
+			image: socialActivity1Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+		{
+			name: "Board Games",
+			image: socialActivity2Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+		{
+			name: "Gardening",
+			image: socialActivity3Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+		{
+			name: "Indoor Games",
+			image: socialActivity4Image,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+		},
+	],
+	cityList: [
+		"New York",
+		"Califonia",
+		"Washington",
+		"Phoenix",
+		"Houston",
+		"Dallas",
+		"San Diego",
+		"San Francisco",
+		"Mesa",
+		"Chicago",
+		"San Antonio",
+		"Las Vegas",
+		"Fresno",
 	],
 }
 
