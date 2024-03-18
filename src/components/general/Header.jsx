@@ -5,9 +5,9 @@ import MiniGradientButton from './MiniGradientButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faHome, faMoneyBill, faPerson, faPersonCane, faPersonWalkingWithCane, faServer, faUserDoctor } from '@fortawesome/free-solid-svg-icons'
 
-export default function Header() {
+export default function Header(props) {
 
-	const [current, setCurrent] = useState("payment")
+	const [current, setCurrent] = useState(props.current)
 
 	useEffect(() => {
 		document.getElementById(current).classList.remove('text-gray-700');

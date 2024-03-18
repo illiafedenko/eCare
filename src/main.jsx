@@ -12,6 +12,9 @@ import SetNewPassword from './pages/SetNewPassword.jsx';
 import ChooseRole from './pages/ChooseRole.jsx';
 import HomePage from './pages/HomePage.jsx';
 import AboutUs from './pages/AboutUs.jsx';
+import ServicesPage from './pages/ServicesPage.jsx';
+import PaymentPage from './pages/PaymentPage.jsx';
+import CareGivers from './pages/CareGivers.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -26,6 +29,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route exact path="/choose_role" element={<ChooseRole />} />
         <Route exact path="/" element={<HomePage />} />
         <Route exact path="/about" element={<AboutUs />} />
+        <Route exact path="/services" element={<ServicesPage />} />
+        <Route exact path="/payment" element={<PaymentPage />} />
+        <Route exact path="/caregivers" element={<CareGivers />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

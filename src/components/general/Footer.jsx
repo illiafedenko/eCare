@@ -9,7 +9,7 @@ import linkedinIcon from '../../assets/icons/linkedin.png';
 
 export default function Footer() {
   return (
-    <div className=' w-full bg-gray-50 mt-[120px] px-[40px] md:px-[50px] lg:px-[100px] gap-[40px] md:gap-0'>
+    <div className=' w-full bg-green-50 mt-[120px] px-[40px] md:px-[50px] lg:px-[100px] gap-[40px] md:gap-0'>
       <div className=' w-full grid grid-cols-2 pt-[88px] gap-[20px] mb-[100px]'>
         <div className=' w-full flex flex-col gap-[20px]'>
           <img className='w-[96px] h-[24px] ml-0' src={logoSrc} ></img>

@@ -15,10 +15,6 @@ import serviceIcon4 from '../assets/images/service_icon4.png';
 import ServiceCard from '../components/special/ServiceCard';
 import dummyData from '../dummydata/index';
 import CustomCarousel from '../components/special/CustomCarousel';
-import img1 from '../assets/images/1.jpg';
-import img2 from '../assets/images/2.jpg';
-import img3 from '../assets/images/3.jpg';
-import img4 from '../assets/images/4.jpg';
 import ClientReview from '../components/special/ClientReview';
 import RatioDiv from '../components/general/RatioDiv';
 import flightImage from '../assets/images/flight.png';
@@ -29,7 +25,7 @@ import Footer from '../components/general/Footer';
 export default function HomePage() {
 	return (
 		<div className=' flex flex-col w-full '>
-			<Header />
+			<Header current="home" />
 			<div className=' w-full aspect-w-16 aspect-h-9 relative'>
 				<img src={mainImage} className=' w-full h-full object-cover' ></img>
 				<div className=' absolute left-0 top-0 w-full h-full flex flex-col justify-center'>
