@@ -20,6 +20,12 @@ import socialActivity2Image from '../assets/images/social2.png'
 import socialActivity3Image from '../assets/images/social3.png'
 import socialActivity4Image from '../assets/images/social4.png'
 
+import senior1Image from '../assets/images/senior1.png';
+import senior2Image from '../assets/images/senior2.png';
+import senior3Image from '../assets/images/senior3.png';
+import senior4Image from '../assets/images/senior4.png';
+import senior5Image from '../assets/images/senior5.png';
+
 
 
 
@@ -179,6 +185,48 @@ const dummyData = {
 			gender: "female"
 		},
 	],
+	seniors: [
+		{
+			name: "Jane Doe",
+			avatar: senior1Image,
+			age: 78,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
+			location: "califonia",
+			gender: "female"
+		},
+		{
+			name: "Johe Doe",
+			avatar: senior2Image,
+			age: 72,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
+			location: "New York",
+			gender: "male"
+		},
+		{
+			name: "Johe Doe",
+			avatar: senior3Image,
+			age: 80,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
+			location: "califonia",
+			gender: "female"
+		},
+		{
+			name: "Johe Doe",
+			avatar: senior4Image,
+			age: 59,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
+			location: "califonia",
+			gender: "male"
+		},
+		{
+			name: "Johe Doe",
+			avatar: senior5Image,
+			age: 62,
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
+			location: "califonia",
+			gender: "female"
+		},
+	],
 	dietData: [
 		{
 			name: "Meal Plan #1",
@@ -234,6 +282,84 @@ const dummyData = {
 		"Las Vegas",
 		"Fresno",
 	],
+	dateList: [
+		"This Month",
+		"Next Month"
+	],
+	availabilities: [
+		"available",
+		"employed",
+	],
+	budgetList: [
+		"$599",
+		"$1299",
+		"$1999"
+	],
+	serviceOffers: [
+		{
+			name: "Name of the Service Offerings",
+			current: true,
+		},
+		{
+			name: "Go for a waking with the Care Givers",
+			current: true,
+		},
+		{
+			name: "Name of the  Offerings",
+			current: true,
+		},
+		{
+			name: "Name of the Service Offerings",
+			current: true,
+		},
+		{
+			name: "Name of the Service ",
+			current: true,
+		},
+		{
+			name: "Go for a waking with the Care Givers",
+			current: true,
+		},
+		{
+			name: "Play chess with the group members",
+			current: false,
+		},
+		{
+			name: "Name of the Service Offerings",
+			current: false,
+		},
+		{
+			name: "Play chess with the group members",
+			current: false,
+		},
+	],
+	availableDateTimeList:[
+		{
+			date: "Wednesday 15th october 2023",
+			time: "8:00am",
+		},
+		{
+			date: "Thursday 15th october 2023",
+			time: "10:00am",
+		},
+		{
+			date: "Friday 15th october 2023",
+			time: "8:00am-9:00pm",
+		},
+		{
+			date: "Saturday 15th october 2023",
+			time: "9:00am",
+		},
+		{
+			date: "Wednesday 15th october 2023",
+			time: "8:00am",
+		},
+		{
+			date: "Wednesday 15th october 2023",
+			time: "8:00am",
+		},
+	]
+
 }
 
 export default dummyData;

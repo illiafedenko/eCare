@@ -1,71 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NormalInput from '../components/general/NormalInput'
 import GradientButton from '../components/general/GradientButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faPersonCane, faPersonWalkingWithCane, faUserDoctor } from '@fortawesome/free-solid-svg-icons'
 import CustomRadioButton from '../components/general/CustomRadioButton';
+import useAuthStore from '../utils/authStore';
+import Senior from './Senior';
 
 export default function ChooseRole() {
-	const [input, setInput] = useState({
-		password: "",
-		confirm: "",
-	});
 
-	const handleSubmitEvent = (e) => {
-		validationAll();
-		setShowModal(true);
-	};
+	const isSenior = useAuthStore((state) => state.chooseRoleSenior);
+	const isCareGiver = useAuthStore((state) => state.chooseRoleCaregiver);
+	const setRole = useAuthStore((state) => state.setRole);
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setInput((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-		validation(e.target);
-	};
+	useEffect(() => {
+		console.log(isSenior, isCareGiver);
+	}, [isSenior, isCareGiver])
 
-	const validationAll = () => {
-		const ps = document.getElementsByName("password")[0];
-		const cf = document.getElementsByName("confirm")[0];
-		if (validation(ps) & validation(cf)) {
-			return true;
+	const handleChooseRole = (role) => {
+		console.log(role);
+		if(role == "senior"){
+			setRole(true);
+			// if(isSenior == true) setRole(false);
+			// else setRole(true);
 		}
-		else {
-			return false;
+		if(role == "caregiver"){
+			setRole(false);
+			// if(isCareGiver == true) setRole(true);
+			// else setRole(false);
 		}
 	}
-
-	const validation = (target) => {
-		const { name, value } = target;
-		switch (name) {
-
-			case "password":
-				if (value.length > 8) {
-					target.classList.remove('border-red-300');
-					return true;
-				}
-				else {
-					target.classList.add('border-red-300');
-					return false;
-				}
-				break;
-
-			case "confirm":
-				if (value == input.password && value.length > 8) {
-					target.classList.remove('border-red-300');
-					return true;
-				}
-				else {
-					target.classList.add('border-red-300');
-					return false;
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
+	
 
 	return (
 		<div className=' relative h-screen w-screen flex items-center justify-center'>
@@ -90,7 +55,7 @@ export default function ChooseRole() {
 									<FontAwesomeIcon icon={faPersonCane} />
 									<p className=' font-poppins font-extrabold'>Senior</p>
 								</div>
-								<CustomRadioButton value={false} />
+								<CustomRadioButton label="senior" onClick={handleChooseRole} value={isSenior} />
 							</div>
 						</div>
 						<div className=' py-0 z-[20]'>
@@ -99,7 +64,7 @@ export default function ChooseRole() {
 									<FontAwesomeIcon icon={faUserDoctor} />
 									<p className=' font-poppins font-extrabold'>Care Giver</p>
 								</div>
-								<CustomRadioButton value={false} />
+								<CustomRadioButton label="caregiver" onClick={handleChooseRole} value={isCareGiver} />
 							</div>
 						</div>
 					</div>

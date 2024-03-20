@@ -29,6 +29,9 @@ export default function Header(props) {
 			case "caregivers":
 				document.getElementById('currentDM').innerHTML = "Care Givers";
 				break;
+			case "howto":
+				document.getElementById('currentDM').innerHTML = "How-To";
+				break;
 			default:
 				document.getElementById('currentDM').innerHTML = "Home";
 				break;
@@ -40,12 +43,13 @@ export default function Header(props) {
 			<img className=' hidden sm:block' src={logoSrc} ></img>
 			<img className=' block sm:hidden' src={miniLogoSrc} ></img>
 			<div className=' hidden md:block '>
-				<div className=' flex flex-row md:gap-[15px] lg:gap-[40px]'>
-					<a href='#' className=''><p className=' text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="home">Home</p></a>
-					<a href='#' className=''><p className=' text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="about">About Us</p></a>
-					<a href='#' className=''><p className=' text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="services">	Services</p></a>
-					<a href='#' className=''><p className=' text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="payment">Cost & Payment</p></a>
-					<a href='#' className=''><p className=' text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="caregivers">Care Givers</p></a>
+				<div className=' flex flex-row md:gap-[15px] lg:gap-[30px] xl:gap-[40px] text-[14px] lg:text-[16px]'>
+					<a href='/' className=''><p className=' text-gray-700 font-extrabold hover:text-green-600' id="home">Home</p></a>
+					<a href='/about' className=''><p className=' text-gray-700 font-extrabold hover:text-green-600' id="about">About Us</p></a>
+					<a href='/services' className=''><p className=' text-gray-700 font-extrabold hover:text-green-600' id="services">	Services</p></a>
+					<a href='/payment' className=''><p className='  text-gray-700 font-extrabold hover:text-green-600' id="payment">Cost & Payment</p></a>
+					<a href='/howto' className=''><p className=' text-gray-700 font-extrabold hover:text-green-600' id="howto">How-To</p></a>
+					<a href='/caregivers' className=''><p className='  text-gray-700 font-extrabold hover:text-green-600' id="caregivers">Care Givers</p></a>
 				</div>
 			</div>
 			<div className=' block md:hidden '>
@@ -54,7 +58,7 @@ export default function Header(props) {
 
 						<div className="flex items-center justify-between space-x-5 w-full bg-white hover:bg-gray-200">
 							<p className=' px-2 py-2 text-[16px] text-gray-700 font-extrabold hover:text-green-600' id="currentDM"></p>
-							<span className='mx-0' style={{marginLeft: "0px"}}>
+							<span className='mx-0' style={{ marginLeft: "0px" }}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
 									stroke="currentColor" className="h-6 w-6">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -71,22 +75,27 @@ export default function Header(props) {
 							</a>
 							<a href='#' className=''>
 								<p className=' h-10 py-2 px-4 border-b text-4 text-gray-700 font-extrabold hover:text-green-600 hover:bg-white' id="about_dm">
-								About Us
+									About Us
 								</p>
 							</a>
 							<a href='#' className=''>
 								<p className=' h-10 py-2 px-4 border-b text-4 text-gray-700 font-extrabold hover:text-green-600 hover:bg-white' id="services_dm">
-								Services
+									Services
 								</p>
 							</a>
 							<a href='#' className=''>
 								<p className=' h-10 py-2 px-4 border-b text-4 text-gray-700 font-extrabold hover:text-green-600 hover:bg-white' id="payment_dm">
-								Cost & Payment
+									Cost & Payment
+								</p>
+							</a>
+							<a href='#' className=''>
+								<p className=' h-10 py-2 px-4 border-b text-4 text-gray-700 font-extrabold hover:text-green-600 hover:bg-white' id="howto_dm">
+									How-To
 								</p>
 							</a>
 							<a href='#' className=''>
 								<p className=' h-10 py-2 px-4 text-4 text-gray-700 font-extrabold hover:text-green-600 hover:bg-white' id="caregivers_dm">
-								Care Givers
+									Care Givers
 								</p>
 							</a>
 						</div>

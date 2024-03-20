@@ -36,7 +36,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className=' w-full items-center mb-[40px]'>
+      <div className=' w-full items-center pb-[40px]'>
         <p className=' w-full text-center font-raleway text-[12px]'>Copyright 2024 Harmony, All Rights Reserved</p>
       </div>
     </div>
