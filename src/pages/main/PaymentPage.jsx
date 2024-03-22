@@ -1,13 +1,13 @@
 import React from 'react';
-import Header from '../components/general/Header';
-import Footer from '../components/general/Footer';
-import WideImage from '../components/special/WideImage';
-import mainImage from '../assets/images/payment_main.png';
+import Header from '../../components/general/Header';
+import Footer from '../../components/general/Footer';
+import WideImage from '../../components/special/WideImage';
+import mainImage from '../../assets/images/payment_main.png';
 import { main } from '@popperjs/core';
-import MiniNormalButton from '../components/general/MiniNormalButton';
-import flightImage from '../assets/images/flight.png';
-import SwitchButton from '../components/general/SwitchButton';
-import PaymentPlanCard from '../components/special/PaymentPlanCard';
+import MiniNormalButton from '../../components/general/MiniNormalButton';
+import flightImage from '../../assets/images/flight.png';
+import SwitchButton from '../../components/general/SwitchButton';
+import PaymentPlanCard from '../../components/special/PaymentPlanCard';
 
 export default function PaymentPage() {
   return (

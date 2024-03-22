@@ -1,11 +1,11 @@
 import React, { useState, } from 'react';
-import imageSrc from '../assets/images/signin_image.png';
-import logoSrc from '../assets/images/logo.png';
-import PasswordInput from '../components/general/PasswordInput';
-import EmailInput from '../components/general/EmailInput';
-import NormalInput from '../components/general/NormalInput';
+import imageSrc from '../../assets/images/signin_image.png';
+import logoSrc from '../../assets/images/logo.png';
+import PasswordInput from '../../components/general/PasswordInput';
+import EmailInput from '../../components/general/EmailInput';
+import NormalInput from '../../components/general/NormalInput';
 import { Prev } from 'react-bootstrap/esm/PageItem';
-import GradientButton from '../components/general/GradientButton';
+import GradientButton from '../../components/general/GradientButton';
 
 
 export default function Signin() {

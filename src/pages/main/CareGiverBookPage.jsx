@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from '../components/general/Header'
-import Footer from '../components/general/Footer'
+import Header from '../../components/general/Header'
+import Footer from '../../components/general/Footer'
 import { useParams } from 'react-router'
-import dummyData from '../dummydata'
+import dummyData from '../../dummydata'
 import { faBagShopping, faLocationPin, faStar, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BookComponent from '../components/special/BookComponent'
+import BookComponent from '../../components/special/BookComponent'
 
 export default function CareGiverBookPage() {
 

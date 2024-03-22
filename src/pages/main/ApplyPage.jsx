@@ -1,13 +1,13 @@
 import React from 'react'
-import Header from '../components/general/Header'
-import Footer from '../components/general/Footer'
+import Header from '../../components/general/Header'
+import Footer from '../../components/general/Footer'
 import { useParams } from 'react-router'
-import dummyData from '../dummydata'
+import dummyData from '../../dummydata'
 import { faBagShopping, faLocationPin, faStar, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BookComponent from '../components/special/BookComponent'
-import WideImage from '../components/special/WideImage'
-import mainImage from '../assets/images/payment_main.png';
+import BookComponent from '../../components/special/BookComponent'
+import WideImage from '../../components/special/WideImage'
+import mainImage from '../../assets/images/payment_main.png';
 
 export default function ApplyPage() {
   return (

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import Header from '../components/general/Header'
-import mainImage from '../assets/images/payment_main.png';
-import WideImage from '../components/special/WideImage';
-import Footer from '../components/general/Footer';
+import Header from '../../components/general/Header'
+import mainImage from '../../assets/images/payment_main.png';
+import WideImage from '../../components/special/WideImage';
+import Footer from '../../components/general/Footer';
 import { useNavigate } from 'react-router'
-import BookComponent from '../components/special/BookComponent';
-import DateTimeComponent from '../components/special/DateTimeComponent';
-import dummyData from '../dummydata';
+import BookComponent from '../../components/special/BookComponent';
+import DateTimeComponent from '../../components/special/DateTimeComponent';
+import dummyData from '../../dummydata';
 
 export default function HowToMatch() {
 

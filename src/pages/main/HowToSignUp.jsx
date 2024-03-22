@@ -1,10 +1,10 @@
 import React from 'react'
-import Header from '../components/general/Header'
-import mainImage from '../assets/images/payment_main.png';
-import WideImage from '../components/special/WideImage';
-import Footer from '../components/general/Footer';
+import Header from '../../components/general/Header'
+import mainImage from '../../assets/images/payment_main.png';
+import WideImage from '../../components/special/WideImage';
+import Footer from '../../components/general/Footer';
 import { useNavigate } from 'react-router'
-import BookComponent from '../components/special/BookComponent';
+import BookComponent from '../../components/special/BookComponent';
 
 export default function HowToSignUp() {
   return (

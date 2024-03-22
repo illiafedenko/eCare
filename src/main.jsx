@@ -3,28 +3,31 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
 import './index.css'
-import Signup from './pages/Signup.jsx'
-import Signin from './pages/Signin.jsx';
+import Signup from './pages/auth/Signup.jsx'
+import Signin from './pages/auth/Signin.jsx';
 import Test from './pages/Test.jsx';
-import RecoverPassword from './pages/RecoverPassword.jsx';
-import OTP from './pages/OTP.jsx';
-import SetNewPassword from './pages/SetNewPassword.jsx';
-import ChooseRole from './pages/ChooseRole.jsx';
-import HomePage from './pages/HomePage.jsx';
-import AboutUs from './pages/AboutUs.jsx';
-import ServicesPage from './pages/ServicesPage.jsx';
-import PaymentPage from './pages/PaymentPage.jsx';
-import CareGivers from './pages/CareGivers.jsx';
+import RecoverPassword from './pages/auth/RecoverPassword.jsx';
+import OTP from './pages/auth/OTP.jsx';
+import SetNewPassword from './pages/auth/SetNewPassword.jsx';
+import ChooseRole from './pages/auth/ChooseRole.jsx';
+import HomePage from './pages/main/HomePage.jsx';
+import AboutUs from './pages/main/AboutUs.jsx';
+import ServicesPage from './pages/main/ServicesPage.jsx';
+import PaymentPage from './pages/main/PaymentPage.jsx';
+import CareGivers from './pages/main/CareGivers.jsx';
 import CareGiverBookCard from './components/special/CareGiverBookCard.jsx';
-import CareGiverBookPage from './pages/CareGiverBookPage.jsx';
-import Senior from './pages/Senior.jsx';
-import ApplyPage from './pages/ApplyPage.jsx';
-import PaymentDetailPage from './pages/PaymentDetailPage.jsx';
-import HowToMain from './pages/HowToMain.jsx';
-import HowToSignUp from './pages/HowToSignUp.jsx';
-import HowToMatch from './pages/HowToMatch.jsx';
-import CareGiverPortalMain from './pages/CareGiverPortalMain.jsx';
+import CareGiverBookPage from './pages/main/CareGiverBookPage.jsx';
+import Senior from './pages/main/Senior.jsx';
+import ApplyPage from './pages/main/ApplyPage.jsx';
+import PaymentDetailPage from './pages/main/PaymentDetailPage.jsx';
+import HowToMain from './pages/main/HowToMain.jsx';
+import HowToSignUp from './pages/main/HowToSignUp.jsx';
+import HowToMatch from './pages/main/HowToMatch.jsx';
+import CareGiverPortalMain from './pages/main/CareGiverPortalMain.jsx';
 import CareGiverRouter from './utils/CareGiverRouter.jsx';
+import SeniorRouter from './utils/SeniorRouter.jsx';
+import CGSetting from './pages/caregiverportal/CGSetting.jsx';
+import CGLogout from './pages/caregiverportal/CGLogout.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -50,6 +53,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route exact path="/howto/signup" element={<HowToSignUp />} />
       <Route exact path="/howto/match" element={<HowToMatch />} />
       <Route exact path="/cgportal/*" element={<CareGiverRouter />} />
+      <Route exact path="/sportal/*" element={<SeniorRouter />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>,

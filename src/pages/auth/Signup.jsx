@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import imageSrc from '../assets/images/register_image.png';
-import logoSrc from '../assets/images/logo.png';
-import NormalInput from '../components/general/NormalInput';
-import GradientButton from '../components/general/GradientButton';
+import imageSrc from '../../assets/images/register_image.png';
+import logoSrc from '../../assets/images/logo.png';
+import NormalInput from '../../components/general/NormalInput';
+import GradientButton from '../../components/general/GradientButton';
 
 
 export default function Signup() {

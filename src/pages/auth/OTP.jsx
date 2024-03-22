@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import NormalInput from '../components/general/NormalInput'
-import GradientButton from '../components/general/GradientButton';
+import NormalInput from '../../components/general/NormalInput'
+import GradientButton from '../../components/general/GradientButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons'
-import OTPInput from '../components/general/OTPInput';
+import OTPInput from '../../components/general/OTPInput';
 
 export default function OTP() {
 	return (

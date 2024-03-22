@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
-import Header from '../components/general/Header';
-import Footer from '../components/general/Footer';
-import dummyData from '../dummydata';
+import Header from '../../components/general/Header';
+import Footer from '../../components/general/Footer';
+import dummyData from '../../dummydata';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faLocationPin, faMedal, faStar, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons';
 

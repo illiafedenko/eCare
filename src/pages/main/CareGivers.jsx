@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Header from '../components/general/Header'
-import Footer from '../components/general/Footer'
-import MiniGradientButton from '../components/general/MiniGradientButton'
-import mainImage from '../assets/images/home_image2.png';
-import IconSelectBox from '../components/general/IconSelectBox';
-import dummyData from '../dummydata';
-import CareGiverBookCard from '../components/special/CareGiverBookCard';
+import Header from '../../components/general/Header'
+import Footer from '../../components/general/Footer'
+import MiniGradientButton from '../../components/general/MiniGradientButton'
+import mainImage from '../../assets/images/home_image2.png';
+import IconSelectBox from '../../components/general/IconSelectBox';
+import dummyData from '../../dummydata';
+import CareGiverBookCard from '../../components/special/CareGiverBookCard';
 import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong, faArrowRightLong, faBagShopping, faLocationPin, faSearch, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons';
@@ -130,8 +130,6 @@ export default function CareGivers() {
             </div>
           </div>
         </div>
-
-
 
         <div className=' w-full mt-[120px] grid md:grid-cols-2 xl:grid-cols-3 justify-center gap-x-[24px] gap-y-[48px]'>
           {

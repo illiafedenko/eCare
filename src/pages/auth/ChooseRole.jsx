@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import NormalInput from '../components/general/NormalInput'
-import GradientButton from '../components/general/GradientButton';
+import NormalInput from '../../components/general/NormalInput'
+import GradientButton from '../../components/general/GradientButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeftLong, faPersonCane, faPersonWalkingWithCane, faUserDoctor } from '@fortawesome/free-solid-svg-icons'
-import CustomRadioButton from '../components/general/CustomRadioButton';
-import useAuthStore from '../utils/authStore';
-import Senior from './Senior';
+import CustomRadioButton from '../../components/general/CustomRadioButton';
+import useAuthStore from '../../utils/authStore';
+import Senior from '../main/Senior';
 
 export default function ChooseRole() {
 

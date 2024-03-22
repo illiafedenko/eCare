@@ -26,6 +26,8 @@ import senior3Image from '../assets/images/senior3.png';
 import senior4Image from '../assets/images/senior4.png';
 import senior5Image from '../assets/images/senior5.png';
 
+import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -124,7 +126,7 @@ const dummyData = {
 			name: "Johe Doe",
 			avatar: caregiver1Image,
 			role: "Norse",
-			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. ",
+			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac.",
 			location: "califonia",
 			gender: "female"
 		},
@@ -333,7 +335,7 @@ const dummyData = {
 			current: false,
 		},
 	],
-	availableDateTimeList:[
+	availableDateTimeList: [
 		{
 			date: "Wednesday 15th october 2023",
 			time: "8:00am",
@@ -358,7 +360,77 @@ const dummyData = {
 			date: "Wednesday 15th october 2023",
 			time: "8:00am",
 		},
-	]
+	],
+	CGMenu: [
+		{
+			title: "Home",
+			id: "home",
+			icon: faHomeLg,
+			badge: null
+		},
+		{
+			title: "My Profile",
+			id: "profile",
+			icon: faUserDoctor,
+			badge: null
+		},
+		{
+			title: "Chat",
+			id: "chat",
+			icon: faMessage,
+			badge: 2
+		},
+		{
+			title: "Notifications",
+			id: "notification",
+			icon: faBell,
+			badge: 3
+		},
+		{
+			title: "Schedule",
+			id: "schedule",
+			icon: faCalendarAlt,
+			badge: null
+		},
+		{
+			title: "Training",
+			id: "training",
+			icon: faChalkboardTeacher,
+			badge: null
+		},
+	],
+	SMenu: [
+		{
+			title: "Home",
+			id: "home",
+			icon: faHomeLg,
+			badge: null
+		},
+		{
+			title: "My Profile",
+			id: "profile",
+			icon: faUserDoctor,
+			badge: null
+		},
+		{
+			title: "Chat",
+			id: "chat",
+			icon: faMessage,
+			badge: 2
+		},
+		{
+			title: "Notifications",
+			id: "notification",
+			icon: faBell,
+			badge: 3
+		},
+		{
+			title: "Schedule",
+			id: "schedule",
+			icon: faCalendarAlt,
+			badge: null
+		},
+	],
 
 }
 

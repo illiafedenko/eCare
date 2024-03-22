@@ -1,12 +1,12 @@
 import React from 'react'
-import Header from '../components/general/Header';
-import WideImage from '../components/special/WideImage';
-import mainImage from '../assets/images/service_main.png';
-import Footer from '../components/general/Footer';
-import ServicePart from '../components/special/ServicePart';
-import DietarySerivceCard from '../components/special/DietarySerivceCard';
-import dummyData from '../dummydata';
-import SocialActivityCard from '../components/special/SocialActivityCard';
+import Header from '../../components/general/Header';
+import WideImage from '../../components/special/WideImage';
+import mainImage from '../../assets/images/service_main.png';
+import Footer from '../../components/general/Footer';
+import ServicePart from '../../components/special/ServicePart';
+import DietarySerivceCard from '../../components/special/DietarySerivceCard';
+import dummyData from '../../dummydata';
+import SocialActivityCard from '../../components/special/SocialActivityCard';
 
 
 export default function ServicesPage() {

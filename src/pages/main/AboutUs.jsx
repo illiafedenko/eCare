@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from '../components/general/Header';
-import mainImage from '../assets/images/about_main.png';
-import WideImage from '../components/special/WideImage';
-import missionImage from '../assets/images/about_1.png';
-import HistoryTimeline from '../components/special/HistoryTimeline';
-import MeetCareGivers from '../components/special/MeetCareGivers';
-import Footer from '../components/general/Footer';
+import Header from '../../components/general/Header';
+import mainImage from '../../assets/images/about_main.png';
+import WideImage from '../../components/special/WideImage';
+import missionImage from '../../assets/images/about_1.png';
+import HistoryTimeline from '../../components/special/HistoryTimeline';
+import MeetCareGivers from '../../components/special/MeetCareGivers';
+import Footer from '../../components/general/Footer';
 
 export default function AboutUs() {
   return (

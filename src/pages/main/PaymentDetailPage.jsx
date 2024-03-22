@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../components/general/Header'
-import Footer from '../components/general/Footer'
+import Header from '../../components/general/Header'
+import Footer from '../../components/general/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
-import dummyData from '../dummydata'
+import dummyData from '../../dummydata'
 
 export default function PaymentDetailPage() {
   return (

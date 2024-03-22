@@ -4,8 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MiniGradientButton from '../general/MiniGradientButton'
 import { useNavigate } from 'react-router'
 
-
-export default function CareGiverBookCard(props) {
+export default function CareGiverInfoViewCard(props) {
 
   const navigate = useNavigate();
 
@@ -16,14 +15,14 @@ export default function CareGiverBookCard(props) {
   }
 
   return (
-    <div className=' w-full rounded-[8px] min-w-[300px] max-w-[400px] border-[2px] border-gray-200'>
+    <div className=' w-full rounded-[8px] min-w-[240px] max-w-[350px] border-[2px] border-gray-200'>
       <div className=' w-full aspect-4/3'>
         <img className=' w-full h-full object-cover rounded-t-[8px]' src={props.careGiver.avatar} />
         <div className=' py-5 px-3 w-full flex flex-col gap-4'>
           <div className=' w-full flex flex-row justify-between'>
             <div className=' flex flex-col items-start'>
               <div className=' flex flex-row items-center gap-1'>
-                <p className=' text-[24px] font-poppins font-bold'>{props.careGiver.name}</p>
+                <p className=' text-[24px] line-clamp-1 text-left font-poppins font-bold'>{props.careGiver.name}</p>
                 <div className=' w-[20px] h-[20px] flex flex-row items-center justify-center bg-gradient-to-br from-green-600 to-green-300 rounded-[8px]'>
                   <FontAwesomeIcon className=' w-3 h-3 text-white' icon={faStar} />
                 </div>
@@ -49,7 +48,7 @@ export default function CareGiverBookCard(props) {
             </div>
           </div>
           <div className=' w-full h-[50px] '>
-            <button className="text-white w-full h-full font-poppins bg-gradient-to-br from-green-600 to-green-400 hover:from-green-600 hover:to-green-300 border-none outline-none focus:border-none focus:outline-none rounded-2" onClick={() => handleNavigate(props.id)} >Book Now</button>
+            <button className="text-white w-full h-full font-poppins bg-gradient-to-br from-green-600 to-green-400 hover:from-green-600 hover:to-green-300 border-none outline-none focus:border-none focus:outline-none rounded-2" onClick={() => handleNavigate(props.id)} >View</button>
           </div>
         </div>
       </div>

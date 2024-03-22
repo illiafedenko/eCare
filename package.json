@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@files-ui/react": "^1.2.4",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -20,13 +21,17 @@
     "flowbite-react": "^0.7.3",
     "primereact": "^10.5.1",
     "react": "^18.2.0",
+    "react-avatar-editor": "^13.0.2",
     "react-bootstrap": "^2.10.1",
     "react-bootstrap-icons": "^1.11.3",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-horizontal-scrolling-menu": "^6.0.2",
+    "react-indiana-drag-scroll": "^2.2.0",
     "react-multi-date-picker": "^4.4.1",
     "react-redux": "^9.1.0",
     "react-select": "^5.8.0",
+    "react-use-draggable-scroll": "^0.4.7",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

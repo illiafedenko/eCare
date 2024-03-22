@@ -1,24 +1,24 @@
 import React from 'react';
-import Header from '../components/general/Header';
+import Header from '../../components/general/Header';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import mainImage from '../assets/images/home_image2.png';
-import MiniGradientButton from '../components/general/MiniGradientButton';
-import MiniNormalButton from '../components/general/MiniNormalButton';
-import grandmaImage from '../assets/images/grandma.png';
-import grandfaImage from '../assets/images/grandfa.png';
+import mainImage from '../../assets/images/home_image2.png';
+import MiniGradientButton from '../../components/general/MiniGradientButton';
+import MiniNormalButton from '../../components/general/MiniNormalButton';
+import grandmaImage from '../../assets/images/grandma.png';
+import grandfaImage from '../../assets/images/grandfa.png';
 import { faCheckDouble, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import checkIcon from '../assets/images/check.png';
-import serviceIcon1 from '../assets/images/service_icon1.png';
-import serviceIcon2 from '../assets/images/service_icon2.png';
-import serviceIcon3 from '../assets/images/service_icon3.png';
-import serviceIcon4 from '../assets/images/service_icon4.png';
-import ServiceCard from '../components/special/ServiceCard';
-import dummyData from '../dummydata/index';
-import CustomCarousel from '../components/special/CustomCarousel';
-import ClientReview from '../components/special/ClientReview';
-import RatioDiv from '../components/general/RatioDiv';
-import flightImage from '../assets/images/flight.png';
-import Footer from '../components/general/Footer';
+import checkIcon from '../../assets/images/check.png';
+import serviceIcon1 from '../../assets/images/service_icon1.png';
+import serviceIcon2 from '../../assets/images/service_icon2.png';
+import serviceIcon3 from '../../assets/images/service_icon3.png';
+import serviceIcon4 from '../../assets/images/service_icon4.png';
+import ServiceCard from '../../components/special/ServiceCard';
+import dummyData from '../../dummydata/index';
+import CustomCarousel from '../../components/special/CustomCarousel';
+import ClientReview from '../../components/special/ClientReview';
+import RatioDiv from '../../components/general/RatioDiv';
+import flightImage from '../../assets/images/flight.png';
+import Footer from '../../components/general/Footer';
 
 
 
@@ -155,6 +155,6 @@ export default function HomePage() {
 			{/* Footer */}
 			<Footer />
 
-		</div>
+		</div >
 	)
 }
