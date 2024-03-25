@@ -26,6 +26,13 @@ import senior3Image from '../assets/images/senior3.png';
 import senior4Image from '../assets/images/senior4.png';
 import senior5Image from '../assets/images/senior5.png';
 
+import chatimg1 from '../assets/images/chatimg1.jpg';
+import chatimg2 from '../assets/images/chatimg2.jpg';
+import chatimg3 from '../assets/images/chatimg3.jpg';
+import chatimg4 from '../assets/images/chatimg4.jpg';
+import chatimg5 from '../assets/images/chatimg5.jpg';
+import chatimg6 from '../assets/images/chatimg6.jpg';
+
 import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -197,7 +204,7 @@ const dummyData = {
 			gender: "female"
 		},
 		{
-			name: "Johe Doe",
+			name: "Robert Fox",
 			avatar: senior2Image,
 			age: 72,
 			description: "Lorem ipsum dolor sit amet consectetur. Augue non malesuada placerat faucibus nam purus sem. Urna pulvinar porttitor dignissim congue pellentesque ac hac. Viverra donec nulla id enim posuere donec morbi dolor. ",
@@ -430,6 +437,14 @@ const dummyData = {
 			icon: faCalendarAlt,
 			badge: null
 		},
+	],
+	chatImageList: [
+		chatimg1,
+		chatimg2,
+		chatimg3,
+		chatimg4,
+		chatimg5,
+		chatimg6,
 	],
 
 }

@@ -11,7 +11,7 @@ export default function CGPortalNavBar(props) {
   }
 
   return (
-    <div className=' w-full h-[100px] px-[40px] border-b-[1px] flex flex-row justify-between items-center gap-x-[40px] border-gray-100'>
+    <div className=' w-full h-[100px] min-h-[100px] px-[40px] border-b-[1px] flex flex-row justify-between items-center gap-x-[40px] border-gray-100'>
       <div className=' flex flex-row items-center gap-2'>
         <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
           type="button"
