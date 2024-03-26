@@ -17,7 +17,7 @@ import DynamicTextArea from '../../components/special/DynamicTextArea';
 import SentMessage from '../../components/special/SentMessage';
 import ReceivedMessage from '../../components/special/ReceivedMessage';
 
-export default function CGChat() {
+export default function SeniorChat() {
 
   const [chatHistoryVisible, setChatHistoryVisible] = useState(true);
   const [chatContactVisible, setChatContactVisible] = useState(true);
@@ -53,7 +53,7 @@ export default function CGChat() {
 
   return (
     <div className=" w-full h-screen min-h-screen max-h-screen overflow-y-hidden flex flex-row relative ">
-      <SideBar portalname="cgportal" menu={dummyData.CGMenu} current="chat" />
+      <SideBar portalname="sportal" menu={dummyData.SMenu} current="chat" />
       <div onClick={handleSidebarShow} id="blur_board" className=' w-full h-screen absolute hidden left-0 top-0 backdrop-blur-[1px] z-[5]'></div>
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Chat" name="John Doe" />

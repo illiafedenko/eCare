@@ -8,7 +8,7 @@ export default function ReceivedMessage(props) {
       <div className=' w-9 py-5 flex flex-col justify-end'>
         <img className=' w-full aspect-square rounded-full object-cover ' src={props.avatar} />
       </div>
-      <div className=' w-[360px] flex flex-col gap-y-2 '>
+      <div className=' w-[240px] sm:w-[350px] flex flex-col gap-y-2 '>
         <p className=' px-5 py-5 text-left text-[14px] bg-white rounded-[20px] rounded-bl-none '>
           That makes sense. How about mobile responsiveness? It's a must nowadays, right?
         </p>

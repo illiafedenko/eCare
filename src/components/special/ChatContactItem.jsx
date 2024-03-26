@@ -6,7 +6,7 @@ export default function ChatContactItem(props) {
     <>
       {props.selected ?
         <>
-          <div className=' relative w-full h-[108px] px-6 py-6 flex flex-row gap-2 cursor-pointer bg-blue-50'>
+          <div onClick={props.onClick} className=' relative w-full h-[108px] px-6 py-6 flex flex-row gap-2 cursor-pointer bg-blue-50'>
             <div className=' h-full aspect-square flex-none'>
               <img src={props.avatar} className=' w-full h-full rounded-full object-cover' />
             </div>
@@ -30,7 +30,7 @@ export default function ChatContactItem(props) {
         </>
         :
         <>
-          <div className=' w-full h-[108px] px-6 py-6 flex flex-row gap-2 cursor-pointer hover:bg-blue-50'>
+          <div onClick={props.onClick} className=' w-full h-[108px] px-6 py-6 flex flex-row gap-2 cursor-pointer hover:bg-blue-50'>
             <div className=' h-full aspect-square flex-none'>
               <img src={props.avatar} className=' w-full h-full rounded-full object-cover' />
             </div>

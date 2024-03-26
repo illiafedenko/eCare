@@ -27,7 +27,7 @@ export default function CGPortalNavBar(props) {
         <div className=' h-[50px] mr-2 xl:hidden border-r-[1px] border-gray-100'></div>
         <p className=' text-[24px] hidden sm:block font-poppins font-semibold'>{props.current}</p>
       </div>
-      <div className=' flex flex-grow max-w-[500px] h-[50px] relative'>
+      <div className=' hidden md:flex flex-grow max-w-[500px] h-[50px] relative'>
         <input
           className=' w-full text-[18px] px-4 h-full border-[1px] border-gray-300 bg-gray-50 focus:border-blue-500 outline-none rounded-[8px]'
           placeholder="Search for anything"

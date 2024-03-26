@@ -28,6 +28,7 @@ import CareGiverRouter from './utils/CareGiverRouter.jsx';
 import SeniorRouter from './utils/SeniorRouter.jsx';
 import CGSetting from './pages/caregiverportal/CGSetting.jsx';
 import CGLogout from './pages/caregiverportal/CGLogout.jsx';
+import AdminRouter from './utils/AdminRouter.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route exact path="/howto/match" element={<HowToMatch />} />
       <Route exact path="/cgportal/*" element={<CareGiverRouter />} />
       <Route exact path="/sportal/*" element={<SeniorRouter />} />
+      <Route exact path="/aportal/*" element={<AdminRouter />} />
     </Routes>
   </BrowserRouter>
   // </React.StrictMode>,

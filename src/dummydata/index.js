@@ -33,7 +33,7 @@ import chatimg4 from '../assets/images/chatimg4.jpg';
 import chatimg5 from '../assets/images/chatimg5.jpg';
 import chatimg6 from '../assets/images/chatimg6.jpg';
 
-import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor, faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -438,6 +438,27 @@ const dummyData = {
 			badge: null
 		},
 	],
+	AMenu: [
+		{
+			title: "Home",
+			id: "home",
+			icon: faHomeLg,
+			badge: null
+		},
+		{
+			title: "Users",
+			id: "users",
+			icon: faUser,
+			badge: null
+		},
+		{
+			title: "Schedule",
+			id: "schedule",
+			icon: faCalendarAlt,
+			badge: null
+		},
+	],
+
 	chatImageList: [
 		chatimg1,
 		chatimg2,

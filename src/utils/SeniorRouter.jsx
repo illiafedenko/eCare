@@ -6,6 +6,7 @@ import SeniorNotificatioins from '../pages/seniorportal/SeniorNotificatioins';
 import SeniorSetting from '../pages/seniorportal/SeniorSetting';
 import SeniorLogout from '../pages/seniorportal/SeniorLogout';
 import SeniorSchedule from '../pages/seniorportal/SeniorSchedule';
+import SeniorChat from '../pages/seniorportal/SeniorChat';
 
 export default function SeniorRouter() {
   return (
@@ -18,6 +19,7 @@ export default function SeniorRouter() {
         <Route exact path="/setting" element={<SeniorSetting />} />
         <Route exact path="/logout" element={<SeniorLogout />} />
         <Route exact path="/schedule" element={<SeniorSchedule />} />
+        <Route exact path="/chat" element={<SeniorChat />} />
       </Routes>
     </div>
   )
