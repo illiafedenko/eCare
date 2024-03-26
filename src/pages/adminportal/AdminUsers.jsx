@@ -9,12 +9,20 @@ import dummyData from '../../dummydata';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import addUserImage from '../../assets/images/adduser.png';
 import CustomTable from '../../components/general/CustomTable';
+import { useNavigate } from 'react-router'
 
 export default function AdminUsers() {
+
+  const navigate = useNavigate();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
     document.getElementById("blur_board").classList.toggle("hidden");
+  }
+
+  const handleAddUser = () => {
+    console.log(123);
+    navigate("/aportal/users/add/");
   }
 
   return (
@@ -28,7 +36,7 @@ export default function AdminUsers() {
             <div className=' flex-grow bg-white rounded-[20px]'>
               <CustomTable />
             </div>
-            <div className=' flex w-[320px] h-[280px] flex-col items-center gap-y-5 py-8 bg-white cursor-pointer rounded-[20px] border-[2px] border-gray-200'>
+            <div onClick={() => handleAddUser()} className=' flex w-[320px] h-[280px] flex-col items-center gap-y-5 py-8 bg-white cursor-pointer rounded-[20px] border-[2px] border-gray-200'>
               <img className=' w-[131px] h-[94px]' src={addUserImage} />
               <p className=' text-[24px] leading-none font-poppins'>Add User</p>
               <p className=' text-[16px] leading-none font-poppins'>Click here to add a user</p>

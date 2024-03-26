@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { useTable, useSortBy, useRowSelect } from 'react-table';
 import cg1_image from '../../assets/images/caregiver4.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faEdit, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faDeleteLeft, faEdit, faSort, faTrash } from '@fortawesome/free-solid-svg-icons';
+import * as Icon from 'react-bootstrap-icons';
 
 const data = [
   { id: 1, name: 'John Doe', age: 27, email: "johndoe@gmail.com", role: "caregiver", createdDate: "2022-03-24" },
@@ -37,7 +38,7 @@ const columns = [
     ),
   },
   { Header: 'Age', accessor: 'age' },
-  { Header: 'Emaile', accessor: 'email' },
+  { Header: 'Email', accessor: 'email' },
   { Header: 'Role', accessor: 'role' },
   { Header: 'Created Date', accessor: 'createdDate' },
   {
@@ -45,8 +46,9 @@ const columns = [
     disableSortBy: true, // Make this column unsortable
     Cell: () => (
       <div className=" flex flex-row justify-center gap-x-3">
-        <FontAwesomeIcon icon={faEdit} />
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon className=' text-[12px] text-gray-400' icon={faEdit} />
+        {/* <FontAwesomeIcon icon={faTrash} /> */}
+        <Icon.Trash className=' text-[12px] text-red-400' />
       </div>
     ),
   },
@@ -91,7 +93,7 @@ export default function CustomTable() {
         <thead className=' text-[12px] font-poppins text-gray-500'>
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()} className=' border-b-[1px] h-[40px]'>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column, i) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   className={
@@ -102,9 +104,9 @@ export default function CustomTable() {
                       : ''
                   }
                 >
-                  <div className=' flex flex-row justify-center items-center gap-x-3'>
+                  <div className={` flex flex-row justify-center items-center gap-x-3 ${i == 0 ? 'pl-5' : ''} ${i == headerGroup.headers.length - 1 ? 'pr-5' : ''} `}>
                     {column.render('Header')}
-                    {column.render('Header') != "Actions" ? <FontAwesomeIcon icon={faSort} /> : undefined}
+                    {column.disableSortBy == true || column.id == "selection" ? undefined : <FontAwesomeIcon icon={faSort} />}
                   </div>
                 </th>
               ))}
@@ -115,9 +117,9 @@ export default function CustomTable() {
           {rows.map(row => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className=' h-[40px] border-b border-[1px] border-gray-100'>
-                {row.cells.map(cell => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+              <tr {...row.getRowProps()} className={` h-[40px] border-b border-[1px] border-gray-100  `}>
+                {row.cells.map((cell, i) => (
+                  <td className={`${cell.id}  rows ${i == 0 ? 'pl-5' : ''} ${i == row.cells.length - 1 ? 'pr-5' : ''} `} {...cell.getCellProps()} >{cell.render('Cell')} </td>
                 ))}
               </tr>
             );
@@ -128,8 +130,20 @@ export default function CustomTable() {
   }, [getTableProps, getTableBodyProps, headerGroups, rows, prepareRow]);
 
   return (
-    <div className=' w-full h-full  border-[2px] border-gray-200 rounded-[20px]'>
+    <div className=' w-full h-full border-[2px] border-gray-200 rounded-[20px]'>
       {memoizedTable}
+      <div className=' w-full px-5 py-5 flex flex-row justify-between items-center'>
+        <p className=' text-[12px] font-poppins text-gray-400'>Showing 1-16 in 80</p>
+        <div className=' w-[81px] h-[30px] flex flex-row items-center border-[1px] text-gray-600 bg-gray-50 rounded-[8px]'>
+          <div className=' w-10'>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </div>
+          <div className=' h-full border-r-[1px] border-gray-200'></div>
+          <div className=' w-10'>
+            <FontAwesomeIcon icon={faArrowRight} />
+          </div>
+        </div>
+      </div>
       {/* <div>
         Selected Rows:{' '}
         {selectedFlatRows.map(row => row.original.name).join(', ')}
