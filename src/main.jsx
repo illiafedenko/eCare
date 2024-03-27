@@ -29,6 +29,10 @@ import SeniorRouter from './utils/SeniorRouter.jsx';
 import CGSetting from './pages/caregiverportal/CGSetting.jsx';
 import CGLogout from './pages/caregiverportal/CGLogout.jsx';
 import AdminRouter from './utils/AdminRouter.jsx';
+import firebase from 'firebase/compat/app';
+import firebaseConfig from './firebaseConfig';
+
+firebase.initializeApp(firebaseConfig);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>

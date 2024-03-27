@@ -75,11 +75,10 @@ export default function Signin() {
 
 	return (
 		<div className=" py-[26px] px-[50px] h-screen w-full">
-			<div className='grid grid-cols-1 lg:grid-cols-2 gap-[17px] h-[calc(100vh-52px)]'>
-				{/* <div className=" flex flex-col lg:flex-row min-h-full "> */}
+			<div className='grid grid-cols-1 xl:grid-cols-2 gap-[17px] h-[calc(100vh-52px)]'>
 				<div className='w-full my-0 lg:pl-0'>
-					<div className='w-full p-0 m-0 h-full relative '>
-						<img className="img-fluid rounded-2xl lg:rounded-tl-[20px] lg:rounded-bl-[20px] lg:rounded-tr-[200px] lg:rounded-br-[200px] h-full object-cover w-full" src={imageSrc} alt="register" />
+					<div className='w-full p-0 m-0 h-full min-h-[500px] aspect-video relative '>
+						<img className="img-fluid rounded-2xl xl:rounded-tl-[20px] xl:rounded-bl-[20px] xl:rounded-tr-[200px] xl:rounded-br-[200px] h-full object-cover w-full" src={imageSrc} alt="register" />
 						<img className=' absolute top-5 left-10 ' src={logoSrc} />
 					</div>
 				</div>
