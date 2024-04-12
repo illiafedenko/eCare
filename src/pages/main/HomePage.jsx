@@ -26,8 +26,8 @@ export default function HomePage() {
 	return (
 		<div className=' flex flex-col w-full '>
 			<Header current="home" />
-			<div className=' w-full aspect-w-16 aspect-h-9 relative'>
-				<img src={mainImage} className=' w-full h-full object-cover' ></img>
+			<div className=' w-full aspect-w-16 aspect-h-9 relative min-h-[250px]'>
+				<img src={mainImage} className=' w-full h-full  min-h-[250px] object-cover' ></img>
 				<div className=' absolute left-0 top-0 w-full h-full flex flex-col justify-center'>
 					<div className=' pl-[40px] md:pl-[50px] lg:pl-[100px] 2xl:w-3/5 w-4/5 w my-auto  flex flex-col gap-2 sm:gap-5'>
 						<p className=' text-white font-bold text-[32px] sm:text-[40px] md:text-[60px] lg:text-[80px] leading-none text-left'>Stay Comfortably Like Your Home</p>

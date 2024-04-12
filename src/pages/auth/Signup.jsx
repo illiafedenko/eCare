@@ -4,6 +4,7 @@ import logoSrc from '../../assets/images/logo.png';
 import NormalInput from '../../components/general/NormalInput';
 import GradientButton from '../../components/general/GradientButton';
 import firebase from 'firebase/compat/app';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Signup() {
 
@@ -18,7 +19,7 @@ export default function Signup() {
 	const firebaseApp = firebase.apps[0];
 
 	useEffect(() => {
-		console.log(JSON.stringify(firebaseApp.options, null, 2));
+
 	}, [])
 
 
@@ -42,7 +43,16 @@ export default function Signup() {
 		const ps = document.getElementsByName("password")[0];
 		const cf = document.getElementsByName("confirm")[0];
 		if (validation(fn) & validation(ln) & validation(em) & validation(ps) & validation(cf)) {
-			return true;
+			const auth = getAuth();
+			createUserWithEmailAndPassword(auth, em.value, ps.value)
+				.then((userCredential) => {
+					const user = userCredential.user;
+					console.log(user);
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+				})
 		}
 		else {
 			return false;
@@ -114,7 +124,7 @@ export default function Signup() {
 	}
 
 	return (
-		<div className=" py-[26px] px-[50px] h-screen w-full">
+		<div className=" relative py-[26px] px-[50px] h-screen w-full">
 			<div className='grid grid-cols-1 xl:grid-cols-2 gap-[17px] h-[calc(100vh-52px)]'>
 				{/* <div className=" flex flex-col lg:flex-row min-h-full "> */}
 				<div className='w-full my-0 lg:pl-0'>
@@ -161,6 +171,19 @@ export default function Signup() {
 					</div>
 				</div>
 			</div>
-		</div>
+			<div className="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-700 bg-opacity-40">
+				<div className="bg-white border py-2 px-5 rounded-lg flex items-center flex-col">
+					<div className="loader-dots block relative w-20 h-5 mt-2">
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+					</div>
+					<div className="text-gray-500 text-xs font-medium mt-2 text-center">
+						Connecting to client...
+					</div>
+				</div>
+			</div>
+		</div >
 	)
 }

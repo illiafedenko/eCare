@@ -31,6 +31,8 @@ import CGLogout from './pages/caregiverportal/CGLogout.jsx';
 import AdminRouter from './utils/AdminRouter.jsx';
 import firebase from 'firebase/compat/app';
 import firebaseConfig from './firebaseConfig';
+import Faqs from './pages/main/Faqs.jsx';
+import WhyBecomeCareGiver from './pages/main/WhyBecomeCareGiver.jsx';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -48,8 +50,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route exact path="/" element={<HomePage />} />
       <Route exact path="/about" element={<AboutUs />} />
       <Route exact path="/services" element={<ServicesPage />} />
+      <Route exact path="/faq" element={<Faqs />} />
       <Route exact path="/payment" element={<PaymentPage />} />
       <Route exact path="/caregivers" element={<CareGivers />} />
+      <Route exact path="/whybecomecaregiver" element={<WhyBecomeCareGiver />} />
       <Route exact path="/caregiver/:id" element={<CareGiverBookPage />} />
       <Route exact path="/apply" element={<ApplyPage />} />
       <Route exact path="/senior/:id" element={<Senior />} />

@@ -468,6 +468,57 @@ const dummyData = {
 		chatimg6,
 	],
 
+	faqs: [
+		{
+			question: "Who are your CareGivers?",
+			answer: "Our CareGivers are typically empty nesters, retirees and other folks who love seniors and want to give back to the community while earning a little flexible income. They include men and women of all ages!"
+		},
+		{
+			question: "How are CareGivers vetted?",
+			answer: "First and foremost, we look for people who have a true passion for supporting the older adults in our communities. All CareGivers go through a 5-step application process before they’re invited to join the CareGiverhood. In addition, we perform in-depth background screens as well as driving record audits."
+		},
+		{
+			question: "Can I include family members on my account?",
+			answer: "Absolutely, when you sign up, just be sure to include them in your profile – or you can always add them later. You will be able to specify whether they are just an emergency contact or if you would like for them to receive communications regarding your visits, etc."
+		},
+		{
+			question: "Can I make same day requests?",
+			answer: "While we cannot guarantee that same day visit requests can be filled, we do our best — and have usually been able to meet those requests."
+		},
+		{
+			question: "Who are your CareGivers?",
+			answer: "Our CareGivers are typically empty nesters, retirees and other folks who love seniors and want to give back to the community while earning a little flexible income. They include men and women of all ages!"
+		},
+		{
+			question: "How are CareGivers vetted?",
+			answer: "First and foremost, we look for people who have a true passion for supporting the older adults in our communities. All CareGivers go through a 5-step application process before they’re invited to join the CareGiverhood. In addition, we perform in-depth background screens as well as driving record audits."
+		},
+		{
+			question: "Can I include family members on my account?",
+			answer: "Absolutely, when you sign up, just be sure to include them in your profile – or you can always add them later. You will be able to specify whether they are just an emergency contact or if you would like for them to receive communications regarding your visits, etc."
+		},
+		{
+			question: "Can I make same day requests?",
+			answer: "While we cannot guarantee that same day visit requests can be filled, we do our best — and have usually been able to meet those requests."
+		},
+		{
+			question: "Who are your CareGivers?",
+			answer: "Our CareGivers are typically empty nesters, retirees and other folks who love seniors and want to give back to the community while earning a little flexible income. They include men and women of all ages!"
+		},
+		{
+			question: "How are CareGivers vetted?",
+			answer: "First and foremost, we look for people who have a true passion for supporting the older adults in our communities. All CareGivers go through a 5-step application process before they’re invited to join the CareGiverhood. In addition, we perform in-depth background screens as well as driving record audits."
+		},
+		{
+			question: "Can I include family members on my account?",
+			answer: "Absolutely, when you sign up, just be sure to include them in your profile – or you can always add them later. You will be able to specify whether they are just an emergency contact or if you would like for them to receive communications regarding your visits, etc."
+		},
+		{
+			question: "Can I make same day requests?",
+			answer: "While we cannot guarantee that same day visit requests can be filled, we do our best — and have usually been able to meet those requests."
+		},
+	],
+
 }
 
 export default dummyData;
