@@ -33,6 +33,7 @@ import firebase from 'firebase/compat/app';
 import firebaseConfig from './firebaseConfig';
 import Faqs from './pages/main/Faqs.jsx';
 import WhyBecomeCareGiver from './pages/main/WhyBecomeCareGiver.jsx';
+import CareGiverApply from './pages/main/CareGiverApply.jsx';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -54,6 +55,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route exact path="/payment" element={<PaymentPage />} />
       <Route exact path="/caregivers" element={<CareGivers />} />
       <Route exact path="/whybecomecaregiver" element={<WhyBecomeCareGiver />} />
+      <Route exact path="/caregiverapply" element={<CareGiverApply />} />
       <Route exact path="/caregiver/:id" element={<CareGiverBookPage />} />
       <Route exact path="/apply" element={<ApplyPage />} />
       <Route exact path="/senior/:id" element={<Senior />} />

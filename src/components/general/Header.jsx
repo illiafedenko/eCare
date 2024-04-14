@@ -101,7 +101,7 @@ export default function Header(props) {
 							<div
 								className="invisible absolute z-50 flex w-full flex-col bg-gray-100 py-0 text-gray-800 shadow-xl group-hover:visible text-left">
 								<a href='/whybecomecaregiver' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="services">Why Become a CareGiver</p></a>
-								<a href='/applycaregiver' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="howto">Apply</p></a>
+								<a href='/caregiverapply' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="howto">Apply</p></a>
 							</div>
 						</div>
 					</div>
