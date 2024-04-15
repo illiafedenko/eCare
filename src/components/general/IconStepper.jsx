@@ -14,7 +14,7 @@ export default function IconStepper(props) {
                   <FontAwesomeIcon icon={faCheck} />
                 </div>
                 :
-                <div key={i} className={`w-8 h-8 text-[16px] text-gray-600 flex flex-row items-center justify-center rounded-full bg-green-200`}>
+                <div key={i} className={`w-8 h-8 text-[16px] ${props.currentStep == i ? ' border-[2px] border-green-500' : ''} text-gray-600 flex flex-row items-center justify-center rounded-full bg-green-200`}>
                   {item}
                 </div>
             }
@@ -28,7 +28,6 @@ export default function IconStepper(props) {
 
                       <div className=' w-full border-t-2 border-gray-600'></div>
                       :
-
                       <div className=' w-full border-t-2 border-gray-200'></div>
                   }
                 </div>

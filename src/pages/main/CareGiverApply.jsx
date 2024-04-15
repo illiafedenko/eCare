@@ -4,8 +4,14 @@ import logoSrc from '../../assets/images/logo.png';
 import NormalInput from '../../components/general/NormalInput';
 import GradientButton from '../../components/general/GradientButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faBook, faCheck, faContactCard, faLocation, faLocationPin, faPerson, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faAddressCard, faBagShopping, faBook, faBuilding, faCheck, faCheckDouble, faContactCard, faLocation, faLocationPin, faPerson, faUser, faUserDoctor, faWorm } from '@fortawesome/free-solid-svg-icons';
 import IconStepper from '../../components/general/IconStepper';
+import CGApplyPrimaryInfo from '../../components/special/CGApplyPrimaryInfo';
+import CGApplyAddress from '../../components/special/CGApplyAddress';
+import CGApplyEducation from '../../components/special/CGApplyEducation';
+import CGApplyWorkHistory from '../../components/special/CGApplyWorkHistory';
+import CGApplyMore from '../../components/special/CGApplyMore';
+import CGApplyConditions from '../../components/special/CGApplyConditions';
 // import { Stepper, Step, Button } from "@material-tailwind/react";
 // import { Button } from "@material-tailwind/react";
 
@@ -46,17 +52,21 @@ export default function CareGiverApply() {
         <div className=" w-full  pt-3 lg:px-[48px] lg:py-0 ">
           <IconStepper currentStep={activeStep}>
             <FontAwesomeIcon icon={faUser} />
-            <FontAwesomeIcon icon={faContactCard} />
             <FontAwesomeIcon icon={faLocationPin} />
             <FontAwesomeIcon icon={faBook} />
-            <FontAwesomeIcon icon={faAddressCard} />
+            <FontAwesomeIcon icon={faBuilding} />
+            <FontAwesomeIcon icon={faUserDoctor} />
+            <FontAwesomeIcon icon={faCheckDouble} />
           </IconStepper>
-          <div className=' mt-[100px]'>
-            {
-              
-            }
+          <div className=' mt-[40px]'>
+            <div className={`${activeStep == 0 ? '' : 'hidden'}`} ><CGApplyPrimaryInfo /></div>
+            <div className={`${activeStep == 1 ? '' : 'hidden'}`} ><CGApplyAddress /></div>
+            <div className={`${activeStep == 2 ? '' : 'hidden'}`} ><CGApplyEducation /></div>
+            <div className={`${activeStep == 3 ? '' : 'hidden'}`} ><CGApplyWorkHistory /></div>
+            <div className={`${activeStep == 4 ? '' : 'hidden'}`} ><CGApplyMore /></div>
+            <div className={`${activeStep == 5 ? '' : 'hidden'}`} ><CGApplyConditions /></div>
           </div>
-          <div className=' mt-[100px] w-full flex flex-row justify-between'>
+          <div className=' mt-[40px] w-full flex flex-row justify-between'>
             <div onClick={handlePrev} className={` w-[100px] h-[30px] text-white ${isFirstStep ? 'bg-gray-400' : 'bg-green-500'} rounded-[8px] cursor-pointer flex flex-row items-center justify-center `}><p className=' text-[16px] font-poppins font-bold select-none'>Previous</p></div>
             <div onClick={handleNext} className={` w-[100px] h-[30px] text-white ${isLastStep ? 'bg-gray-400' : 'bg-green-500'} rounded-[8px] cursor-pointer flex flex-row items-center justify-center `}><p className=' text-[16px] font-poppins font-bold select-none'>Next</p></div>
           </div>
