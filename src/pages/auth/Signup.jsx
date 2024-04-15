@@ -5,6 +5,12 @@ import NormalInput from '../../components/general/NormalInput';
 import GradientButton from '../../components/general/GradientButton';
 import firebase from 'firebase/compat/app';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, set } from 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from '../../firebaseConfig';
+import { useNavigate } from 'react-router'
+
+
 
 export default function Signup() {
 
@@ -15,8 +21,10 @@ export default function Signup() {
 		password: "",
 		confirm: "",
 	});
+	const [loading, setLoading] = useState(false);
 
 	const firebaseApp = firebase.apps[0];
+	const navigate = useNavigate();
 
 	useEffect(() => {
 
@@ -24,7 +32,30 @@ export default function Signup() {
 
 
 	const handleSubmitEvent = (e) => {
-		validationAll();
+		if (validationAll() == false) return;
+		setLoading(true);
+		const auth = getAuth();
+		createUserWithEmailAndPassword(auth, input.email, input.password)
+			.then((userCredential) => {
+				const user = userCredential.user;
+				const db = getDatabase();
+				set(ref(db, 'users/' + user.uid), {
+					firstname: input.firstname,
+					lastname: input.lastname,
+					fullname: input.firstname + " " + input.lastname,
+					email: input.email,
+					password: input.password,
+				});
+				setLoading(false);
+				const path = "/choose_role";
+				navigate(path);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(errorMessage);
+				setLoading(false);
+			})
 	};
 
 	const handleChange = (e) => {
@@ -43,16 +74,7 @@ export default function Signup() {
 		const ps = document.getElementsByName("password")[0];
 		const cf = document.getElementsByName("confirm")[0];
 		if (validation(fn) & validation(ln) & validation(em) & validation(ps) & validation(cf)) {
-			const auth = getAuth();
-			createUserWithEmailAndPassword(auth, em.value, ps.value)
-				.then((userCredential) => {
-					const user = userCredential.user;
-					console.log(user);
-				})
-				.catch((error) => {
-					const errorCode = error.code;
-					const errorMessage = error.message;
-				})
+			return true;
 		}
 		else {
 			return false;
@@ -138,28 +160,28 @@ export default function Signup() {
 					<p className='mt-0 text-left text-gray-500 font-poppins' >Enter your credentials to create an account</p>
 					<div className=' flex flex-col gap-5 sm:gap-3 sm:flex-row mt-10 mb-4'>
 						<div className=' w-full sm:w-1/2 '>
-							<p className='mb-2 text-left text-gray-500 font-poppins' >First Name</p>
+							<p className='mb-2 text-left text-gray-500 font-poppins' >First Name <span className=' text-red-600'>*</span></p>
 							<NormalInput type="text" name="firstname" onChange={handleChange} placeholder="First Name" required />
 						</div>
 						<div className=' w-full sm:w-1/2 '>
-							<p className='mb-2 text-left text-gray-500 font-poppins' >Last Name</p>
+							<p className='mb-2 text-left text-gray-500 font-poppins' >Last Name <span className=' text-red-600'>*</span></p>
 							<NormalInput type="text" name="lastname" onChange={handleChange} placeholder="Last Name" required />
 						</div>
 					</div>
 					<div className='my-4 w-full'>
-						<p className='mb-2 text-left text-gray-500 font-poppins' >Email</p>
+						<p className='mb-2 text-left text-gray-500 font-poppins' >Email <span className=' text-red-600'>*</span></p>
 						<NormalInput type="email" name="email" onChange={handleChange} placeholder="Your Email" required />
 					</div>
 					<div className='my-4 w-full'>
-						<p className='mb-2 text-left text-gray-500 font-poppins' >Password</p>
+						<p className='mb-2 text-left text-gray-500 font-poppins' >Password <span className=' text-red-600'>*</span></p>
 						<NormalInput type="password" name="password" onChange={handleChange} placeholder="Minimum 8 Characters" required />
 					</div>
 					<div className='my-4 w-full'>
-						<p className='mb-2 text-left text-gray-500 font-poppins' >Comfirm Password</p>
+						<p className='mb-2 text-left text-gray-500 font-poppins' >Comfirm Password <span className=' text-red-600'>*</span></p>
 						<NormalInput type="password" name="confirm" onChange={handleChange} placeholder="Minimum 8 Characters" required />
 					</div>
 					<div className="flex items-center mb-4">
-						<input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
+						<input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded accent-green-600 " />
 						<label className="ms-2 text-sm text-gray-500 font-poppins font-medium dark:text-gray-300"><a href='#' className='text-gray-500 underline'>Accept terms and conditions</a></label>
 					</div>
 					<div className='my-8 w-full'>
@@ -171,7 +193,7 @@ export default function Signup() {
 					</div>
 				</div>
 			</div>
-			<div className="fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-700 bg-opacity-40">
+			<div id='loading' className={`fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-700 bg-opacity-40 ${!loading ? 'invisible' : ''}`}>
 				<div className="bg-white border py-2 px-5 rounded-lg flex items-center flex-col">
 					<div className="loader-dots block relative w-20 h-5 mt-2">
 						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
@@ -180,7 +202,7 @@ export default function Signup() {
 						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
 					</div>
 					<div className="text-gray-500 text-xs font-medium mt-2 text-center">
-						Connecting to client...
+						Just a seconds...
 					</div>
 				</div>
 			</div>

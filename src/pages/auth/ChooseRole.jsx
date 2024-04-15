@@ -17,20 +17,25 @@ export default function ChooseRole() {
 		console.log(isSenior, isCareGiver);
 	}, [isSenior, isCareGiver])
 
+	useEffect(() => {
+		setRole(true);
+	}, [])
+
+
 	const handleChooseRole = (role) => {
 		console.log(role);
-		if(role == "senior"){
+		if (role == "senior") {
 			setRole(true);
 			// if(isSenior == true) setRole(false);
 			// else setRole(true);
 		}
-		if(role == "caregiver"){
+		if (role == "caregiver") {
 			setRole(false);
 			// if(isCareGiver == true) setRole(true);
 			// else setRole(false);
 		}
 	}
-	
+
 
 	return (
 		<div className=' relative h-screen w-screen flex items-center justify-center'>
@@ -53,7 +58,7 @@ export default function ChooseRole() {
 							<div className=' w-full h-[60px] bg-gray-300 rounded-[8px] flex flex-row items-center justify-between px-[24px] '>
 								<div className='flex flex-row items-center gap-1'>
 									<FontAwesomeIcon icon={faPersonCane} />
-									<p className=' font-poppins font-extrabold'>Senior</p>
+									<p className=' font-poppins font-bold'>I am senior</p>
 								</div>
 								<CustomRadioButton label="senior" onClick={handleChooseRole} value={isSenior} />
 							</div>
@@ -62,7 +67,7 @@ export default function ChooseRole() {
 							<div className=' w-full h-[60px] bg-gray-300 rounded-[8px] flex flex-row items-center justify-between px-[24px] '>
 								<div className='flex flex-row items-center gap-1'>
 									<FontAwesomeIcon icon={faUserDoctor} />
-									<p className=' font-poppins font-extrabold'>Care Giver</p>
+									<p className=' font-poppins font-bold'>I am family</p>
 								</div>
 								<CustomRadioButton label="caregiver" onClick={handleChooseRole} value={isCareGiver} />
 							</div>
