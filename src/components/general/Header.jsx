@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import logoSrc from '../../assets/images/logo.png';
 import miniLogoSrc from '../../assets/images/miniLogo.png';
 import MiniGradientButton from './MiniGradientButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleRight, faArrowLeftLong, faArrowRight, faGreaterThan, faHome, faMoneyBill, faPerson, faPersonCane, faPersonWalkingWithCane, faServer, faUserDoctor } from '@fortawesome/free-solid-svg-icons'
 
 export default function Header(props) {
 

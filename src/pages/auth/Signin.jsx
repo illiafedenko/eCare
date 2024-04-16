@@ -1,11 +1,11 @@
 import React, { useState, } from 'react';
 import imageSrc from '../../assets/images/signin_image.png';
 import logoSrc from '../../assets/images/logo.png';
-import PasswordInput from '../../components/general/PasswordInput';
-import EmailInput from '../../components/general/EmailInput';
 import NormalInput from '../../components/general/NormalInput';
-import { Prev } from 'react-bootstrap/esm/PageItem';
 import GradientButton from '../../components/general/GradientButton';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
+import useAuthStore from '../../utils/authStore';
 
 
 export default function Signin() {
@@ -15,8 +15,32 @@ export default function Signin() {
 		password: "",
 	});
 
+	const setUid = useAuthStore((state) => state.setUid);
+	const setAccessToken = useAuthStore((state) => state.setAccessToken);
+
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+
 	const handleSubmitEvent = (e) => {
-		validationAll();
+		if (validationAll() == false) return;
+		setLoading(true);
+		const auth = getAuth();
+		signInWithEmailAndPassword(auth, input.email, input.password)
+			.then((userCredential) => {
+				const user = userCredential.user;
+				setUid(user.uid);
+				setAccessToken(user.accessToken)
+				setLoading(false);
+				console.log(1);
+				const path = '/';
+				navigate(path);
+			})
+			.catch((error) => {
+				const errorCode = error.code;
+				const errorMessage = error.message;
+				console.log(errorCode, errorMessage);
+				setLoading(false);
+			})
 	};
 
 	const handleChange = (e) => {
@@ -31,9 +55,6 @@ export default function Signin() {
 	const validationAll = () => {
 		var em = document.getElementsByName("email")[0];
 		var ps = document.getElementsByName("password")[0];
-		console.log(em, ps);
-		console.log(em.value, ps.value);
-		console.log(validation(em), validation(ps));
 		if (validation(em) & validation(ps)) {
 			return true;
 		}
@@ -107,6 +128,19 @@ export default function Signin() {
 					<div className='my-8 w-full'>
 						<p className=' text-center text-gray-500 font-poppins'>Don't have an account?, <span><a href='./signup' className=' text-green-500'>Register</a></span></p>
 						{/* <p className=' text-center text-gray-500 py-3' style={{ fontFamily: 'poppins', fontSize: '16px' }}>Or</p> */}
+					</div>
+				</div>
+			</div>
+			<div id='loading' className={`fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-700 bg-opacity-40 ${!loading ? 'invisible' : ''}`}>
+				<div className="bg-white border py-2 px-5 rounded-lg flex items-center flex-col">
+					<div className="loader-dots block relative w-20 h-5 mt-2">
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+						<div className="absolute top-0 mt-1 w-3 h-3 rounded-full bg-green-500"></div>
+					</div>
+					<div className="text-gray-500 text-xs font-medium mt-2 text-center">
+						Just a seconds...
 					</div>
 				</div>
 			</div>
