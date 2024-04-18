@@ -32,11 +32,16 @@ export default function SideBar(props) {
     navigate(path);
   }
 
+  const gotoMainHomePage = () => {
+    const path = "/";
+    navigate(path);
+  }
+
   return (
     <>
       <aside className='w-[350px] min-w-[350px] h-screen xl:flex flex-col hidden px-5 border-r-[1px] border-gray-100 transition-transform -translate-x-full xl:translate-x-0'>
         <div className=' w-full h-[100px] flex flex-row items-center'>
-          <img className=' pl-[20px]' src={logoImage} />
+          <img onClick={() => gotoMainHomePage()} className=' pl-[20px] cursor-pointer' src={logoImage} />
         </div>
         <div className=' w-full h-[calc(100vh-100px)] py-5 flex flex-col justify-between'>
           <div className=' w-full flex flex-col'>

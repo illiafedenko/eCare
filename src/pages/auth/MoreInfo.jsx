@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import GradientButton from '../../components/general/GradientButton'
 import NormalInput from '../../components/general/NormalInput'
 import dummyData from '../../dummydata';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set, update } from 'firebase/database';
 import { useNavigate } from 'react-router'
 import useAuthStore from '../../utils/authStore';

@@ -7,7 +7,6 @@ import CustomRadioButton from '../../components/general/CustomRadioButton';
 import useAuthStore from '../../utils/authStore';
 import Senior from '../main/Senior';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set, update } from 'firebase/database';
 
 export default function ChooseRole() {

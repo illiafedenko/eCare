@@ -4,16 +4,40 @@ import miniLogoSrc from '../../assets/images/miniLogo.png';
 import MiniGradientButton from './MiniGradientButton';
 import useAuthStore from '../../utils/authStore';
 import { useNavigate } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
+import 'firebase/auth';
 
 export default function Header(props) {
 
 	const [current, setCurrent] = useState(props.current)
 	const uid = useAuthStore((state) => state.uid);
+	const userType = useAuthStore((state) => state.userType);
 	const setUid = useAuthStore((state) => state.setUid);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log(uid);
+		const getToken = async () => {
+			try {
+
+				const user = getAuth().currentUser;
+				if (user) {
+					// const token = await user.getIdToken();
+					const token = localStorage.getItem("token");
+					const idTokenResult = await user.getIdTokenResult();
+
+					console.log(user.uid);
+					console.log("token", token);
+					console.log("idTokenResult", idTokenResult);
+					// console.log("localstorage", localStorage.getItem("token"));
+				} else {
+					console.log("User is not signed in");
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+		getToken();
 	}, [])
 
 
@@ -104,35 +128,43 @@ export default function Header(props) {
 							</div>
 						</div>
 					</div>
-					<div className="flex h-10 w-[240px] items-center justify-center bg-gray-200 px-0">
-						<div className="group relative cursor-pointer w-[240px]">
-
-							<div className="flex items-center justify-between space-x-5 w-full bg-white hover:bg-gray-200">
-								<p className=' px-2 py-2 text-[16px] text-gray-700 font-semibold hover:text-green-600' id="how_we_work">Become a CareGiver</p>
-								<span className='mx-0' style={{ marginLeft: "0px" }}>
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-										stroke="currentColor" className="h-6 w-6">
-										<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-									</svg>
-								</span>
-							</div>
-							<div
-								className="invisible absolute z-50 flex w-full flex-col bg-gray-100 py-0 text-gray-800 shadow-xl group-hover:visible text-left">
-								<a href='/whybecomecaregiver' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="services">Why Become a CareGiver</p></a>
-								<a href='/caregiverapply' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="howto">Apply</p></a>
-							</div>
-						</div>
-					</div>
-					<a href='/about' className=''><p className=' text-gray-700 font-semibold hover:text-green-600' id="about">About Us</p></a>
 					{
 						uid == "" || uid == undefined ?
+							<div className="flex h-10 w-[240px] items-center justify-center bg-gray-200 px-0">
+								<div className="group relative cursor-pointer w-[240px]">
+
+									<div className="flex items-center justify-between space-x-5 w-full bg-white hover:bg-gray-200">
+										<p className=' px-2 py-2 text-[16px] text-gray-700 font-semibold hover:text-green-600' id="how_we_work">Become a CareGiver</p>
+										<span className='mx-0' style={{ marginLeft: "0px" }}>
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+												stroke="currentColor" className="h-6 w-6">
+												<path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+											</svg>
+										</span>
+									</div>
+									<div
+										className="invisible absolute z-50 flex w-full flex-col bg-gray-100 py-0 text-gray-800 shadow-xl group-hover:visible text-left">
+										<a href='/whybecomecaregiver' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="services">Why Become a CareGiver</p></a>
+										<a href='/caregiverapply' className=''><p className=' h-10 py-2 px-4 border-b my-0 text-4 text-gray-700 font-semibold hover:text-green-600 hover:bg-white' id="howto">Apply</p></a>
+									</div>
+								</div>
+							</div>
+							:
+							userType == "senior" ?
+								<a href='/sportal' className=''><p className=' text-gray-700 font-semibold hover:text-green-600' id="sportal">Senior Portal</p></a>
+								:
+								<a href='/cgportal' className=''><p className=' text-gray-700 font-semibold hover:text-green-600' id="cgportal">CareGiver Portal</p></a>
+
+					}
+					<a href='/about' className=''><p className=' text-gray-700 font-semibold hover:text-green-600' id="about">About Us</p></a>
+					{
+						uid == "" || uid == undefined || userType != "senior" ?
 							<></>
 							:
 							<a href='/payment' className=''><p className='  text-gray-700 font-semibold hover:text-green-600' id="payment">Cost & Payment</p></a>
 					}
 				</div>
 			</div>
-
 
 			{/* mini menu */}
 			<div className=' block xl:hidden '>

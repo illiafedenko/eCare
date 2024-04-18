@@ -36,6 +36,7 @@ export default function Signin() {
 				const user = userCredential.user;
 				setUid(user.uid);
 				setAccessToken(user.accessToken)
+				localStorage.setItem("token", user.accessToken);
 				handleNextPage(user.uid);
 				setLoading(false);
 			})
@@ -52,7 +53,7 @@ export default function Signin() {
 	};
 
 	const handleNextPage = (uid) => {
-		console.log(uid);
+		// console.log(uid);
 		var user = ref(db, 'caregivers/' + uid);
 		onValue(user, (snapshot) => {
 			const data = snapshot.val();
@@ -68,7 +69,14 @@ export default function Signin() {
 			const data = snapshot.val();
 			if (data != null) {
 				setUserType("senior");
-				const path = '/choose_role';
+				var path = "";
+				if (data.userType == "" || data.userType == undefined) {
+					path = '/choose_role';
+				} else if (data.phonenumber == "" || data.phonenumber == undefined) {
+					path = '/set_additional_info';
+				} else {
+					path = '/';
+				}
 				navigate(path);
 				return;
 			}
