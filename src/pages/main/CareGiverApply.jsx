@@ -49,7 +49,7 @@ export default function CareGiverApply() {
             <img className=' absolute top-5 left-10 ' src={logoSrc} />
           </div>
         </div>
-        <div className=" w-full  pt-3 lg:px-[48px] lg:py-0 ">
+        <div className=" w-full pt-3 lg:px-[48px] lg:py-0 ">
           <IconStepper currentStep={activeStep}>
             <FontAwesomeIcon icon={faUser} />
             <FontAwesomeIcon icon={faLocationPin} />
@@ -59,17 +59,14 @@ export default function CareGiverApply() {
             <FontAwesomeIcon icon={faCheckDouble} />
           </IconStepper>
           <div className=' mt-[40px]'>
-            <div className={`${activeStep == 0 ? '' : 'hidden'}`} ><CGApplyPrimaryInfo /></div>
-            <div className={`${activeStep == 1 ? '' : 'hidden'}`} ><CGApplyAddress /></div>
-            <div className={`${activeStep == 2 ? '' : 'hidden'}`} ><CGApplyEducation /></div>
-            <div className={`${activeStep == 3 ? '' : 'hidden'}`} ><CGApplyWorkHistory /></div>
-            <div className={`${activeStep == 4 ? '' : 'hidden'}`} ><CGApplyMore /></div>
-            <div className={`${activeStep == 5 ? '' : 'hidden'}`} ><CGApplyConditions /></div>
+            <div className={`${activeStep == 0 ? '' : 'hidden'}`} ><CGApplyPrimaryInfo handleNext={handleNext} handlePrev={handlePrev} /></div>
+            <div className={`${activeStep == 1 ? '' : 'hidden'}`} ><CGApplyAddress handleNext={handleNext} handlePrev={handlePrev} /></div>
+            <div className={`${activeStep == 2 ? '' : 'hidden'}`} ><CGApplyEducation handleNext={handleNext} handlePrev={handlePrev} /></div>
+            <div className={`${activeStep == 3 ? '' : 'hidden'}`} ><CGApplyWorkHistory handleNext={handleNext} handlePrev={handlePrev} /></div>
+            <div className={`${activeStep == 4 ? '' : 'hidden'}`} ><CGApplyMore handleNext={handleNext} handlePrev={handlePrev} /></div>
+            <div className={`${activeStep == 5 ? '' : 'hidden'}`} ><CGApplyConditions handleNext={handleNext} handlePrev={handlePrev} /></div>
           </div>
-          <div className=' mt-[40px] w-full flex flex-row justify-between'>
-            <div onClick={handlePrev} className={` w-[100px] h-[30px] text-white ${isFirstStep ? 'bg-gray-400' : 'bg-green-500'} rounded-[8px] cursor-pointer flex flex-row items-center justify-center `}><p className=' text-[16px] font-poppins font-bold select-none'>Previous</p></div>
-            <div onClick={handleNext} className={` w-[100px] h-[30px] text-white ${isLastStep ? 'bg-gray-400' : 'bg-green-500'} rounded-[8px] cursor-pointer flex flex-row items-center justify-center `}><p className=' text-[16px] font-poppins font-bold select-none'>Next</p></div>
-          </div>
+
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import logoSrc from '../../assets/images/logo.png';
 import NormalInput from '../../components/general/NormalInput';
 import GradientButton from '../../components/general/GradientButton';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../../utils/authStore';
 
@@ -14,11 +15,16 @@ export default function Signin() {
 		email: "",
 		password: "",
 	});
-
+	//auth info
 	const setUid = useAuthStore((state) => state.setUid);
 	const setAccessToken = useAuthStore((state) => state.setAccessToken);
-
+	const setUserType = useAuthStore((state) => state.setUserType);
+	//database
+	const db = getDatabase();
+	//progress and toast
 	const [loading, setLoading] = useState(false);
+	const [showToast, setShowToast] = useState(false);
+	//navigation
 	const navigate = useNavigate();
 
 	const handleSubmitEvent = (e) => {
@@ -30,18 +36,46 @@ export default function Signin() {
 				const user = userCredential.user;
 				setUid(user.uid);
 				setAccessToken(user.accessToken)
+				handleNextPage(user.uid);
 				setLoading(false);
-				console.log(1);
-				const path = '/';
-				navigate(path);
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
-				console.log(errorCode, errorMessage);
+				// console.log(errorCode, errorMessage);
 				setLoading(false);
+				setShowToast(true);
+				setTimeout(() => {
+					setShowToast(false);
+				}, 3000);
 			})
 	};
+
+	const handleNextPage = (uid) => {
+		console.log(uid);
+		var user = ref(db, 'caregivers/' + uid);
+		onValue(user, (snapshot) => {
+			const data = snapshot.val();
+			if (data != null) {
+				setUserType("caregiver");
+				const path = '/cgportal';
+				navigate(path);
+				return;
+			}
+		});
+		user = ref(db, 'users/' + uid);
+		onValue(user, (snapshot) => {
+			const data = snapshot.val();
+			if (data != null) {
+				setUserType("senior");
+				const path = '/choose_role';
+				navigate(path);
+				return;
+			}
+		});
+		// const path = '/';
+		// navigate(path);
+	}
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -104,7 +138,7 @@ export default function Signin() {
 					</div>
 				</div>
 				<div className=" w-full  pt-3 lg:px-[48px] lg:py-0 ">
-					<p className='my-2 text-left text-gray-900 text-3xl font-poppins font-extrabold' >Login to your account</p>
+					<p className='my-2 text-left text-gray-900 text-3xl font-poppins font-bold' >Login to your account</p>
 					<p className='mt-0 text-left text-gray-500 font-poppins' >Enter your credentials to login</p>
 
 					<div className='mt-10 mb-4 w-full'>
@@ -116,7 +150,7 @@ export default function Signin() {
 						<NormalInput placeholder="Your Password" type="password" name="password" onChange={handleChange} required />
 					</div>
 					<div className='mb-4 w-full'>
-						<p className='text-left'><a href='#' className='mb-2 text-left text-gray-900 font-extrabold text-[12px] font-poppins' >Forgot password?</a></p>
+						<p className='text-left'><a href='#' className='mb-2 text-left text-gray-900 font-bold text-[12px] font-poppins' >Forgot password?</a></p>
 					</div>
 					<div className="flex items-center mt-6 mb-4">
 						<input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded " />
@@ -144,6 +178,14 @@ export default function Signin() {
 					</div>
 				</div>
 			</div>
+			{
+				showToast ?
+					<div className="fixed bottom-0 right-0 mb-4 mr-4 bg-red-400 text-white py-2 px-4 rounded">
+						Input Email and Password correctly...
+					</div>
+					:
+					<></>
+			}
 		</div>
 	)
 }

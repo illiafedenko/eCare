@@ -6,9 +6,9 @@ import GradientButton from '../../components/general/GradientButton';
 import firebase from 'firebase/compat/app';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set } from 'firebase/database';
+import { useNavigate } from 'react-router'
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../../firebaseConfig';
-import { useNavigate } from 'react-router'
 
 
 
@@ -47,7 +47,7 @@ export default function Signup() {
 					password: input.password,
 				});
 				setLoading(false);
-				const path = "/choose_role";
+				const path = "/signin";
 				navigate(path);
 			})
 			.catch((error) => {
@@ -119,7 +119,7 @@ export default function Signup() {
 				break;
 
 			case "password":
-				if (value.length > 8) {
+				if (value.length > 7) {
 					target.classList.remove('border-red-300');
 					return true;
 				}
@@ -130,7 +130,7 @@ export default function Signup() {
 				break;
 
 			case "confirm":
-				if (value == input.password && value.length > 8) {
+				if (value == input.password && value.length > 7) {
 					target.classList.remove('border-red-300');
 					return true;
 				}

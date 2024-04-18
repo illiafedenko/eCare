@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import logoSrc from '../../assets/images/logo.png';
 import miniLogoSrc from '../../assets/images/miniLogo.png';
 import MiniGradientButton from './MiniGradientButton';
+import useAuthStore from '../../utils/authStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header(props) {
 
 	const [current, setCurrent] = useState(props.current)
+	const uid = useAuthStore((state) => state.uid);
+	const setUid = useAuthStore((state) => state.setUid);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		console.log(uid);
+	}, [])
+
 
 	useEffect(() => {
 		document.getElementById(current).classList.remove('text-gray-700');
@@ -52,6 +62,16 @@ export default function Header(props) {
 	}
 	const cgMouseOut = () => {
 		document.getElementById("cg_pop_up_menu").classList.add("invisible");
+	}
+
+	const handleSignin = () => {
+		const path = "/signin";
+		navigate(path)
+	}
+	const handleSignout = () => {
+		setUid("");
+		const path = "/";
+		navigate(path);
 	}
 
 	return (
@@ -104,7 +124,12 @@ export default function Header(props) {
 						</div>
 					</div>
 					<a href='/about' className=''><p className=' text-gray-700 font-semibold hover:text-green-600' id="about">About Us</p></a>
-					<a href='/payment' className=''><p className='  text-gray-700 font-semibold hover:text-green-600' id="payment">Cost & Payment</p></a>
+					{
+						uid == "" || uid == undefined ?
+							<></>
+							:
+							<a href='/payment' className=''><p className='  text-gray-700 font-semibold hover:text-green-600' id="payment">Cost & Payment</p></a>
+					}
 				</div>
 			</div>
 
@@ -189,7 +214,14 @@ export default function Header(props) {
 					</div>
 				</div>
 			</div>
-			<div className=' w-[80px] h-[32px] sm:w-[100px] sm:h-[40px] text-[12px] sm:text-[16px] hidden sm:block'><MiniGradientButton text="Sign Up" /></div>
+			<div className=' w-[80px] h-[32px] sm:w-[120px] sm:h-[40px] text-[12px] sm:text-[16px] hidden sm:block'>
+				{
+					uid == "" || uid == undefined ?
+						<MiniGradientButton onClick={() => handleSignin()} text="Sign In" />
+						:
+						<MiniGradientButton onClick={() => handleSignout()} text="Sign Out" />
+				}
+			</div>
 		</div>
 	)
 }

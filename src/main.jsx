@@ -34,6 +34,8 @@ import firebaseConfig from './firebaseConfig';
 import Faqs from './pages/main/Faqs.jsx';
 import WhyBecomeCareGiver from './pages/main/WhyBecomeCareGiver.jsx';
 import CareGiverApply from './pages/main/CareGiverApply.jsx';
+import MoreInfo from './pages/auth/MoreInfo.jsx';
+import MyRoute from './utils/MyRoute.jsx';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -41,6 +43,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <BrowserRouter>
     <Routes>
+      <Route exact path="/" element={<HomePage />} />
       <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/signin" element={<Signin />} />
       <Route exact path="/test" element={<Test />} />
@@ -48,7 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route exact path="/otp" element={<OTP />} />
       <Route exact path="/set_new_password" element={<SetNewPassword />} />
       <Route exact path="/choose_role" element={<ChooseRole />} />
-      <Route exact path="/" element={<HomePage />} />
+      <Route exact path="/set_additional_info" element={<MoreInfo />} />
       <Route exact path="/about" element={<AboutUs />} />
       <Route exact path="/services" element={<ServicesPage />} />
       <Route exact path="/faq" element={<Faqs />} />
