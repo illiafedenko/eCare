@@ -6,7 +6,7 @@ export default function SettingInput(props) {
       <p className=' w-full text-[16px] text-left font-raleway'>{props.label}</p>
       <div className=' w-full h-[48px]'>
         <input
-          className=' w-full text-[16px] font-raleway px-4 h-full border-[1px] border-gray-300 disabled:bg-gray-200 disabled:text-gray-400 focus:border-blue-500 outline-none rounded-[16px]'
+          className={`w-full text-[16px] font-raleway px-4 h-full border-[2px] border-gray-300 disabled:bg-gray-200 disabled:text-gray-400 focus:border-blue-500 outline-none rounded-[4px] ${props.invalid ? 'border-red-500' : ''}`}
           placeholder={props.placeholder}
           type={props.type}
           name={props.name}

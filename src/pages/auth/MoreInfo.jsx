@@ -8,7 +8,7 @@ import useAuthStore from '../../utils/authStore';
 
 export default function MoreInfo() {
 
-  const uid = useAuthStore((state) => state.uid);
+  const uid = useAuthStore(localStorage.getItem("userID"));
   const navigate = useNavigate();
 
   const [input, setInput] = useState({

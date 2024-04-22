@@ -3,7 +3,7 @@ import logoImage from '../../assets/images/logo.png';
 import avatar from '../../assets/images/caregiver6.png'
 import dashboardIcon from '../../assets/images/dashboardicon.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router'
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
