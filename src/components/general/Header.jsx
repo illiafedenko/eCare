@@ -10,38 +10,32 @@ import 'firebase/auth';
 export default function Header(props) {
 
 	const [current, setCurrent] = useState(props.current)
-	const uid = useAuthStore((state) => state.uid);
-	const userType = useAuthStore((state) => state.userType);
-	const setUid = useAuthStore((state) => state.setUid);
+	const [uid, setUid] = useState(localStorage.getItem("userID"));
+	const [userType, setUserType] = useState(localStorage.getItem("userType"));
 	const navigate = useNavigate();
 
 	useEffect(() => {
+
 		const getToken = async () => {
 			try {
-
-				const user = getAuth().currentUser;
-				if (user) {
-					// const token = await user.getIdToken();
-					const token = localStorage.getItem("token");
-					const idTokenResult = await user.getIdTokenResult();
-
-					console.log(user.uid);
-					console.log("token", token);
-					console.log("idTokenResult", idTokenResult);
-					// console.log("localstorage", localStorage.getItem("token"));
-				} else {
-					console.log("User is not signed in");
-				}
+				// const user = getAuth().currentUser;
+				getAuth().onAuthStateChanged(async (user) => {
+					if (user) {
+						const idTokenResult = await user.getIdTokenResult();
+						console.log(user.uid);
+						// console.log("token", token);
+						console.log("idTokenResult", idTokenResult);
+					} else {
+						console.log("User is not signed in");
+					}
+				})
 			} catch (error) {
 				console.log(error);
 			}
 		}
 
 		getToken();
-	}, [])
 
-
-	useEffect(() => {
 		document.getElementById(current).classList.remove('text-gray-700');
 		document.getElementById(current).classList.add('text-green-600');
 		if (current == "howto" || current == "services" || current == "caregivers") {
@@ -93,7 +87,14 @@ export default function Header(props) {
 		navigate(path)
 	}
 	const handleSignout = () => {
+		localStorage.setItem("userType", "");
+		localStorage.setItem("token", "");
+		localStorage.setItem("userID", "");
 		setUid("");
+		setUserType("");
+		getAuth().signOut().then(() => {
+			// Sign-out successful.
+		});
 		const path = "/";
 		navigate(path);
 	}

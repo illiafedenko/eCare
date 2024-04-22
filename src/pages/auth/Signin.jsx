@@ -37,6 +37,7 @@ export default function Signin() {
 				setUid(user.uid);
 				setAccessToken(user.accessToken)
 				localStorage.setItem("token", user.accessToken);
+				localStorage.setItem("userID", user.uid);
 				handleNextPage(user.uid);
 				setLoading(false);
 			})
@@ -59,6 +60,7 @@ export default function Signin() {
 			const data = snapshot.val();
 			if (data != null) {
 				setUserType("caregiver");
+				localStorage.setItem("userType", "caregiver");
 				const path = '/cgportal';
 				navigate(path);
 				return;
@@ -69,13 +71,17 @@ export default function Signin() {
 			const data = snapshot.val();
 			if (data != null) {
 				setUserType("senior");
+				localStorage.setItem("userType", "senior");
 				var path = "";
 				if (data.userType == "" || data.userType == undefined) {
 					path = '/choose_role';
+					localStorage.setItem("sinfostep", "init");
 				} else if (data.phonenumber == "" || data.phonenumber == undefined) {
 					path = '/set_additional_info';
+					localStorage.setItem("sinfostep", "role");
 				} else {
 					path = '/';
+					localStorage.setItem("sinfostep", "done");
 				}
 				navigate(path);
 				return;

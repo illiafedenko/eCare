@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDashboard, faDatabase, faMeteor, faTh, faThLarge, faThermometer4, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
 
 
 export default function CGPortalNavBar(props) {
+
+  const [userName, setUserName] = useState();
+  const db = getDatabase();
+
+  useEffect(() => {
+    const getUserName = async () => {
+      try {
+        getAuth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const idTokenResult = await user.getIdTokenResult();
+            var user;
+            if (localStorage.getItem("userType") == "caregiver") {
+              user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
+            } else if (localStorage.getItem("userType") == "senior") {
+              user = ref(db, 'users/' + idTokenResult.claims.user_id);
+            }
+            onValue(user, (snapshot) => {
+              const data = snapshot.val();
+              if (data != null) {
+                setUserName(data.fullname);
+              }
+            });
+          }
+          else {
+          }
+        })
+      } catch (error) {
+
+      }
+    }
+    getUserName();
+  }, [])
+
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -39,7 +74,7 @@ export default function CGPortalNavBar(props) {
       </div>
       <div className=' flex flex-col text-left text-[20px] font-poppins'>
         <p>Good morning 👋🏽,</p>
-        <p className=' text-green-600'>{props.name}</p>
+        <p className=' text-green-600 text-right'>{userName}</p>
       </div>
     </div>
   )

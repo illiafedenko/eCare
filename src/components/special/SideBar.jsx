@@ -5,6 +5,10 @@ import dashboardIcon from '../../assets/images/dashboardicon.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCalendarAlt, faChalkboardTeacher, faClose, faDashboard, faGear, faHomeLg, faMessage, faSignOut, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router'
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
+import maleSeniorImage from '../../assets/images/unknown_senior_m.png';
+import femaleSeniorImage from '../../assets/images/unknown_senior_f.png';
 
 export default function SideBar(props) {
 
@@ -14,7 +18,44 @@ export default function SideBar(props) {
 
   const [sidebarVisible, setSidebarVisible] = useState(false)
 
+  const [userName, setUserName] = useState();
+  const [gender, setGender] = useState();
+  const [imgURL, setImgURL] = useState();
+
+  const db = getDatabase();
+
   useEffect(() => {
+    const getUserName = async () => {
+      try {
+        getAuth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const idTokenResult = await user.getIdTokenResult();
+            var user;
+            if (localStorage.getItem("userType") == "caregiver") {
+              user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
+            } else if (localStorage.getItem("userType") == "senior") {
+              user = ref(db, 'users/' + idTokenResult.claims.user_id);
+            }
+            onValue(user, (snapshot) => {
+              const data = snapshot.val();
+              if (data != null) {
+                setUserName(data.fullname);
+                setGender(data.gender);
+                if (data.avatar != null && data.avatar != "") {
+                  setImgURL(data.avatar);
+                }
+              }
+            });
+          }
+          else {
+          }
+        })
+      } catch (error) {
+
+      }
+    }
+    getUserName();
+
     document.getElementById(current).classList.add("text-green-600");
     document.getElementById(current).classList.add("bg-green-50");
     document.getElementById(current + "2").classList.add("text-green-600");
@@ -46,10 +87,18 @@ export default function SideBar(props) {
         <div className=' w-full h-[calc(100vh-100px)] py-5 flex flex-col justify-between'>
           <div className=' w-full flex flex-col'>
             <div className=' w-full h-24 border-[1px] px-4 flex flex-row items-center bg-gray-50 justify-start gap-[20px] border-gray-100 rounded-[24px]'>
-              <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={avatar}></img>
+              {
+                imgURL == "" || imgURL == undefined ?
+                  gender == "man" ?
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={maleSeniorImage}></img>
+                    :
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={femaleSeniorImage}></img>
+                  :
+                  <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={`${imgURL}`}></img>
+              }
               <div className=' flex flex-col text-left'>
-                <p className=' text-[24px] font-raleway'>John Doe</p>
-                <p className=' text-[14px] font-poppins font-bold text-green-600'>Care giver</p>
+                <p className=' text-[24px] font-raleway font-bold'>{userName}</p>
+                <p className=' text-[14px] font-poppins font-bold text-green-600'>Senior</p>
               </div>
             </div>
             <div className=' mt-[20px] w-full flex flex-col gap-y-1'>
