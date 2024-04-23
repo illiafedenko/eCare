@@ -35,6 +35,7 @@ export default function CGApplyConditions(props) {
             lastname: caregiverPrimaryInfo.lastname,
             fullname: caregiverPrimaryInfo.firstname + " " + caregiverPrimaryInfo.lastname,
             email: caregiverPrimaryInfo.email,
+            password: caregiverPrimaryInfo.password,
             phonenumber: caregiverPrimaryInfo.phonenumber,
             birthday: caregiverPrimaryInfo.birthday,
             gender: caregiverPrimaryInfo.gender,

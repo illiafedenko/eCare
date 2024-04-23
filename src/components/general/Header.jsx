@@ -24,7 +24,6 @@ export default function Header(props) {
 						const idTokenResult = await user.getIdTokenResult();
 						console.log(user.uid);
 						// console.log("token", token);
-						console.log("idTokenResult", idTokenResult);
 					} else {
 						console.log("User is not signed in");
 					}

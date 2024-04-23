@@ -375,12 +375,12 @@ const dummyData = {
 			icon: faHomeLg,
 			badge: null
 		},
-		{
-			title: "My Profile",
-			id: "profile",
-			icon: faUserDoctor,
-			badge: null
-		},
+		// {
+		// 	title: "My Profile",
+		// 	id: "profile",
+		// 	icon: faUserDoctor,
+		// 	badge: null
+		// },
 		{
 			title: "Chat",
 			id: "chat",

@@ -4,8 +4,14 @@ import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import dummyData from '../../dummydata';
 import AvatarMiniButtonUpload from '../../components/general/AvatarMiniButtonUpload';
 import SettingInput from '../../components/general/SettingInput';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGear, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import CGSettingNormalInfo from '../../components/special/CGSettingNormalInfo';
+import CGSettingChangePassword from '../../components/special/CGSettingChangePassword';
 
 export default function CGSetting() {
+
+  const [currentTap, setCurrentTap] = useState(0);
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -19,28 +25,27 @@ export default function CGSetting() {
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Setting" name="John Doe" />
         <div className=' w-full h-full overflow-y-scroll bg-gray-100 py-[48px] pl-[32px] pr-[16px]'>
-          <div className=' w-full bg-white rounded-[20px] px-[10px] sm:px-[20px] md:px-[40px] lg:px-[60px] pt-[48px] pb-[100px]'>
-            <div className=' w-full flex flex-col md:flex-row gap-x-8 gap-y-5'>
-              <AvatarMiniButtonUpload />
-              <div className='flex-grow flex-none flex-col'>
-                <div className=' w-full grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-4'>
-                  <div className=' flex flex-col gap-4'>
-                    <SettingInput label="Your Name" type="text" name="fullname" placeholder="Your Name" value="John Doe" disabled required />
-                    <SettingInput label="Email" type="email" name="email" placeholder="Your Email" value="charlenereed@gmail.com" disabled required />
-                    <SettingInput label="Date of Birth" type="date" name="birthday" placeholder="Your Birthday" value="1990-07-01" disabled required />
-                    <SettingInput label="Permanent Address" type="text" name="address" placeholder="Your Address" value="San Jose, California, USA" disabled required />
-                    <SettingInput label="Postal Code" type="text" name="postalcode" placeholder="Postal code" value="45962" disabled required />
+          <div className=' w-full flex flex-col items-center bg-white rounded-[20px] px-[10px] sm:px-[20px] md:px-[40px] lg:px-[60px] pt-[48px] pb-[100px] gap-y-10'>
+            <div className=' w-full flex flex-col max-w-[800px] gap-y-10'>
+              {/* tab  */}
+              <div className="border-b border-gray-200 dark:border-neutral-700">
+                <nav className="flex space-x-1" aria-label="Tabs" role="tablist">
+                  <div onClick={() => setCurrentTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                    <p className=' font-semibold'>Profile</p>
+                    <FontAwesomeIcon icon={faUser} className=' text-[12px]' />
                   </div>
-                  <div className=' flex flex-col gap-4'>
-                    <SettingInput label="User Name" type="text" name="username" placeholder="User name" required />
-                    <SettingInput label="Password" type="password" name="password" placeholder="Your Password" required />
-                    <SettingInput label="Present Address" type="text" name="paddress" placeholder="Present Address" required />
-                    <SettingInput label="City" type="text" name="city" placeholder="Your City" required />
-                    <SettingInput label="Country" type="text" name="country" placeholder="Your Country" required />
+                  <div onClick={() => setCurrentTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                    <p className=' font-semibold'>Security</p>
+                    <FontAwesomeIcon icon={faLock} className=' text-[12px]' />
                   </div>
+                </nav>
+              </div>
+              <div>
+                <div className={`${currentTap == 0 ? '' : ' hidden'}`}>
+                  <CGSettingNormalInfo />
                 </div>
-                <div className=' w-full flex flex-col items-center mt-[120px]'>
-                  <button className=' w-1/2 min-w-[300px] h-[48px] text-[20px] leading-none font-poppins font-light text-white bg-green-600'>Save</button>
+                <div className={`${currentTap == 1 ? '' : ' hidden'}`}>
+                  <CGSettingChangePassword />
                 </div>
               </div>
             </div>

@@ -9,6 +9,7 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import maleSeniorImage from '../../assets/images/unknown_senior_m.png';
 import femaleSeniorImage from '../../assets/images/unknown_senior_f.png';
+import unknownCaregiverImage from '../../assets/images/unknown_image_caregiver.png';
 
 export default function SideBar(props) {
 
@@ -90,15 +91,15 @@ export default function SideBar(props) {
               {
                 imgURL == "" || imgURL == undefined ?
                   gender == "man" ?
-                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={maleSeniorImage}></img>
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={localStorage.getItem("userType") == "senior" ? maleSeniorImage : unknownCaregiverImage}></img>
                     :
-                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={femaleSeniorImage}></img>
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={localStorage.getItem("userType") == "senior" ? femaleSeniorImage : unknownCaregiverImage}></img>
                   :
                   <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={`${imgURL}`}></img>
               }
               <div className=' flex flex-col text-left'>
                 <p className=' text-[24px] font-raleway font-bold'>{userName}</p>
-                <p className=' text-[14px] font-poppins font-bold text-green-600'>Senior</p>
+                <p className=' text-[14px] font-poppins font-bold text-green-600'>{localStorage.getItem("userType") == "senior" ? 'Senior' : 'Caregiver'}</p>
               </div>
             </div>
             <div className=' mt-[20px] w-full flex flex-col gap-y-1'>

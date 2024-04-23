@@ -10,9 +10,7 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 import { getStorage, ref as storeRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
-
-export default function SeniorSettingNormalInfor() {
-
+export default function CGSettingNormalInfo() {
   const [input, setInput] = useState({
     street: "",
     city: "",
@@ -49,7 +47,7 @@ export default function SeniorSettingNormalInfor() {
           if (user) {
             const idTokenResult = await user.getIdTokenResult();
             setUid(idTokenResult.claims.user_id);
-            var user = ref(db, 'users/' + idTokenResult.claims.user_id);
+            var user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
             onValue(user, (snapshot) => {
               const data = snapshot.val();
               if (data != null) {
@@ -107,11 +105,11 @@ export default function SeniorSettingNormalInfor() {
       setLoading(true);
       const dbref = ref(getDatabase());
       const updates = {};
-      updates[`users/${uid}/phonenumber`] = input.phonenumber;
-      updates[`users/${uid}/street`] = input.street;
-      updates[`users/${uid}/city`] = input.city;
-      updates[`users/${uid}/state`] = input.state;
-      updates[`users/${uid}/zipcode`] = input.zipcode;
+      updates[`caregivers/${uid}/phonenumber`] = input.phonenumber;
+      updates[`caregivers/${uid}/street`] = input.street;
+      updates[`caregivers/${uid}/city`] = input.city;
+      updates[`caregivers/${uid}/state`] = input.state;
+      updates[`caregivers/${uid}/zipcode`] = input.zipcode;
 
       // avatar upload
       const uploadTask = uploadBytesResumable(storageRef, imageSource2);
@@ -127,7 +125,7 @@ export default function SeniorSettingNormalInfor() {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
-            updates[`users/${uid}/avatar`] = downloadURL;
+            updates[`caregivers/${uid}/avatar`] = downloadURL;
             update(dbref, updates);
             setShowToast(true);
             setTimeout(() => {
