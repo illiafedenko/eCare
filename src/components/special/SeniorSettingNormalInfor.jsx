@@ -200,63 +200,65 @@ export default function SeniorSettingNormalInfor() {
   return (
     <div className=' w-full flex flex-col gap-y-5'>
       <p className=' text-[24px] font-poppins font-semibold'>Normal Information</p>
-      <div className=' w-full flex flex-col md:flex-row gap-x-8 gap-y-5'>
+      <div className=' w-full  flex flex-col gap-x-8 gap-y-5'>
         {/* avatar upload */}
-        <div onLoad={isLoaded} className=' w-[200px] h-[200px] relative '>
-          {
-            imageSource2 == undefined ?
+        <div className=' w-full flex flex-row justify-center items-center'>
+          <div onLoad={isLoaded} className=' w-[200px] h-[200px] relative '>
+            {
+              imageSource2 == undefined ?
+                <Avatar
+                  src={`${avatarURL}`}
+                  style={{ objectFit: "cover" }}
+                  onChange={(imgSource) => setImageSource2(imgSource)}
+                  variant="circle"
+                  accept=".png, .jpg"
+                  readOnly
+                  alt="Avatar2"
+                  changeLabel={""}
+                  emptyLabel={"Upload an avatar"}
+                  loadingLabel={""}
+                />
+                :
+                <Avatar
+                  src={imageSource2}
+                  style={{ objectFit: "cover" }}
+                  onError={() => setImageSource2(fallBackImage)}
+                  onChange={(imgSource) => setImageSource2(imgSource)}
+                  variant="circle"
+                  accept=".png, .jpg"
+                  readOnly
+                  alt="Avatar2"
+                  changeLabel={""}
+                  emptyLabel={"Upload an avatar"}
+                  loadingLabel={""}
+                />
+            }
+            <div className=' w-[32px] h-[32px] absolute left-[160px] top-[160px]'>
               <Avatar
-                src={`${avatarURL}`}
-                style={{ objectFit: "cover" }}
-                onChange={(imgSource) => setImageSource2(imgSource)}
+                style={{ width: "30px", height: "30px" }}
+                src={penImage}
+                onError={() => setImageSource2(penImage)}
+                onChange={(imgSource) => setNewImage(imgSource)}
                 variant="circle"
                 accept=".png, .jpg"
-                readOnly
                 alt="Avatar2"
                 changeLabel={""}
-                emptyLabel={"Upload an avatar"}
+                emptyLabel={""}
                 loadingLabel={""}
               />
-              :
-              <Avatar
-                src={imageSource2}
-                style={{ objectFit: "cover" }}
-                onError={() => setImageSource2(fallBackImage)}
-                onChange={(imgSource) => setImageSource2(imgSource)}
-                variant="circle"
-                accept=".png, .jpg"
-                readOnly
-                alt="Avatar2"
-                changeLabel={""}
-                emptyLabel={"Upload an avatar"}
-                loadingLabel={""}
-              />
-          }
-          <div className=' w-[32px] h-[32px] absolute left-[160px] top-[160px]'>
-            <Avatar
-              style={{ width: "30px", height: "30px" }}
-              src={penImage}
-              onError={() => setImageSource2(penImage)}
-              onChange={(imgSource) => setNewImage(imgSource)}
-              variant="circle"
-              accept=".png, .jpg"
-              alt="Avatar2"
-              changeLabel={""}
-              emptyLabel={""}
-              loadingLabel={""}
-            />
+            </div>
+            {
+              showRemoveBtn ?
+                <div onClick={() => handleCancelImage()} className=' w-[32px] h-[32px] flex flex-row items-center justify-center absolute left-[160px] top-[14px] text-gray-200 bg-gray-400 rounded-full cursor-pointer hover:bg-gray-500 hover:text-white'>
+                  <FontAwesomeIcon className=' ' icon={faClose} />
+                </div>
+                :
+                <></>
+            }
           </div>
-          {
-            showRemoveBtn ?
-              <div onClick={() => handleCancelImage()} className=' w-[32px] h-[32px] flex flex-row items-center justify-center absolute left-[160px] top-[14px] text-gray-200 bg-gray-400 rounded-full cursor-pointer hover:bg-gray-500 hover:text-white'>
-                <FontAwesomeIcon className=' ' icon={faClose} />
-              </div>
-              :
-              <></>
-          }
         </div>
         {/* Avatar Change end */}
-        <div className='flex-grow flex-none flex-col'>
+        <div className='flex-grow flex-col'>
           <div className=' w-full grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-4'>
             <SettingInput onChange={(e) => handleInputChange(e)} label="Street" type="text" name="street" placeholder="Your Name" value={input.street} invalid={valid.street ? false : true} required />
             <SettingInput onChange={(e) => handleInputChange(e)} label="City" type="text" name="city" placeholder="Your Email" value={input.city} invalid={valid.city ? false : true} required />
