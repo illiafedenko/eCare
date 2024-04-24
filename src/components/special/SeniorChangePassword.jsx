@@ -33,7 +33,7 @@ export default function SeniorChangePassword() {
             if (localStorage.getItem("userType") == "caregiver") {
               user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
             } else if (localStorage.getItem("userType") == "senior") {
-              user = ref(db, 'users/' + idTokenResult.claims.user_id);
+              user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
             }
             onValue(user, (snapshot) => {
               const data = snapshot.val();
@@ -76,7 +76,7 @@ export default function SeniorChangePassword() {
       updatePassword(user.currentUser, input.newPassword).then(() => {
         const dbref = ref(getDatabase());
         const updates = {};
-        updates[`users/${uid}/password`] = input.newPassword;
+        updates[`seniors/${uid}/password`] = input.newPassword;
         update(dbref, updates);
         setShowToast(true);
         setTimeout(() => {

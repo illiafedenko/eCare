@@ -20,7 +20,7 @@ export default function CGPortalNavBar(props) {
             if (localStorage.getItem("userType") == "caregiver") {
               user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
             } else if (localStorage.getItem("userType") == "senior") {
-              user = ref(db, 'users/' + idTokenResult.claims.user_id);
+              user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
             }
             onValue(user, (snapshot) => {
               const data = snapshot.val();

@@ -39,7 +39,7 @@ export default function Signup() {
 			.then((userCredential) => {
 				const user = userCredential.user;
 				const db = getDatabase();
-				set(ref(db, 'users/' + user.uid), {
+				set(ref(db, 'seniors/' + user.uid), {
 					firstname: input.firstname,
 					lastname: input.lastname,
 					fullname: input.firstname + " " + input.lastname,

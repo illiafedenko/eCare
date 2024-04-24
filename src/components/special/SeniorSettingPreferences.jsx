@@ -21,7 +21,7 @@ export default function SeniorSettingPreferences() {
           if (user) {
             const idTokenResult = await user.getIdTokenResult();
             setUid(idTokenResult.claims.user_id);
-            var user = ref(db, 'users/' + idTokenResult.claims.user_id);
+            var user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
             onValue(user, (snapshot) => {
               const data = snapshot.val();
               if (data != null) {
@@ -65,9 +65,9 @@ export default function SeniorSettingPreferences() {
 
     const dbref = ref(getDatabase());
     const updates = {};
-    updates[`users/${uid}/preferedAge`] = age;
-    updates[`users/${uid}/preferedGender`] = gender;
-    updates[`users/${uid}/havePet`] = pet;
+    updates[`seniors/${uid}/preferedAge`] = age;
+    updates[`seniors/${uid}/preferedGender`] = gender;
+    updates[`seniors/${uid}/havePet`] = pet;
     update(dbref, updates);
     setShowToast(true);
     setTimeout(() => {

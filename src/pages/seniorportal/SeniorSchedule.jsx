@@ -4,11 +4,14 @@ import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import NotificationCard from '../../components/special/NotificationCard';
 import dummyData from '../../dummydata';
 import CareGIverInfo from '../../components/special/CareGIverInfo';
-import { faBagShopping, faLocationPin, faStar, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons'
+import { faGear, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DateTimeComponent from '../../components/special/DateTimeComponent';
+import SeniorScheduleSelf from './SeniorScheduleSelf';
 
 export default function SeniorSchedule() {
+
+  const [currentTap, setCurrentTap] = useState(0);
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -37,6 +40,36 @@ export default function SeniorSchedule() {
         <CGPortalNavBar current="Schedule" name="John Doe" />
         <div className=' w-full h-full overflow-y-scroll bg-gray-100 py-[48px] pl-[32px] pr-[16px]'>
           <div className=' w-full bg-white rounded-[20px] px-[10px] sm:px-[20px] md:px-[40px] lg:px-[60px] pt-[48px] pb-[100px]'>
+            {/* tab  */}
+            <div className="border-b border-gray-200 dark:border-neutral-700">
+              <nav className="flex space-x-1" aria-label="Tabs" role="tablist">
+                <div onClick={() => setCurrentTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                  <p className=' font-semibold'>Myself</p>
+                  <FontAwesomeIcon icon={faUser} className=' text-[12px]' />
+                </div>
+                <div onClick={() => setCurrentTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                  <p className=' font-semibold'>Need help</p>
+                  <FontAwesomeIcon icon={faGear} className=' text-[12px]' />
+                </div>
+              </nav>
+            </div>
+            <div>
+              <div className={`${currentTap == 0 ? '' : ' hidden'}`}>
+                <SeniorScheduleSelf />
+              </div>
+              <div className={`${currentTap == 1 ? '' : ' hidden'}`}>
+                2
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+/*
             <div className=' w-full flex flex-col text-left'>
               <p className=' text-[24px] font-poppins font-bold'>Select Caregiver</p>
               <p className=' text-[20px] mt-[40px] mb-[10px] font-raleway'>Care giver name<span className=' text-green-600'>*</span></p>
@@ -97,9 +130,4 @@ export default function SeniorSchedule() {
                 <button className=' w-full h-full rounded-full bg-green-700 font-raleway text-white text-[24px] leading-none text-center'>Submit</button>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+*/

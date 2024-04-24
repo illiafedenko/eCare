@@ -44,7 +44,7 @@ export default function ChooseRole() {
 		// const db = getDatabase();
 		const dbref = ref(getDatabase());
 		const updates = {};
-		updates[`users/${uid}/userType`] = seniorType;
+		updates[`seniors/${uid}/userType`] = seniorType;
 		update(dbref, updates);
 		const path = "/set_additional_info";
 		navigate(path);

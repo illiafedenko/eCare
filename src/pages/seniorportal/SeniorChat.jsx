@@ -16,11 +16,130 @@ import ChatHistoryImageItem from '../../components/special/ChatHistoryImageItem'
 import DynamicTextArea from '../../components/special/DynamicTextArea';
 import SentMessage from '../../components/special/SentMessage';
 import ReceivedMessage from '../../components/special/ReceivedMessage';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue, set, update, push, equalTo } from 'firebase/database';
 
 export default function SeniorChat() {
 
-  const [chatHistoryVisible, setChatHistoryVisible] = useState(true);
+  const [chatHistoryVisible, setChatHistoryVisible] = useState(false);
   const [chatContactVisible, setChatContactVisible] = useState(true);
+
+  const db = getDatabase();
+  const [allUser, setAllUser] = useState([])
+  const [searchList, setSearchList] = useState([])
+  const [searchValue, setSearchValue] = useState('')
+  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const [myID, setMyID] = useState();
+  const [myContactList, setMyContactList] = useState([])
+  const [currentContactID, setCurrentContactID] = useState();
+
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        getAuth().onAuthStateChanged(async (user) => {
+          if (user) {
+            const userType = localStorage.getItem("userType");
+            setMyID(user.uid);
+            var users;
+            if (userType == "senior") {
+              users = ref(db, "caregivers");
+            }
+            else if (userType == "caregiver") {
+              users = ref(db, "seniors");
+            }
+            let userList = [];
+            onValue(users, (snapshot) => {
+              snapshot.forEach((childSnapshot) => {
+                const childKey = childSnapshot.key;
+                const childData = childSnapshot.val();
+                userList.push({
+                  id: childKey,
+                  name: childData.fullname,
+                  avatar: childData.avatar,
+                });
+              });
+              setAllUser(userList);
+              setSearchList(userList);
+            });
+            console.log(1);
+            const contactListRef = ref(db, 'contactLists');
+            var tempContactList = [];
+            onValue(contactListRef, (snapshot) => {
+              snapshot.forEach((item) => {
+                if (item.val().userID1 == user.uid) {
+                  console.log(item.val().userID2);
+                  tempContactList.push({
+                    userID: item.val().userID2,
+                  })
+                }
+              })
+            })
+            console.log(2);
+          }
+        })
+      } catch (error) {
+
+      }
+
+
+    }
+
+    getData();
+  }, [])
+
+  useEffect(() => {
+    if (allUser.length == 0) return;
+    var tempList = [];
+    allUser.map((item) => {
+      if (item.name.startsWith(searchValue)) {
+        tempList.push(item)
+      }
+    })
+    setSearchList(tempList);
+  }, [searchValue])
+
+  useEffect(() => {
+  }, [allUser])
+
+  useEffect(() => {
+  }, [showSearchDropdown])
+
+  const handleSearchInputChange = (e) => {
+    setSearchValue(e.target.value);
+  }
+
+  const handleSelectContactUser = (id) => {
+    const contactListRef = ref(db, 'contactLists');
+    var b1 = false;
+    var b2 = false;
+    onValue(contactListRef, (snapshot) => {
+      const list = snapshot;
+      list.forEach((item) => {
+        if (item.val().userID1 == myID && item.val().userID2 == id) {
+          b1 = true;
+        }
+        if (item.val().userID1 == id && item.val().userID2 == myID) {
+          b2 = true;
+        }
+      })
+    })
+
+    if (!b1) {
+      const newContactListRef1 = push(contactListRef);
+      set(newContactListRef1, {
+        userID1: myID,
+        userID2: id,
+      });
+    }
+    if (!b2) {
+      const newContactListRef2 = push(contactListRef);
+      set(newContactListRef2, {
+        userID1: id,
+        userID2: myID,
+      });
+    }
+  }
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -32,7 +151,7 @@ export default function SeniorChat() {
   }
 
   const handleShowChatInfo = () => {
-    setChatHistoryVisible(true);
+    setChatHistoryVisible(!chatHistoryVisible);
   }
 
   const handleCloseContactList = () => {
@@ -61,23 +180,37 @@ export default function SeniorChat() {
           {/* chat left contact list */}
           <div className={` w-[350px] min-w-[350px] h-full flex-none flex-col ${!chatContactVisible ? 'hidden' : ''}  absolute left-0 z-[5] lg:relative bg-white border-r-[1px] `}>
             <div className=' w-full h-[80px] px-[24px] gap-5 flex flex-row items-center justify-between'>
+              <FontAwesomeIcon onClick={() => handleCloseContactList()} className=' text-[20px] text-gray-500 cursor-pointer' icon={faArrowLeftLong} />
               <div className=' flex flex-grow h-[48px] relative'>
                 <input
-                  className=' w-full text-[18px] font-poppins text-gray-600 pl-10 pr-6 h-full border-[1px] border-gray-300 bg-gray-50 focus:border-blue-500 outline-none rounded-full'
+                  className=' w-full text-[18px] font-poppins text-gray-600 pl-5 pr-8 h-full border-[2px] border-gray-300 bg-gray-50 focus:border-blue-500 outline-none rounded-full'
                   placeholder="Search for chats..."
                   name="search"
+                  value={searchValue}
+                  onChange={(e) => handleSearchInputChange(e)}
+                  onFocus={() => setShowSearchDropdown(true)}
+                  onBlur={() => setShowSearchDropdown(false)}
                 />
-                <div className=' absolute w-[36px] h-full flex flex-col items-center justify-center left-1 top-0'>
-                  <FontAwesomeIcon className=' w-4 h-4 text-gray-500' icon={faSearch} />
+                <div className=' absolute w-[36px] h-full flex flex-col items-center justify-center right-1 top-0 cursor-pointer'>
+                  <FontAwesomeIcon className=' w-4 h-4 text-gray-500 hover:text-green-600' icon={faSearch} />
+                </div>
+                <div className={`absolute w-full bg-gray-100 top-[60px] z-50 shadow-lg ${showSearchDropdown ? '' : 'hidden'}`}>
+                  {
+                    searchList.map((item, i) => {
+                      return <div key={i} onMouseDown={() => handleSelectContactUser(item.id)} className=' w-full h-[60px] flex flex-row gap-x-4 items-center px-2 cursor-pointer hover:bg-slate-50'>
+                        <img src={`${item.avatar}`} className=' w-[40px] h-[40px] rounded-full' />
+                        <p className=' text-[16px] font-poppins font-bold line-clamp-1 text-left'>{item.name}</p>
+                      </div>
+                    })
+                  }
                 </div>
               </div>
-              <FontAwesomeIcon className=' text-[20px] text-gray-500' icon={faEllipsisH} />
             </div>
             <div className=' w-full h-[calc(100vh-180px)] flex-col dynamic-scroll overflow-y-auto'>
               <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={1} />
-              <ChatContactItem onClick={() => handleCloseContactList()} avatar={dummyData.seniors[1].avatar} unread={0} selected />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={3} />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={0} />
+              <ChatContactItem avatar={dummyData.seniors[1].avatar} unread={0} selected />
+              <ChatContactItem avatar={dummyData.seniors[2].avatar} unread={3} />
+              <ChatContactItem avatar={dummyData.seniors[3].avatar} unread={0} />
               <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={2} />
               <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={0} />
               <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={1} />

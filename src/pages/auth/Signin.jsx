@@ -66,7 +66,7 @@ export default function Signin() {
 				return;
 			}
 		});
-		user = ref(db, 'users/' + uid);
+		user = ref(db, 'seniors/' + uid);
 		onValue(user, (snapshot) => {
 			const data = snapshot.val();
 			if (data != null) {
