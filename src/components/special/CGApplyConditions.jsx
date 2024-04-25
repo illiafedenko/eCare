@@ -56,6 +56,10 @@ export default function CGApplyConditions(props) {
             vaccinated: caregiverWorkHistoryInfo.vaccinated,
             coverletter: caregiverMoreInfo.coverletter,
           });
+          set(ref(db, 'users/' + user.uid), {
+            fullname: caregiverPrimaryInfo.firstname + " " + caregiverPrimaryInfo.lastname,
+            userType: "caregiver"
+          });
           setLoading(false);
           const path = "/signin";
           navigate(path);

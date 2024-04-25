@@ -128,6 +128,7 @@ export default function SeniorSettingNormalInfor() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
             updates[`seniors/${uid}/avatar`] = downloadURL;
+            updates[`users/${uid}/avatar`] = downloadURL;
             update(dbref, updates);
             setShowToast(true);
             setTimeout(() => {

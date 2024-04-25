@@ -18,6 +18,7 @@ import SentMessage from '../../components/special/SentMessage';
 import ReceivedMessage from '../../components/special/ReceivedMessage';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, set, update, push, equalTo } from 'firebase/database';
+import ChattingBoard from '../../components/special/ChattingBoard';
 
 export default function SeniorChat() {
 
@@ -33,6 +34,8 @@ export default function SeniorChat() {
   const [myContactList, setMyContactList] = useState([])
   const [currentContactID, setCurrentContactID] = useState();
 
+  var tmpAry = [];
+
 
   useEffect(() => {
     const getData = async () => {
@@ -40,7 +43,8 @@ export default function SeniorChat() {
         getAuth().onAuthStateChanged(async (user) => {
           if (user) {
             const userType = localStorage.getItem("userType");
-            setMyID(user.uid);
+            const myuserID = user.uid;
+            setMyID(myuserID);
             var users;
             if (userType == "senior") {
               users = ref(db, "caregivers");
@@ -62,26 +66,25 @@ export default function SeniorChat() {
               setAllUser(userList);
               setSearchList(userList);
             });
-            console.log(1);
+
+            //get contact list
             const contactListRef = ref(db, 'contactLists');
             var tempContactList = [];
             onValue(contactListRef, (snapshot) => {
               snapshot.forEach((item) => {
-                if (item.val().userID1 == user.uid) {
-                  console.log(item.val().userID2);
-                  tempContactList.push({
-                    userID: item.val().userID2,
-                  })
+                if (item.val().userID1 == myuserID) {
+                  tempContactList.push(item.val().userID2);
                 }
               })
+              setMyContactList(tempContactList);
+              if (!currentContactID)
+                setCurrentContactID(tempContactList[0]);
             })
-            console.log(2);
           }
         })
       } catch (error) {
 
       }
-
 
     }
 
@@ -100,10 +103,13 @@ export default function SeniorChat() {
   }, [searchValue])
 
   useEffect(() => {
-  }, [allUser])
+    // console.log('mycontactlist______________:', myContactList);
+  }, [JSON.stringify(myContactList)])
 
   useEffect(() => {
-  }, [showSearchDropdown])
+    // console.log('mycurrentID______________:', currentContactID);
+  }, [currentContactID])
+
 
   const handleSearchInputChange = (e) => {
     setSearchValue(e.target.value);
@@ -125,12 +131,16 @@ export default function SeniorChat() {
       })
     })
 
+    setCurrentContactID(id);
     if (!b1) {
       const newContactListRef1 = push(contactListRef);
       set(newContactListRef1, {
         userID1: myID,
         userID2: id,
       });
+      var temp = myContactList;
+      temp.push(id);
+      setMyContactList(temp);
     }
     if (!b2) {
       const newContactListRef2 = push(contactListRef);
@@ -139,6 +149,7 @@ export default function SeniorChat() {
         userID2: myID,
       });
     }
+
   }
 
   const handleSidebarShow = () => {
@@ -207,14 +218,11 @@ export default function SeniorChat() {
               </div>
             </div>
             <div className=' w-full h-[calc(100vh-180px)] flex-col dynamic-scroll overflow-y-auto'>
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={1} />
-              <ChatContactItem avatar={dummyData.seniors[1].avatar} unread={0} selected />
-              <ChatContactItem avatar={dummyData.seniors[2].avatar} unread={3} />
-              <ChatContactItem avatar={dummyData.seniors[3].avatar} unread={0} />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={2} />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={0} />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={1} />
-              <ChatContactItem avatar={dummyData.seniors[0].avatar} unread={0} />
+              {
+                Array.from(new Set(myContactList)).map((item, i) => {
+                  return <div key={i}><ChatContactItem onClick={() => setCurrentContactID(item)} userID={item} selected={item == currentContactID ? true : false} /></div>
+                })
+              }
             </div>
           </div>
           <div className=' flex flex-grow h-[calc(100vh-100px)] flex-col'>
@@ -250,17 +258,10 @@ export default function SeniorChat() {
             {/* chat body */}
             <div className=' w-full h-[calc(100vh-180px)]  flex flex-col items-center justify-end bg-gray-100 gap-y-3'>
               <div className=' w-full px-[40px] pt-3 dynamic-scroll flex flex-col items-center overflow-y-auto'>
-                <div className=' w-full max-w-[800px] flex flex-col gap-y-5'>
-                  <ReceivedMessage avatar={dummyData.seniors[1].avatar} />
-                  <SentMessage avatar={dummyData.careGivers[0].avatar} />
-                  <ReceivedMessage avatar={dummyData.seniors[1].avatar} />
-                  <SentMessage avatar={dummyData.careGivers[0].avatar} />
-                  <ReceivedMessage avatar={dummyData.seniors[1].avatar} />
-                  <SentMessage avatar={dummyData.careGivers[0].avatar} />
-                </div>
+                <ChattingBoard senderID={myID} receiverID={currentContactID} />
               </div>
               <div className=' w-full max-w-[800px] px-[40px]'>
-                <DynamicTextArea />
+                <DynamicTextArea senderID={myID} receiverID={currentContactID} />
               </div>
             </div>
           </div>

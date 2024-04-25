@@ -46,6 +46,10 @@ export default function Signup() {
 					email: input.email,
 					password: input.password,
 				});
+				set(ref(db, 'users/' + user.uid), {
+					fullname: input.firstname + " " + input.lastname,
+					userType: "senior"
+				});
 				setLoading(false);
 				const path = "/signin";
 				navigate(path);
