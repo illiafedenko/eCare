@@ -19,6 +19,7 @@ export default function CareGiverRouter() {
         <Route exact path="/" element={<CGHome />} />
         <Route exact path="/notification" element={<CGNotifications />} />
         <Route exact path="/profile" element={<CGProfile />} />
+        <Route exact path="/chat/:opponentID" element={<CGChat />} />
         <Route exact path="/chat" element={<CGChat />} />
         <Route exact path="/schedule" element={<CGSchedule />} />
         <Route exact path="/training" element={<CGTraining />} />

@@ -50,36 +50,23 @@ export default function DynamicTextArea(props) {
         set(newMessageRef, {
           senderID: senderID,
           receiverID: receiverID,
-          message: message,
+          message: message.replace("\n", "&#10;"),
           isRead: false,
           sentAt: Date.now(),
         });
         setMessage('');
+        props.onSend(message);
       }
     }
   }
 
-  const handleKeyDown = (e) => {
-    // const keycode = e.which || e.keyCode;
-    // if (keycode == 13) {
-    //   var content = e.target.value;
-    //   var caret = getCaret(e.target);
-    //   if (e.shiftKey) {
-    //     e.stopPropagation();
-    //   } else {
-    //     // setMessage(content.substring(0, caret - 1) + content.substring(caret, content.length));
-    //     console.log(message);
-    //     setMessage('');
-    //   }
-    // }
-  }
 
   const handleChange = (e) => {
     setMessage(e.target.value);
   }
 
   return (
-    <div onKeyUp={(e) => handleKeyUp(e)} onKeyDown={(e) => handleKeyDown(e)} className=' w-full flex flex-col mb-4 px-5 pt-5 pb-3 bg-white justify-start rounded-[20px] gap-y-2'>
+    <div onKeyUp={(e) => handleKeyUp(e)} className=' w-full flex flex-col mb-4 px-5 pt-5 pb-3 bg-white justify-start rounded-[20px] gap-y-2'>
       <TextareaAutosize className=' resize-none outline-none text-[14px]' maxRows={3} minRows={3} onChange={(e) => handleChange(e)} value={message} />
       <div className=' px-6'>
         <div className='border-b-[2px] border-b-gray-200'></div>

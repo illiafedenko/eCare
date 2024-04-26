@@ -19,6 +19,9 @@ import ReceivedMessage from '../../components/special/ReceivedMessage';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, onValue, set, update, push, equalTo } from 'firebase/database';
 import ChattingBoard from '../../components/special/ChattingBoard';
+import ChatBody from '../../components/special/ChatBody';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 export default function SeniorChat() {
 
@@ -34,62 +37,62 @@ export default function SeniorChat() {
   const [myContactList, setMyContactList] = useState([])
   const [currentContactID, setCurrentContactID] = useState();
 
-  var tmpAry = [];
-
+  const { opponentID } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        getAuth().onAuthStateChanged(async (user) => {
-          if (user) {
-            const userType = localStorage.getItem("userType");
-            const myuserID = user.uid;
-            setMyID(myuserID);
-            var users;
-            if (userType == "senior") {
-              users = ref(db, "caregivers");
-            }
-            else if (userType == "caregiver") {
-              users = ref(db, "seniors");
-            }
-            let userList = [];
-            onValue(users, (snapshot) => {
-              snapshot.forEach((childSnapshot) => {
-                const childKey = childSnapshot.key;
-                const childData = childSnapshot.val();
-                userList.push({
-                  id: childKey,
-                  name: childData.fullname,
-                  avatar: childData.avatar,
-                });
-              });
-              setAllUser(userList);
-              setSearchList(userList);
-            });
+    getData();
+  }, [])
 
-            //get contact list
-            const contactListRef = ref(db, 'contactLists');
-            var tempContactList = [];
-            onValue(contactListRef, (snapshot) => {
-              snapshot.forEach((item) => {
-                if (item.val().userID1 == myuserID) {
-                  tempContactList.push(item.val().userID2);
-                }
-              })
-              setMyContactList(tempContactList);
-              if (!currentContactID)
-                setCurrentContactID(tempContactList[0]);
-            })
+  const getData = async () => {
+    try {
+      getAuth().onAuthStateChanged(async (user) => {
+        if (user) {
+          const userType = localStorage.getItem("userType");
+          const myuserID = user.uid;
+          setMyID(myuserID);
+          var users;
+          if (userType == "senior") {
+            users = ref(db, "caregivers");
           }
-        })
-      } catch (error) {
+          else if (userType == "caregiver") {
+            users = ref(db, "seniors");
+          }
+          let userList = [];
+          onValue(users, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+              const childKey = childSnapshot.key;
+              const childData = childSnapshot.val();
+              userList.push({
+                id: childKey,
+                name: childData.fullname,
+                avatar: childData.avatar,
+              });
+            });
+            setAllUser(userList);
+            setSearchList(userList);
+          });
 
-      }
+          //get contact list
+          const contactListRef = ref(db, 'contactLists');
+          var tempContactList = [];
+          onValue(contactListRef, (snapshot) => {
+            snapshot.forEach((item) => {
+              if (item.val().userID1 == myuserID) {
+                tempContactList.push(item.val().userID2);
+              }
+            })
+            setMyContactList(tempContactList);
+            if (!currentContactID)
+              setCurrentContactID(opponentID != undefined ? opponentID : tempContactList[0]);
+          })
+        }
+      })
+    } catch (error) {
 
     }
 
-    getData();
-  }, [])
+  }
 
   useEffect(() => {
     if (allUser.length == 0) return;
@@ -220,7 +223,7 @@ export default function SeniorChat() {
             <div className=' w-full h-[calc(100vh-180px)] flex-col dynamic-scroll overflow-y-auto'>
               {
                 Array.from(new Set(myContactList)).map((item, i) => {
-                  return <div key={i}><ChatContactItem onClick={() => setCurrentContactID(item)} userID={item} selected={item == currentContactID ? true : false} /></div>
+                  return <div key={i}><ChatContactItem onClick={() => { setCurrentContactID(item); navigate('/sportal/chat/' + item); }} userID={item} selected={item == currentContactID ? true : false} /></div>
                 })
               }
             </div>
@@ -256,13 +259,8 @@ export default function SeniorChat() {
               </div>
             </div>
             {/* chat body */}
-            <div className=' w-full h-[calc(100vh-180px)]  flex flex-col items-center justify-end bg-gray-100 gap-y-3'>
-              <div className=' w-full px-[40px] pt-3 dynamic-scroll flex flex-col items-center overflow-y-auto'>
-                <ChattingBoard senderID={myID} receiverID={currentContactID} />
-              </div>
-              <div className=' w-full max-w-[800px] px-[40px]'>
-                <DynamicTextArea senderID={myID} receiverID={currentContactID} />
-              </div>
+            <div className=' w-full h-[calc(100vh-180px)]  '>
+              <ChatBody senderID={myID} receiverID={currentContactID} />
             </div>
           </div>
           {/* chat infomation */}

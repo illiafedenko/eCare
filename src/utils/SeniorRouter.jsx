@@ -20,6 +20,7 @@ export default function SeniorRouter() {
         <Route exact path="/logout" element={<SeniorLogout />} />
         <Route exact path="/schedule" element={<SeniorSchedule />} />
         <Route exact path="/chat" element={<SeniorChat />} />
+        <Route exact path="/chat/:opponentID" element={<SeniorChat />} />
       </Routes>
     </div>
   )
