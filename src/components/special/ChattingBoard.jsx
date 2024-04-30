@@ -12,12 +12,14 @@ export default function ChattingBoard(props) {
 
   const [senderID, setSenderID] = useState();
   const [receiverID, setReceiverID] = useState();
-  const [messageList, setMessageList] = useState([])
+  const [messageList, setMessageList] = useState([]);
   const [senderAvatar, setSenderAvatar] = useState();
-  const [receiverAvatar, setReceiverAvatar] = useState()
+  const [receiverAvatar, setReceiverAvatar] = useState();
+  const [readArray, setSetReadArray] = useState({});
 
   const setReadySend = useChatStore((state) => state.setReadySend);
   const sendingMessage = useChatStore((state) => state.sendingMessage);
+
 
   const [reload, setReload] = useState(false);
 
@@ -29,23 +31,41 @@ export default function ChattingBoard(props) {
 
         snapshot.forEach((item) => {
           if ((item.val().senderID == props.senderID && item.val().receiverID == props.receiverID) || (item.val().senderID == props.receiverID && item.val().receiverID == props.senderID)) {
-
             strMsgAry.push(JSON.stringify({
+              key: item.key,
               sender: item.val().senderID,
               receiver: item.val().receiverID,
               message: item.val().message,
               sentAt: item.val().sentAt,
               isSent: item.val().senderID == props.senderID,
             }));
+            setSetReadArray((prev) => ({
+              ...prev,
+              [item.key]: item.val().isRead,
+            }))
           }
         })
         // console.log("array:", new Set(tmpMsgAry.sort((a, b) => a.sentAt - b.sentAt)));
-        setMessageList([...strMsgAry]);
+        setMessageList([...new Set(strMsgAry)]);
       })
     } catch (error) {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+  }, [])
+
+  useEffect(() => {
+    const dbref = ref(getDatabase());
+    const updates = {};
+    messageList.forEach((item) => {
+      if (JSON.parse(item).sender != props.senderID) {
+        updates[`messageLists/${JSON.parse(item).key}/isRead`] = true;
+      }
+    });
+    update(dbref, updates);
+  }, [JSON.stringify(messageList)])
 
   useEffect(() => {
     if (props.readySend) {
@@ -58,12 +78,6 @@ export default function ChattingBoard(props) {
   const addMessage = (msg) => {
     console.log("add:", msg);
   }
-
-  useEffect(() => {
-  }, [])
-
-  useEffect(() => {
-  }, [JSON.stringify(messageList)])
 
   useEffect(() => {
     if (props.senderID && props.receiverID) {
@@ -88,7 +102,7 @@ export default function ChattingBoard(props) {
       {
         messageList.reverse().map((item, i) => {
           return JSON.parse(item).isSent ?
-            <SentMessage key={i} message={JSON.parse(item).message} avatar={senderAvatar} sentAt={JSON.parse(item).sentAt} />
+            <SentMessage key={i} message={JSON.parse(item).message} avatar={senderAvatar} sentAt={JSON.parse(item).sentAt} isRead={readArray[JSON.parse(item).key]} />
             :
             <ReceivedMessage key={i} message={`${JSON.parse(item).message}`} avatar={receiverAvatar} sentAt={JSON.parse(item).sentAt} />
         })

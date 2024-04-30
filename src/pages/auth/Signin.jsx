@@ -87,6 +87,17 @@ export default function Signin() {
 				return;
 			}
 		});
+		user = ref(db, 'admins/' + uid);
+		onValue(user, (snapshot) => {
+			const data = snapshot.val();
+			if (data != null) {
+				setUserType("admin");
+				localStorage.setItem("userType", "admin");
+				const path = '/aportal';
+				navigate(path);
+				return;
+			}
+		});
 		// const path = '/';
 		// navigate(path);
 	}

@@ -25,7 +25,13 @@ export default function SentMessage(props) {
           }
         </p>
         <div className=' w-full h-5 flex flex-row gap-x-1 justify-end items-center'>
-          {/* <img className=' w-4 h-2' src={readCheckedIcon} /> */}
+          {/* */}
+          {
+            props.isRead ?
+              <img className=' w-4 h-2' src={readCheckedIcon} />
+              :
+              <></>
+          }
           <p className=' text-[12px] text-gray-500 font-poppins'>{getTime(props.sentAt)}</p>
         </div>
       </div>

@@ -14,18 +14,23 @@ import CGChat from '../pages/caregiverportal/CGChat';
 export default function CareGiverRouter() {
   return (
     <div>
-      <Routes>
-        <Route exact path="/all" element={<CGMeetAll />} />
-        <Route exact path="/" element={<CGHome />} />
-        <Route exact path="/notification" element={<CGNotifications />} />
-        <Route exact path="/profile" element={<CGProfile />} />
-        <Route exact path="/chat/:opponentID" element={<CGChat />} />
-        <Route exact path="/chat" element={<CGChat />} />
-        <Route exact path="/schedule" element={<CGSchedule />} />
-        <Route exact path="/training" element={<CGTraining />} />
-        <Route exact path="/setting" element={<CGSetting />} />
-        <Route exact path="/logout" element={<CGLogout />} />
-      </Routes>
+      {
+        localStorage.getItem("userType") == "caregiver" ?
+          <Routes>
+            <Route exact path="/all" element={<CGMeetAll />} />
+            <Route exact path="/" element={<CGHome />} />
+            <Route exact path="/notification" element={<CGNotifications />} />
+            <Route exact path="/profile" element={<CGProfile />} />
+            <Route exact path="/chat/:opponentID" element={<CGChat />} />
+            <Route exact path="/chat" element={<CGChat />} />
+            <Route exact path="/schedule" element={<CGSchedule />} />
+            <Route exact path="/training" element={<CGTraining />} />
+            <Route exact path="/setting" element={<CGSetting />} />
+            <Route exact path="/logout" element={<CGLogout />} />
+          </Routes>
+          :
+          <>Access is forbidden</>
+      }
     </div>
   )
 }

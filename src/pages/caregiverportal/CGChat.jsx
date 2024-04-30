@@ -13,6 +13,7 @@ import { getDatabase, ref, onValue, set, update, push, equalTo } from 'firebase/
 import ChatBody from '../../components/special/ChatBody';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { avatar } from '@material-tailwind/react';
 
 export default function CGChat() {
 
@@ -30,10 +31,12 @@ export default function CGChat() {
   const [myID, setMyID] = useState();
   const [myContactList, setMyContactList] = useState([])
   const [currentContactID, setCurrentContactID] = useState();
+  const [opponentInfo, setOpponentInfo] = useState();
 
   useEffect(() => {
 
     getData();
+    // console.log(123);
   }, [])
 
   const getData = async () => {
@@ -86,6 +89,18 @@ export default function CGChat() {
 
   }
 
+  const getOpponentInfo = async (id) => {
+    var opponentRef = ref(db, "users/" + id);
+    onValue(opponentRef, (snapshot) => {
+      // console.log(snapshot.val());
+      setOpponentInfo({
+        name: snapshot.val().fullname,
+        avatar: snapshot.val().avatar,
+        userType: snapshot.val().userType
+      });
+    })
+  }
+
   useEffect(() => {
     if (allUser.length == 0) return;
     var tempList = [];
@@ -103,6 +118,7 @@ export default function CGChat() {
 
   useEffect(() => {
     // console.log('mycurrentID______________:', currentContactID);
+    getOpponentInfo(currentContactID);
   }, [currentContactID])
 
 
@@ -228,13 +244,18 @@ export default function CGChat() {
                   <FontAwesomeIcon className=' text-[20px] text-gray-600 pt-[2px]' icon={faContactCard} />
                 </div>
                 <div className=' h-full aspect-square cursor-pointer' onClick={() => handleShowChatInfo()}>
-                  <img className=' w-full h-full object-cover rounded-full' src={dummyData.seniors[1].avatar}></img>
+                  {
+                    opponentInfo ?
+                      <img className=' w-full h-full object-cover rounded-full' src={`${opponentInfo.avatar}`}></img>
+                      :
+                      <></>
+                  }
                 </div>
-                <div className=' h-full text-left flex flex-col leading-none gap-y-1 items-center justify-center'>
-                  <p className=' text-[20px] line-clamp-1 font-poppins font-semibold'>{dummyData.seniors[1].name}</p>
+                <div className=' h-full text-left flex flex-col leading-none gap-y-1 items-start justify-center'>
+                  <p className=' text-[20px] line-clamp-1 font-poppins font-semibold'>{opponentInfo ? opponentInfo.name : ""}</p>
                   <div className=' flex flex-row gap-1 items-center justify-start'>
-                    <div className=' w-2 h-2 rounded-full bg-green-600'></div>
-                    <p className=' text-[16px] line-clamp-1 font-poppins text-gray-600'>Active Now</p>
+                    {/* <div className=' w-2 h-2 rounded-full bg-green-600'></div> */}
+                    <p className=' text-[16px] line-clamp-1 font-poppins text-gray-600'>{opponentInfo ? opponentInfo.userType : ""}</p>
                   </div>
                 </div>
               </div>
@@ -264,9 +285,9 @@ export default function CGChat() {
             </div>
             <div className=' w-full h-[calc(100vh-180px)] dynamic-scroll overflow-auto px-6 py-3 flex flex-col justify-start'>
               <div className=' w-full flex flex-col items-center gap-2'>
-                <img className=' w-[120px] h-[120px] object-cover rounded-full border-[5px] border-green-700' src={dummyData.seniors[1].avatar} />
-                <p className=' text-[24px] font-semibold leading-none font-poppins text-center'>Jane Doe</p>
-                <p className=' text-[16px] font-poppins leading-none'>@janedoe.ecare</p>
+                <img className=' w-[120px] h-[120px] object-cover rounded-full border-[5px] border-green-700' src={opponentInfo ? opponentInfo.avatar : ''} />
+                <p className=' text-[24px] font-semibold leading-none font-poppins text-center'>{opponentInfo ? opponentInfo.name : ''}</p>
+                <p className=' text-[16px] font-poppins leading-none'>{opponentInfo ? opponentInfo.userType : ''}</p>
               </div>
               <div className=' w-full bg-gray-700 my-6 border-t-[1px] border-gray-200'></div>
               <div className=' w-full flex flex-row justify-between items-center'>

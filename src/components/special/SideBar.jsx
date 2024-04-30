@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose, faGear, faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router'
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, query, orderByChild, equalTo } from 'firebase/database';
 import maleSeniorImage from '../../assets/images/unknown_senior_m.png';
 import femaleSeniorImage from '../../assets/images/unknown_senior_f.png';
 import unknownCaregiverImage from '../../assets/images/unknown_image_caregiver.png';
@@ -22,6 +22,7 @@ export default function SideBar(props) {
   const [userName, setUserName] = useState();
   const [gender, setGender] = useState();
   const [imgURL, setImgURL] = useState();
+  const [unreadMessage, setUnreadMessage] = useState(0)
 
   const db = getDatabase();
 
@@ -31,13 +32,15 @@ export default function SideBar(props) {
         getAuth().onAuthStateChanged(async (user) => {
           if (user) {
             const idTokenResult = await user.getIdTokenResult();
-            var user;
+            var userRef;
             if (localStorage.getItem("userType") == "caregiver") {
-              user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
+              userRef = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
             } else if (localStorage.getItem("userType") == "senior") {
-              user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
+              userRef = ref(db, 'seniors/' + idTokenResult.claims.user_id);
+            } else if (localStorage.getItem("userType") == "admin") {
+              userRef = ref(db, 'admins/' + idTokenResult.claims.user_id);
             }
-            onValue(user, (snapshot) => {
+            onValue(userRef, (snapshot) => {
               const data = snapshot.val();
               if (data != null) {
                 setUserName(data.fullname);
@@ -47,6 +50,16 @@ export default function SideBar(props) {
                 }
               }
             });
+            const unreadChatQuery = query(ref(db, "messageLists"), orderByChild('receiverID'), equalTo(idTokenResult.claims.user_id));
+            onValue(unreadChatQuery, (snapshot) => {
+              var cnt = 0;
+              snapshot.forEach((item) => {
+                if (item.val().isRead == false) {
+                  cnt++;
+                }
+              })
+              setUnreadMessage(cnt);
+            })
           }
           else {
           }
@@ -99,28 +112,43 @@ export default function SideBar(props) {
               }
               <div className=' flex flex-col text-left'>
                 <p className=' text-[24px] font-raleway font-bold'>{userName}</p>
-                <p className=' text-[14px] font-poppins font-bold text-green-600'>{localStorage.getItem("userType") == "senior" ? 'Senior' : 'Caregiver'}</p>
+                <p className=' text-[14px] font-poppins font-bold text-green-600'>{localStorage.getItem("userType") == "senior" ? 'Senior' : localStorage.getItem("userType") == "caregiver" ? 'Caregiver' : localStorage.getItem("userType") == "admin" ? "Admin" : ""}</p>
               </div>
             </div>
             <div className=' mt-[20px] w-full flex flex-col gap-y-1'>
               {
                 props.menu.map((item, i) => {
-                  if (item.badge == null) {
-                    return (
-                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id} className=' w-full h-[50px] px-4 flex flex-row gap-4  items-center justify-start rounded-[8px] hover:cursor-pointer'>
-                        <FontAwesomeIcon className='w-5' icon={item.icon} />
-                        <p className=' text-[16px] font-poppins'>{item.title}</p>
-                      </div>
-                    )
-                  }
-                  else {
+                  if (item.title == "Chat") {
                     return (
                       <div key={i} onClick={() => handleNavigate(item.id)} id={item.id} className=' w-full h-[50px] px-4 flex flex-row gap-1 items-center justify-between rounded-[8px] hover:bg-green-50 hover:cursor-pointer'>
                         <div className=' flex flex-row gap-4 items-center'>
                           <FontAwesomeIcon className='w-5' icon={item.icon} />
                           <p className=' text-[16px] font-poppins'>{item.title}</p>
                         </div>
-                        <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{item.badge}</p>
+                        {
+                          unreadMessage > 0 ?
+                            <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{unreadMessage}</p> :
+                            <></>
+                        }
+                      </div>
+                    )
+                  }
+                  else if (item.title == "Notification") {
+                    return (
+                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id} className=' w-full h-[50px] px-4 flex flex-row gap-1 items-center justify-between rounded-[8px] hover:bg-green-50 hover:cursor-pointer'>
+                        <div className=' flex flex-row gap-4 items-center'>
+                          <FontAwesomeIcon className='w-5' icon={item.icon} />
+                          <p className=' text-[16px] font-poppins'>{item.title}</p>
+                        </div>
+                        <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{0}</p>
+                      </div>
+                    )
+                  }
+                  else {
+                    return (
+                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id} className=' w-full h-[50px] px-4 flex flex-row gap-4  items-center justify-start rounded-[8px] hover:cursor-pointer'>
+                        <FontAwesomeIcon className='w-5' icon={item.icon} />
+                        <p className=' text-[16px] font-poppins'>{item.title}</p>
                       </div>
                     )
                   }
@@ -149,31 +177,54 @@ export default function SideBar(props) {
         <div className=' w-full h-[calc(100vh-100px)] py-5 flex flex-col justify-between'>
           <div className=' w-full flex flex-col'>
             <div className=' w-full h-24 border-[1px] px-4 flex flex-row items-center bg-gray-50 justify-start gap-[20px] border-gray-100 rounded-[24px]'>
-              <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={avatar}></img>
+              {
+                imgURL == "" || imgURL == undefined ?
+                  gender == "man" ?
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={localStorage.getItem("userType") == "senior" ? maleSeniorImage : unknownCaregiverImage}></img>
+                    :
+                    <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={localStorage.getItem("userType") == "senior" ? femaleSeniorImage : unknownCaregiverImage}></img>
+                  :
+                  <img className=' w-[60px] h-[60px] object-cover rounded-[12px]' src={`${imgURL}`}></img>
+              }
               <div className=' flex flex-col text-left'>
-                <p className=' text-[24px] font-raleway'>John Doe</p>
-                <p className=' text-[14px] font-poppins font-bold text-green-600'>Care giver</p>
+                <p className=' text-[24px] font-raleway font-bold'>{userName}</p>
+                <p className=' text-[14px] font-poppins font-bold text-green-600'>{localStorage.getItem("userType") == "senior" ? 'Senior' : 'Caregiver'}</p>
               </div>
             </div>
             <div className=' mt-[20px] w-full flex flex-col gap-y-1'>
               {
                 props.menu.map((item, i) => {
-                  if (item.badge == null) {
-                    return (
-                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id + "2"} className=' w-full h-[50px] px-4 flex flex-row gap-4  items-center justify-start rounded-[8px] hover:cursor-pointer'>
-                        <FontAwesomeIcon className='w-5' icon={item.icon} />
-                        <p className=' text-[16px] font-poppins'>{item.title}</p>
-                      </div>
-                    )
-                  }
-                  else {
+                  if (item.title == "Chat") {
                     return (
                       <div key={i} onClick={() => handleNavigate(item.id)} id={item.id + "2"} className=' w-full h-[50px] px-4 flex flex-row gap-1 items-center justify-between rounded-[8px] hover:bg-green-50 hover:cursor-pointer'>
                         <div className=' flex flex-row gap-4 items-center'>
                           <FontAwesomeIcon className='w-5' icon={item.icon} />
                           <p className=' text-[16px] font-poppins'>{item.title}</p>
                         </div>
-                        <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{item.badge}</p>
+                        {
+                          unreadMessage > 0 ?
+                            <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{unreadMessage}</p> :
+                            <></>
+                        }
+                      </div>
+                    )
+                  }
+                  else if (item.title == "Notification") {
+                    return (
+                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id + "2"} className=' w-full h-[50px] px-4 flex flex-row gap-1 items-center justify-between rounded-[8px] hover:bg-green-50 hover:cursor-pointer'>
+                        <div className=' flex flex-row gap-4 items-center'>
+                          <FontAwesomeIcon className='w-5' icon={item.icon} />
+                          <p className=' text-[16px] font-poppins'>{item.title}</p>
+                        </div>
+                        <p className=' bg-red-500 text-[12px] text-center font-poppins font-bold text-white rounded-full px-2'>{0}</p>
+                      </div>
+                    )
+                  }
+                  else {
+                    return (
+                      <div key={i} onClick={() => handleNavigate(item.id)} id={item.id + "2"} className=' w-full h-[50px] px-4 flex flex-row gap-4  items-center justify-start rounded-[8px] hover:cursor-pointer'>
+                        <FontAwesomeIcon className='w-5' icon={item.icon} />
+                        <p className=' text-[16px] font-poppins'>{item.title}</p>
                       </div>
                     )
                   }

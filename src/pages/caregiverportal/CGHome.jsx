@@ -12,6 +12,10 @@ import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 
 export default function CGHome() {
 
+  useEffect(() => {
+  }, [])
+
+
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
     document.getElementById("blur_board").classList.toggle("hidden");
