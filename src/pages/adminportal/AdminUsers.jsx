@@ -10,6 +10,7 @@ import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import addUserImage from '../../assets/images/adduser.png';
 import CustomTable from '../../components/general/CustomTable';
 import { useNavigate } from 'react-router'
+import SeniorsTable from '../../components/special/SeniorsTable';
 
 export default function AdminUsers() {
 
@@ -37,26 +38,26 @@ export default function AdminUsers() {
           <div className=' w-full flex flex-col gap-x-5'>
             {/* tab  */}
 
-            <div className=' flex-col flex gap-y-10 bg-white rounded-[20px] py-10 px-10 '>
-              <div className="border-b border-gray-200 dark:border-neutral-700 mx-2">
-                <nav className="flex space-x-1" aria-label="Tabs" role="tablist">
-                  <div onClick={() => setCurrentTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+            <div className=' flex-col flex gap-y-10 bg-white rounded-[20px] py-10 sm:px-10 px-5 '>
+              <div className=" sm:border-b  border-gray-200 dark:border-neutral-700 mx-2">
+                <nav className="flex sm:flex-row flex-col sm:space-x-1 space-y-3 sm:space-y-0 text-left leading-none" aria-label="Tabs" role="tablist">
+                  <div onClick={() => setCurrentTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
                     <p className=' font-semibold'>Senior</p>
                     {/* <FontAwesomeIcon icon={faUser} className=' text-[12px]' /> */}
                   </div>
-                  <div onClick={() => setCurrentTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
-                    <p className=' font-semibold'>Caregiver</p>
-                    {/* <FontAwesomeIcon icon={faGear} className=' text-[12px]' /> */}
+                  <div onClick={() => setCurrentTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
+                    <p className=' font-semibold'>CareGiver</p>
+                    {/* <FontAwesomeIcon icon={faUser} className=' text-[12px]' /> */}
                   </div>
-                  <div onClick={() => setCurrentTap(2)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 2 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                  <div onClick={() => setCurrentTap(2)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 2 ? 'text-green-600' : '[&:not(:hover)]:border-transparent'} `}>
                     <p className=' font-semibold'>Office Manager</p>
                   </div>
-                  <div onClick={() => setCurrentTap(3)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 3 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                  <div onClick={() => setCurrentTap(3)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 3 ? 'text-green-600' : '[&:not(:hover)]:border-transparent'} `}>
                     <p className=' font-semibold'>Human Resources</p>
                   </div>
                 </nav>
               </div>
-              <CustomTable userType={"senior"} />
+              <SeniorsTable />
             </div>
             {/* <div onClick={() => handleAddUser()} className=' flex w-[320px] h-[280px] flex-col items-center gap-y-5 py-8 bg-white cursor-pointer rounded-[20px] border-[2px] border-gray-200'>
               <img className=' w-[131px] h-[94px]' src={addUserImage} />

@@ -130,7 +130,7 @@ export default function CustomTable() {
   }, [getTableProps, getTableBodyProps, headerGroups, rows, prepareRow]);
 
   return (
-    <div className=' w-full h-full border-[2px] border-gray-200 rounded-[20px]'>
+    <div className=' w-full h-full border-[2px] border-gray-200 rounded-[8px]'>
       {memoizedTable}
       <div className=' w-full px-5 py-5 flex flex-row justify-between items-center'>
         <p className=' text-[12px] font-poppins text-gray-400'>Showing 1-16 in 80</p>
