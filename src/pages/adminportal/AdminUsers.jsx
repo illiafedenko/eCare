@@ -57,7 +57,22 @@ export default function AdminUsers() {
                   </div>
                 </nav>
               </div>
-              <SeniorsTable />
+              <div>
+                <div className={`${currentTap == 0 ? '' : ' hidden '}`}>
+                  <SeniorsTable />
+                </div>
+                <div className={`${currentTap == 1 ? '' : ' hidden '}`}>
+                  Caregiver
+                </div>
+                <div className={`${currentTap == 2 ? '' : ' hidden '}`}>
+                  Office Manager
+                </div>
+                <div className={`${currentTap == 3 ? '' : ' hidden '}`}>
+                  HR
+                </div>
+              </div>
+              <div>
+              </div>
             </div>
             {/* <div onClick={() => handleAddUser()} className=' flex w-[320px] h-[280px] flex-col items-center gap-y-5 py-8 bg-white cursor-pointer rounded-[20px] border-[2px] border-gray-200'>
               <img className=' w-[131px] h-[94px]' src={addUserImage} />
