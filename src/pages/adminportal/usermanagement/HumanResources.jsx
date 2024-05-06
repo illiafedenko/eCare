@@ -3,38 +3,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, limitToFirst, limitToLast, onValue, orderByChild, query, ref } from 'firebase/database';
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-export default function SeniorsTable() {
+export default function HumanResources() {
 
   const [sortingField, setSortingField] = useState("fullname");
   const [sortingDirection, setSortingDirection] = useState(true);
-  const [seniorList, setSeniorList] = useState([]);
+  const [officeManagerList, setOfficeManagerList] = useState([]);
   const [checkList, setCheckList] = useState();
   const [checkAll, setCheckAll] = useState(false);
+
+  const navigate = useNavigate();
 
 
   const db = getDatabase();
 
-  const calculateAge = (birthday) => {
-    const [birthMonth, birthDay, birthYear] = birthday.split('-');
-
-    const today = new Date();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth() + 1;
-    const currentDay = today.getDate();
-
-    let age = currentYear - parseInt(birthYear);
-
-    if (currentMonth < parseInt(birthMonth) || (currentMonth === parseInt(birthMonth) && currentDay < parseInt(birthDay))) {
-      age--;
-    }
-
-    return age;
-  }
-
-  const getSeniorsList = async () => {
+  const getHumanResources = async () => {
     try {
-      var listQuery = query(ref(db, "seniors"), orderByChild(sortingField));
+      var listQuery = query(ref(db, "humanResources"), orderByChild(sortingField));
 
       onValue(listQuery, (snapshot) => {
         let tmpAry = [];
@@ -48,14 +34,11 @@ export default function SeniorsTable() {
             fullname: item.val().fullname,
             avatar: item.val().avatar,
             email: item.val().email,
-            phonenumber: item.val().phonenumber,
-            gender: item.val().gender,
-            age: calculateAge(item.val().birthday),
           })
           checkAry[item.key] = false;
         })
         setCheckList(JSON.stringify(checkAry));
-        setSeniorList([...tmpAry]);
+        setOfficeManagerList([...tmpAry]);
       })
     } catch (error) {
       console.log(error)
@@ -63,11 +46,11 @@ export default function SeniorsTable() {
   }
 
   useEffect(() => {
-    getSeniorsList();
+    getHumanResources();
   }, [])
 
   useEffect(() => {
-    getSeniorsList();
+    getHumanResources();
   }, [sortingField])
 
   const setSorting = (str) => {
@@ -80,7 +63,7 @@ export default function SeniorsTable() {
   }
 
   useEffect(() => {
-    getSeniorsList();
+    getHumanResources();
   }, [sortingDirection])
 
   const setCheck = (e, key) => {
@@ -95,7 +78,7 @@ export default function SeniorsTable() {
 
   useEffect(() => {
     if (!checkList) return;
-    console.log(JSON.parse(checkList));
+    console.log(checkList);
   }, [checkList])
 
   useEffect(() => {
@@ -108,12 +91,24 @@ export default function SeniorsTable() {
     setCheckList(JSON.stringify(temp));
   }, [checkAll])
 
+  const addUser = () => {
+    navigate('add');
+  }
 
   return (
     <div className=' flex flex-col gap-y-3'>
       {/* <div className=' flex flex-row justify-end'>
         <div className=' flex flex-row'><FontAwesomeIcon icon={faPlusCircle} /></div>
       </div> */}
+      <div className=' flex flex-row justify-end'>
+        <div
+          onClick={() => addUser()}
+          className=' flex flex-row gap-x-3 items-center font-poppins text-gray-600 hover:text-green-600 cursor-pointer border-[2px] rounded-md px-3 py-1 bg-gray-50 border-gray-300 hover:border-gray-400 hover:bg-gray-200 '
+        >
+          <FontAwesomeIcon icon={faPlus} />
+          <p className=' font-semibold'>Add</p>
+        </div>
+      </div>
       <div className=' border-2 rounded-[8px] font-poppins'>
         <table className=' w-full'>
           <thead>
@@ -122,10 +117,9 @@ export default function SeniorsTable() {
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>No</span></div></td>
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'></div></td>
               <td onClick={() => setSorting("fullname")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Name</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
-              <td onClick={() => setSorting("age")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Age</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
-              <td onClick={() => setSorting("gender")} className=' cursor-pointer'><div className=' py-2 md:flex flex-row gap-x-2 justify-center items-center hidden'><span>Gender</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
+              {/* <td onClick={() => setSorting("age")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Age</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
+              <td onClick={() => setSorting("gender")} className=' cursor-pointer'><div className=' py-2 md:flex flex-row gap-x-2 justify-center items-center hidden'><span>Gender</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td> */}
               <td onClick={() => setSorting("email")} className=' cursor-pointer'><div className=' py-2 xl:flex flex-row gap-x-2 justify-center items-center hidden'><span>Email</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
-              <td onClick={() => setSorting("phonenumber")} className=' cursor-pointer'><div className=' py-2 lg:flex flex-row gap-x-2 justify-center items-center hidden'><span>PhoneNumber</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td>
             </tr>
           </thead>
@@ -133,21 +127,21 @@ export default function SeniorsTable() {
           <tbody>
             {
               sortingDirection ?
-                seniorList.map((item, i) => {
+                officeManagerList.map((item, i) => {
                   return <tr key={i} className=' border-t-2'>
                     <td className=' py-1 px-1'><input onChange={(e) => setCheck(e, item.key)} checked={JSON.parse(checkList)[item.key]} type='checkbox' className=' accent-green-600' /></td>
                     <td className=''>{item.no}</td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><img src={`${item.avatar}`} className=' w-6 h-6 rounded-full' /></div></td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><span>{item.fullname}</span></div></td>
-                    <td>{item.age}</td>
-                    <td><span className=' md:block hidden'>{item.gender}</span></td>
+                    {/* <td>{item.age}</td>
+                    <td><span className=' md:block hidden'>{item.gender}</span></td> */}
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
                     <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
                   </tr>
                 })
                 :
-                seniorList.reverse().map((item, i) => {
+                officeManagerList.reverse().map((item, i) => {
                   return <tr key={i} className=' border-t-2'>
                     <td className=' py-1 px-1'><input onChange={(e) => setCheck(e, item.key)} checked={JSON.parse(checkList)[item.key]} type='checkbox' className=' accent-green-600' /></td>
                     <td className=''>{item.no}</td>
@@ -156,7 +150,6 @@ export default function SeniorsTable() {
                     <td>{item.age}</td>
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
-                    <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
                     <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
                   </tr>
                 })
@@ -164,6 +157,12 @@ export default function SeniorsTable() {
           </tbody>
         </table>
       </div >
+      {
+        officeManagerList.length == 0 ?
+          <p className=' text-[20px] font-poppins'>There is no office manager</p>
+          :
+          <></>
+      }
     </div>
   )
 }

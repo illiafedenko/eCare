@@ -10,7 +10,8 @@ export default function AdminRouter() {
       <Routes>
         <Route exact path="/" element={<AdminHome />} />
         <Route exact path="/users" element={<AdminUsers />} />
-        <Route exact path="/users/add" element={<AdminAddUser />} />
+        <Route exact path="/users/:id" element={<AdminUsers />} />
+        <Route exact path="/users/:id/add" element={<AdminAddUser />} />
       </Routes>
     </div>
   )

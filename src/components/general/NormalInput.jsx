@@ -9,6 +9,7 @@ export default function NormalInput(props) {
 			name={props.name}
 			onChange={props.onChange}
 			required={props.required}
+			disabled={props.disabled}
 		/>
 	)
 }

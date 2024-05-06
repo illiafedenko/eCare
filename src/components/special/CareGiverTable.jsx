@@ -4,7 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, limitToFirst, limitToLast, onValue, orderByChild, query, ref } from 'firebase/database';
 import React, { useState, useEffect } from 'react'
 
-export default function SeniorsTable() {
+export default function CareGiverTable() {
 
   const [sortingField, setSortingField] = useState("fullname");
   const [sortingDirection, setSortingDirection] = useState(true);
@@ -32,9 +32,9 @@ export default function SeniorsTable() {
     return age;
   }
 
-  const getSeniorsList = async () => {
+  const getCaregiversList = async () => {
     try {
-      var listQuery = query(ref(db, "seniors"), orderByChild(sortingField));
+      var listQuery = query(ref(db, "caregivers"), orderByChild(sortingField));
 
       onValue(listQuery, (snapshot) => {
         let tmpAry = [];
@@ -63,11 +63,11 @@ export default function SeniorsTable() {
   }
 
   useEffect(() => {
-    getSeniorsList();
+    getCaregiversList();
   }, [])
 
   useEffect(() => {
-    getSeniorsList();
+    getCaregiversList();
   }, [sortingField])
 
   const setSorting = (str) => {
@@ -80,7 +80,7 @@ export default function SeniorsTable() {
   }
 
   useEffect(() => {
-    getSeniorsList();
+    getCaregiversList();
   }, [sortingDirection])
 
   const setCheck = (e, key) => {

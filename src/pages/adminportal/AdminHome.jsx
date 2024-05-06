@@ -22,7 +22,6 @@ export default function AdminHome() {
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Home" name="John Doe" />
         <div className=' w-full h-[calc(100vh-100px)] overflow-y-auto bg-gray-50 pt-[48px] pl-[32px] pr-[8px]'>
-
         </div>
       </div>
     </div>

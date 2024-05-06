@@ -273,7 +273,6 @@ export default function CGSettingNormalInfo() {
             <SettingInput onChange={(e) => handleInputChange(e)} label="Zip Code" type="text" name="zipcode" placeholder="xxxxx" value={input.zipcode} invalid={valid.zipcode ? false : true} required />
             <SettingInput onChange={(e) => handleInputChange(e)} label="Phone Number" type="text" name="phonenumber" placeholder="xxx-xxx-xxxx" value={input.phonenumber} invalid={valid.phonenumber ? false : true} required />
           </div>
-
         </div>
       </div>
       <div className=' w-full flex flex-col items-center mt-[20px]'>
