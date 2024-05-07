@@ -36,6 +36,8 @@ import WhyBecomeCareGiver from './pages/main/WhyBecomeCareGiver.jsx';
 import CareGiverApply from './pages/main/CareGiverApply.jsx';
 import MoreInfo from './pages/auth/MoreInfo.jsx';
 import MyRoute from './utils/MyRoute.jsx';
+import ManagementSignUp from './pages/auth/ManagementSignUp.jsx';
+import ManagementSignIn from './pages/auth/ManagementSignIn.jsx';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -44,6 +46,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
       <Route exact path="/" element={<HomePage />} />
+      <Route exact path="/m/signin" element={<ManagementSignIn />} />
+      <Route exact path="/m/signup" element={<ManagementSignUp />} />
       <Route exact path="/signup" element={<Signup />} />
       <Route exact path="/signin" element={<Signin />} />
       <Route exact path="/test" element={<Test />} />

@@ -24,6 +24,7 @@ export default function Signin() {
 	//progress and toast
 	const [loading, setLoading] = useState(false);
 	const [showToast, setShowToast] = useState(false);
+	const [toastText, setToastText] = useState("Input Email and Password correctly...");
 	//navigation
 	const navigate = useNavigate();
 
@@ -38,14 +39,16 @@ export default function Signin() {
 				setAccessToken(user.accessToken)
 				localStorage.setItem("token", user.accessToken);
 				localStorage.setItem("userID", user.uid);
-				handleNextPage(user.uid);
 				setLoading(false);
+				setToastText("You are not allowed yet. Please wait until admin allow you...");
+				handleNextPage(user.uid);
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 				// console.log(errorCode, errorMessage);
 				setLoading(false);
+				setToastText("Input Email and Password correctly...");
 				setShowToast(true);
 				setTimeout(() => {
 					setShowToast(false);
@@ -59,11 +62,22 @@ export default function Signin() {
 		onValue(user, (snapshot) => {
 			const data = snapshot.val();
 			if (data != null) {
-				setUserType("caregiver");
-				localStorage.setItem("userType", "caregiver");
-				const path = '/cgportal';
-				navigate(path);
-				return;
+				if (data.permitted == false) {
+					getAuth().signOut().then(() => {
+						setShowToast(true);
+						setTimeout(() => {
+							setShowToast(false);
+						}, 3000);
+					})
+					return;
+				}
+				else {
+					setUserType("caregiver");
+					localStorage.setItem("userType", "caregiver");
+					const path = '/cgportal';
+					navigate(path);
+					return;
+				}
 			}
 		});
 		user = ref(db, 'seniors/' + uid);
@@ -87,17 +101,17 @@ export default function Signin() {
 				return;
 			}
 		});
-		user = ref(db, 'admins/' + uid);
-		onValue(user, (snapshot) => {
-			const data = snapshot.val();
-			if (data != null) {
-				setUserType("admin");
-				localStorage.setItem("userType", "admin");
-				const path = '/aportal';
-				navigate(path);
-				return;
-			}
-		});
+		// user = ref(db, 'admins/' + uid);
+		// onValue(user, (snapshot) => {
+		// 	const data = snapshot.val();
+		// 	if (data != null) {
+		// 		setUserType("admin");
+		// 		localStorage.setItem("userType", "admin");
+		// 		const path = '/aportal';
+		// 		navigate(path);
+		// 		return;
+		// 	}
+		// });
 		// const path = '/';
 		// navigate(path);
 	}
@@ -206,7 +220,7 @@ export default function Signin() {
 			{
 				showToast ?
 					<div className="fixed bottom-0 right-0 mb-4 mr-4 bg-red-400 text-white py-2 px-4 rounded">
-						Input Email and Password correctly...
+						{toastText}
 					</div>
 					:
 					<></>

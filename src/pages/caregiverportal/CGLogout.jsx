@@ -3,12 +3,23 @@ import SideBar from '../../components/special/SideBar';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import dummyData from '../../dummydata';
 import logoutImage from '../../assets/images/logout.png';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router';
 
 export default function CGLogout() {
+
+  const navigate = useNavigate();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
     document.getElementById("blur_board").classList.toggle("hidden");
+  }
+
+  const onLogOut = () => {
+    getAuth().signOut().then(() => {
+      const path = "/signin";
+      navigate(path);
+    })
   }
 
 
@@ -26,7 +37,9 @@ export default function CGLogout() {
                 <p className=' text-[24px] md:text-[40px] font-raleway leading-none'>Are you sure you want to logout?</p>
                 <p className=' text-[12px] md:text-[20px] font-raleway leading-none'>You will need to sign in again if you logout.</p>
               </div>
-              <button className=' w-1/2 min-w-[280px] h-[48px] text-[20px] leading-none font-poppins font-light text-white bg-green-600'>Log out</button>
+              <div onClick={() => onLogOut()} className=' flex flex-row items-center justify-center w-1/2 min-w-[280px] h-[48px] text-[20px] leading-none font-poppins font-light text-white bg-green-600 hover:bg-green-700 border-none outline-none hover:border-none hover:outline-none rounded-lg cursor-pointer'>
+                <p className=' select-none'>Log out</p>
+              </div>
             </div>
           </div>
         </div>

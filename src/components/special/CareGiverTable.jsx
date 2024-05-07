@@ -1,4 +1,4 @@
-import { faEdit, faPlus, faPlusCircle, faSort, faSortAlphaAsc, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faClose, faEdit, faPlus, faPlusCircle, faSort, faSortAlphaAsc, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, limitToFirst, limitToLast, onValue, orderByChild, query, ref } from 'firebase/database';
@@ -51,6 +51,7 @@ export default function CareGiverTable() {
             phonenumber: item.val().phonenumber,
             gender: item.val().gender,
             age: calculateAge(item.val().birthday),
+            permission: item.val().permitted,
           })
           checkAry[item.key] = false;
         })
@@ -122,10 +123,11 @@ export default function CareGiverTable() {
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>No</span></div></td>
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'></div></td>
               <td onClick={() => setSorting("fullname")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Name</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
-              <td onClick={() => setSorting("age")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Age</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
+              <td onClick={() => setSorting("age")} className=' cursor-pointer'><div className=' py-2 sm:flex flex-row gap-x-2 justify-center items-center hidden'><span>Age</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("gender")} className=' cursor-pointer'><div className=' py-2 md:flex flex-row gap-x-2 justify-center items-center hidden'><span>Gender</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("email")} className=' cursor-pointer'><div className=' py-2 xl:flex flex-row gap-x-2 justify-center items-center hidden'><span>Email</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("phonenumber")} className=' cursor-pointer'><div className=' py-2 lg:flex flex-row gap-x-2 justify-center items-center hidden'><span>PhoneNumber</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
+              <td onClick={() => setSorting("permitted")} className=' cursor-pointer'><div className=' py-2 lg:flex flex-row gap-x-2 justify-center items-center '><span>Allow</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td>
             </tr>
           </thead>
@@ -139,10 +141,11 @@ export default function CareGiverTable() {
                     <td className=''>{item.no}</td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><img src={`${item.avatar}`} className=' w-6 h-6 rounded-full' /></div></td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><span>{item.fullname}</span></div></td>
-                    <td>{item.age}</td>
+                    <td><span className=' sm:block hidden'>{item.age}</span></td>
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
+                    <td>{item.permission ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClose} />}</td>
                     <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
                   </tr>
                 })
@@ -153,10 +156,11 @@ export default function CareGiverTable() {
                     <td className=''>{item.no}</td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><img src={`${item.avatar}`} className=' w-6 h-6 rounded-full' /></div></td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><span>{item.fullname}</span></div></td>
-                    <td>{item.age}</td>
+                    <td><span className=' sm:block hidden'>{item.age}</span></td>
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
+                    <td>{item.permission ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClose} />}</td>
                     <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
                   </tr>
                 })

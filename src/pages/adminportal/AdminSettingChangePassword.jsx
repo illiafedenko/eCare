@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import SettingInput from '../general/SettingInput'
+import React, { useState, useEffect } from 'react';
+import SettingInput from '../../components/general/SettingInput';
 import { getAuth, updatePassword } from 'firebase/auth';
 import { getDatabase, ref, onValue, update } from 'firebase/database';
 
-export default function CGSettingChangePassword() {
+export default function AdminSettingChangePassword() {
+
   const [input, setInput] = useState({
     currentPassword: "",
     newPassword: "",
@@ -28,12 +29,12 @@ export default function CGSettingChangePassword() {
       try {
         getAuth().onAuthStateChanged(async (user) => {
           if (user) {
-            const idTokenResult = await user.getIdTokenResult();
-            setUid(idTokenResult.claims.user_id);
-            var user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
+            setUid(user.uid);
+            var user = ref(db, 'admins/' + user.uid);
             onValue(user, (snapshot) => {
               const data = snapshot.val();
               if (data != null) {
+                console.log(data.password);
                 setCorrectPassword(data.password);
               }
             });
@@ -72,7 +73,7 @@ export default function CGSettingChangePassword() {
       updatePassword(user.currentUser, input.newPassword).then(() => {
         const dbref = ref(getDatabase());
         const updates = {};
-        updates[`caregivers/${uid}/password`] = input.newPassword;
+        updates[`admins/${uid}/password`] = input.newPassword;
         update(dbref, updates);
         setLoading(false);
         setToastText("Changes are saved exactly!");

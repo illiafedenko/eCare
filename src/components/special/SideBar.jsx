@@ -31,17 +31,18 @@ export default function SideBar(props) {
       try {
         getAuth().onAuthStateChanged(async (user) => {
           if (user) {
-            const idTokenResult = await user.getIdTokenResult();
             var userRef;
             if (localStorage.getItem("userType") == "caregiver") {
-              userRef = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
+              userRef = ref(db, 'caregivers/' + user.uid);
             } else if (localStorage.getItem("userType") == "senior") {
-              userRef = ref(db, 'seniors/' + idTokenResult.claims.user_id);
+              userRef = ref(db, 'seniors/' + user.uid);
             } else if (localStorage.getItem("userType") == "admin") {
-              userRef = ref(db, 'admins/' + idTokenResult.claims.user_id);
+              userRef = ref(db, 'admins/' + user.uid);
+              console.log(user.uid);
             }
             onValue(userRef, (snapshot) => {
               const data = snapshot.val();
+              console.log(data);
               if (data != null) {
                 setUserName(data.fullname);
                 setGender(data.gender);
@@ -50,7 +51,7 @@ export default function SideBar(props) {
                 }
               }
             });
-            const unreadChatQuery = query(ref(db, "messageLists"), orderByChild('receiverID'), equalTo(idTokenResult.claims.user_id));
+            const unreadChatQuery = query(ref(db, "messageLists"), orderByChild('receiverID'), equalTo(user.uid));
             onValue(unreadChatQuery, (snapshot) => {
               var cnt = 0;
               snapshot.forEach((item) => {

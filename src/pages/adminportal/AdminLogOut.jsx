@@ -1,10 +1,15 @@
+
 import React, { useState, useRef } from 'react'
 import SideBar from '../../components/special/SideBar';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import dummyData from '../../dummydata';
 import logoutImage from '../../assets/images/logout.png';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router';
 
-export default function SeniorLogout() {
+export default function AdminLogOut() {
+
+  const navigate = useNavigate();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -13,14 +18,15 @@ export default function SeniorLogout() {
 
   const onLogOut = () => {
     getAuth().signOut().then(() => {
-      const path = "/signin";
+      const path = "/m/signin";
       navigate(path);
     })
   }
 
+
   return (
     <div className=" w-full h-screen flex flex-row relative ">
-      <SideBar portalname="sportal" menu={dummyData.SMenu} current="logout" />
+      <SideBar portalname="aportal" menu={dummyData.AMenu} current="logout" />
       <div onClick={handleSidebarShow} id="blur_board" className=' w-full h-screen absolute hidden left-0 top-0 backdrop-blur-[1px] z-[5]'></div>
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Log out" name="John Doe" />

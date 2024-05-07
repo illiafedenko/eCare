@@ -20,6 +20,8 @@ export default function SeniorChangePassword() {
   const db = getDatabase();
 
   const [showToast, setShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [toastState, setToastState] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -29,12 +31,7 @@ export default function SeniorChangePassword() {
           if (user) {
             const idTokenResult = await user.getIdTokenResult();
             setUid(idTokenResult.claims.user_id);
-            var user;
-            if (localStorage.getItem("userType") == "caregiver") {
-              user = ref(db, 'caregivers/' + idTokenResult.claims.user_id);
-            } else if (localStorage.getItem("userType") == "senior") {
-              user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
-            }
+            var user = ref(db, 'seniors/' + idTokenResult.claims.user_id);
             onValue(user, (snapshot) => {
               const data = snapshot.val();
               if (data != null) {
@@ -78,14 +75,22 @@ export default function SeniorChangePassword() {
         const updates = {};
         updates[`seniors/${uid}/password`] = input.newPassword;
         update(dbref, updates);
+        setLoading(false);
+        setToastText("Changes are saved exactly!");
+        setToastState(true);
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
         }, 3000);
-        setLoading(false);
       }).catch((error) => {
         console.log(error);
         setLoading(false);
+        setToastState(false);
+        setToastText("Error occured. Please re-login and try again...");
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
       });
 
 
@@ -149,8 +154,8 @@ export default function SeniorChangePassword() {
       </div>
       {
         showToast ?
-          <div className="fixed bottom-0 right-0 mb-4 mr-4 bg-green-500 text-white py-2 px-4 rounded">
-            Changes are saved exactly!
+          <div className={`fixed bottom-0 right-0 mb-4 mr-4 ${toastState ? `bg-green-500` : `bg-red-500`} text-white py-2 px-4 rounded`}>
+            {toastText}
           </div>
           :
           <></>
