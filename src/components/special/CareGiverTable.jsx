@@ -1,7 +1,7 @@
 import { faCheck, faClose, faEdit, faPlus, faPlusCircle, faSort, faSortAlphaAsc, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getAuth } from 'firebase/auth';
-import { getDatabase, limitToFirst, limitToLast, onValue, orderByChild, query, ref } from 'firebase/database';
+import { getDatabase, limitToFirst, limitToLast, onValue, orderByChild, query, ref, update } from 'firebase/database';
 import React, { useState, useEffect } from 'react'
 
 export default function CareGiverTable() {
@@ -11,6 +11,12 @@ export default function CareGiverTable() {
   const [seniorList, setSeniorList] = useState([]);
   const [checkList, setCheckList] = useState();
   const [checkAll, setCheckAll] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [toastState, setToastState] = useState(true);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [currentRemoveID, setCurrentRemoveID] = useState("");
 
 
   const db = getDatabase();
@@ -109,6 +115,39 @@ export default function CareGiverTable() {
     setCheckList(JSON.stringify(temp));
   }, [checkAll])
 
+  const onUpdateUser = (e, id) => {
+    const newPermission = e.target.checked;
+    const dbRef = ref(db);
+    const updates = {};
+    updates[`caregivers/${id}/permitted`] = newPermission;
+    update(dbRef, updates);
+    //show toast
+    setToastText("Changes are saved exactly!");
+    setToastState(true);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
+  }
+
+  const onDeleteModal = (id) => {
+    setCurrentRemoveID(id);
+    setIsConfirming(true);
+  }
+
+  const onDeleteUser = () => {
+    setIsConfirming(false);
+    console.log("delete:", currentRemoveID);
+    remove(ref(db, 'caregivers/' + currentRemoveID));
+    remove(ref(db, 'users/' + currentRemoveID));
+    //show toast
+    setToastText("Removed user exactly!");
+    setToastState(false);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
+  }
 
   return (
     <div className=' flex flex-col gap-y-3'>
@@ -145,8 +184,20 @@ export default function CareGiverTable() {
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
-                    <td>{item.permission ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClose} />}</td>
-                    <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
+                    <td>
+                      <div className=' h-full flex flex-col justify-center items-center'>
+                        <label className="relative inline-flex cursor-pointer items-center">
+                          <input onChange={(e) => onUpdateUser(e, item.key)} id="switch" type="checkbox" checked={item.permission} className="peer sr-only" />
+                          <label htmlFor="switch" className="hidden" />
+                          <div className="peer h-4 w-7 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div className=' flex flex-row text-[12px] gap-x-3 lg:gap-x-5 lg:px-3 justify-center items-center text-gray-500'>
+                        <FontAwesomeIcon onClick={() => onDeleteModal(item.key)} className=' hover:text-red-400 cursor-pointer' icon={faTrash} />
+                      </div>
+                    </td>
                   </tr>
                 })
                 :
@@ -160,14 +211,53 @@ export default function CareGiverTable() {
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
-                    <td>{item.permission ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClose} />}</td>
-                    <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
+                    <td>
+                      <div className=' h-full flex flex-col justify-center items-center'>
+                        <label className="relative inline-flex cursor-pointer items-center">
+                          <input onChange={(e) => onUpdateUser(e, item.key)} id="switch" type="checkbox" checked={item.permission} className="peer sr-only" />
+                          <label htmlFor="switch" className="hidden" />
+                          <div className="peer h-4 w-7 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
+                        </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div className=' flex flex-row text-[12px] gap-x-3 lg:gap-x-5 lg:px-3 justify-center items-center text-gray-500'>
+                        <FontAwesomeIcon onClick={() => onDeleteModal(item.key)} className=' hover:text-red-400 cursor-pointer' icon={faTrash} />
+                      </div>
+                    </td>
                   </tr>
                 })
             }
           </tbody>
         </table>
       </div >
+      <div id='loading' className={`fixed top-0 left-0 z-50 w-screen h-screen flex items-center justify-center bg-gray-700 bg-opacity-40 ${!isConfirming ? 'invisible' : ''}`}>
+        <div className="bg-white border py-2 px-5 mx-10 rounded-lg flex items-center flex-col gap-y-5">
+          <p className=' text-[20px] font-poppins font-semibold'>Do you want to remove this user?</p>
+          <div className=' w-full flex flex-row gap-x-2 justify-around'>
+            <div onClick={() => setIsConfirming(false)} className=' px-5 py-1 bg-blue-400 hover:bg-blue-500 cursor-pointer rounded-md'>
+              <span className=' font-poppins font-bold text-white'>No</span>
+            </div>
+            <div onClick={() => onDeleteUser()} className=' px-5 py-1 bg-red-400 hover:bg-red-500 cursor-pointer rounded-md'>
+              <span className=' font-poppins font-bold text-white'>Yes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {
+        seniorList.length == 0 ?
+          <p className=' text-[20px] font-poppins'>There is no office manager</p>
+          :
+          <></>
+      }
+      {
+        showToast ?
+          <div className={`fixed bottom-0 right-0 mb-4 mr-4 ${toastState ? `bg-green-500` : `bg-red-500`} text-white py-2 px-4 rounded`}>
+            {toastText}
+          </div>
+          :
+          <></>
+      }
     </div>
   )
 }

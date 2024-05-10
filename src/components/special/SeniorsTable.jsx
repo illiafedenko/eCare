@@ -126,7 +126,7 @@ export default function SeniorsTable() {
               <td onClick={() => setSorting("gender")} className=' cursor-pointer'><div className=' py-2 md:flex flex-row gap-x-2 justify-center items-center hidden'><span>Gender</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("email")} className=' cursor-pointer'><div className=' py-2 xl:flex flex-row gap-x-2 justify-center items-center hidden'><span>Email</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("phonenumber")} className=' cursor-pointer'><div className=' py-2 lg:flex flex-row gap-x-2 justify-center items-center hidden'><span>PhoneNumber</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
-              <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td>
+              {/* <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td> */}
             </tr>
           </thead>
 
@@ -143,7 +143,7 @@ export default function SeniorsTable() {
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
-                    <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
+                    {/* <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td> */}
                   </tr>
                 })
                 :
@@ -157,7 +157,7 @@ export default function SeniorsTable() {
                     <td><span className=' md:block hidden'>{item.gender}</span></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
                     <td><span className=' lg:block hidden'>{item.phonenumber}</span></td>
-                    <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td>
+                    {/* <td><div className=' flex flex-row text-[12px] gap-x-3 justify-center items-center text-gray-500'><FontAwesomeIcon className=' hover:text-green-600 cursor-pointer' icon={faEdit} /><FontAwesomeIcon className='  hover:text-red-400 cursor-pointer' icon={faTrash} /></div></td> */}
                   </tr>
                 })
             }

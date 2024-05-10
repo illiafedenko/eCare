@@ -3,8 +3,12 @@ import SideBar from '../../components/special/SideBar';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import dummyData from '../../dummydata';
 import logoutImage from '../../assets/images/logout.png';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router';
 
 export default function SeniorLogout() {
+
+  const navigate = useNavigate();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");

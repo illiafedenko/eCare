@@ -108,6 +108,7 @@ export default function OfficeManagement() {
     setIsConfirming(false);
     console.log("delete:", currentRemoveID);
     remove(ref(db, 'officeManagers/' + currentRemoveID));
+    remove(ref(db, 'users/' + currentRemoveID));
     //show toast
     setToastText("Removed user exactly!");
     setToastState(false);
@@ -158,7 +159,7 @@ export default function OfficeManagement() {
               <td onClick={() => setSorting("email")} className=' cursor-pointer'><div className=' py-2 xl:flex flex-row gap-x-2 justify-center items-center hidden'><span>Email</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               <td onClick={() => setSorting("permitted")} className=' cursor-pointer'><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span>Allow</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td>
               {/* <td onClick={() => setSorting("gender")} className=' cursor-pointer'><div className=' py-2 md:flex flex-row gap-x-2 justify-center items-center hidden'><span>Gender</span><FontAwesomeIcon className=' text-[12px]' icon={faSort} /></div></td> */}
-              <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td>
+              {/* <td className=''><div className=' py-2 flex flex-row gap-x-2 justify-center items-center'><span></span></div></td> */}
             </tr>
           </thead>
 
@@ -198,7 +199,15 @@ export default function OfficeManagement() {
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><img src={`${item.avatar}`} className=' w-6 h-6 rounded-full' /></div></td>
                     <td><div className=' flex flex-row gap-x-5 justify-center items-center'><span>{item.fullname}</span></div></td>
                     <td><span className=' xl:block hidden'>{item.email}</span></td>
-                    <td>{item.permission ? <FontAwesomeIcon icon={faCheck} /> : <FontAwesomeIcon icon={faClose} />}</td>
+                    <td>
+                      <div className=' h-full flex flex-col justify-center items-center'>
+                        <label className="relative inline-flex cursor-pointer items-center">
+                          <input onChange={(e) => onUpdateUser(e, item.key)} id="switch" type="checkbox" checked={item.permission} className="peer sr-only" />
+                          <label htmlFor="switch" className="hidden" />
+                          <div className="peer h-4 w-7 rounded-full border bg-slate-200 after:absolute after:left-[2px] after:top-0.5 after:h-3 after:w-3 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-green-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-green-300"></div>
+                        </label>
+                      </div>
+                    </td>
                     {/* <td>{item.age}</td> */}
                     {/* <td><span className=' md:block hidden'>{item.gender}</span></td> */}
                     <td>

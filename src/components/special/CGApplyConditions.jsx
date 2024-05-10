@@ -55,6 +55,7 @@ export default function CGApplyConditions(props) {
             preferweekend: caregiverWorkHistoryInfo.preferweekend,
             vaccinated: caregiverWorkHistoryInfo.vaccinated,
             coverletter: caregiverMoreInfo.coverletter,
+            permitted: false,
           });
           set(ref(db, 'users/' + user.uid), {
             fullname: caregiverPrimaryInfo.firstname + " " + caregiverPrimaryInfo.lastname,

@@ -14,6 +14,9 @@ export default {
       aspectRatio: {
         'wide': '18 / 5',
         '4/3': '4 / 3',
+      },
+      gridTemplateColumns: {
+        '24': 'repeat(24, minmax(0, 1fr))',
       }
     },
   },

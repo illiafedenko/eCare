@@ -57,63 +57,61 @@ export default function Signin() {
 	};
 
 	const handleNextPage = (uid) => {
-		// console.log(uid);
-		var user = ref(db, 'caregivers/' + uid);
-		onValue(user, (snapshot) => {
-			const data = snapshot.val();
-			if (data != null) {
-				if (data.permitted == false) {
-					getAuth().signOut().then(() => {
-						setShowToast(true);
-						setTimeout(() => {
-							setShowToast(false);
-						}, 3000);
-					})
+		console.log(uid);
+		onValue(ref(db, 'users/' + uid), (snapshot) => {
+			let data = snapshot.val();
+			if (data == null) {
+				getAuth().currentUser.delete().then(() => {
 					return;
-				}
-				else {
-					setUserType("caregiver");
-					localStorage.setItem("userType", "caregiver");
-					const path = '/cgportal';
-					navigate(path);
-					return;
-				}
+				});
+			}
+			else {
+				var user = ref(db, 'caregivers/' + uid);
+				onValue(user, (snapshot) => {
+					const data = snapshot.val();
+					if (data != null) {
+						if (data.permitted == false) {
+							getAuth().signOut().then(() => {
+								setShowToast(true);
+								setTimeout(() => {
+									setShowToast(false);
+								}, 3000);
+							})
+							return;
+						}
+						else {
+							setUserType("caregiver");
+							localStorage.setItem("userType", "caregiver");
+							const path = '/cgportal';
+							navigate(path);
+							return;
+						}
+					}
+				});
+				user = ref(db, 'seniors/' + uid);
+				onValue(user, (snapshot) => {
+					const data = snapshot.val();
+					if (data != null) {
+						setUserType("senior");
+						localStorage.setItem("userType", "senior");
+						var path = "";
+						if (data.userType == "" || data.userType == undefined) {
+							path = '/choose_role';
+							localStorage.setItem("sinfostep", "init");
+						} else if (data.phonenumber == "" || data.phonenumber == undefined) {
+							path = '/set_additional_info';
+							localStorage.setItem("sinfostep", "role");
+						} else {
+							path = '/';
+							localStorage.setItem("sinfostep", "done");
+						}
+						navigate(path);
+						return;
+					}
+				});
 			}
 		});
-		user = ref(db, 'seniors/' + uid);
-		onValue(user, (snapshot) => {
-			const data = snapshot.val();
-			if (data != null) {
-				setUserType("senior");
-				localStorage.setItem("userType", "senior");
-				var path = "";
-				if (data.userType == "" || data.userType == undefined) {
-					path = '/choose_role';
-					localStorage.setItem("sinfostep", "init");
-				} else if (data.phonenumber == "" || data.phonenumber == undefined) {
-					path = '/set_additional_info';
-					localStorage.setItem("sinfostep", "role");
-				} else {
-					path = '/';
-					localStorage.setItem("sinfostep", "done");
-				}
-				navigate(path);
-				return;
-			}
-		});
-		// user = ref(db, 'admins/' + uid);
-		// onValue(user, (snapshot) => {
-		// 	const data = snapshot.val();
-		// 	if (data != null) {
-		// 		setUserType("admin");
-		// 		localStorage.setItem("userType", "admin");
-		// 		const path = '/aportal';
-		// 		navigate(path);
-		// 		return;
-		// 	}
-		// });
-		// const path = '/';
-		// navigate(path);
+
 	}
 
 	const handleChange = (e) => {

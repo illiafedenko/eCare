@@ -16,6 +16,24 @@ export default function Header(props) {
 
 	useEffect(() => {
 
+		console.log();
+		switch (localStorage.getItem("userType")) {
+			case "admin":
+				navigate('/aportal');
+				break;
+
+			case "om":
+				navigate('/omportal');
+				break;
+
+			case "hr":
+				navigate('/hrportal');
+				break;
+
+			default:
+				break;
+		}
+
 		const getToken = async () => {
 			try {
 				// const user = getAuth().currentUser;

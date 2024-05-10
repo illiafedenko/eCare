@@ -216,11 +216,11 @@ export default function CGChat() {
                 <div className=' absolute w-[36px] h-full flex flex-col items-center justify-center right-1 top-0 cursor-pointer'>
                   <FontAwesomeIcon className=' w-4 h-4 text-gray-500 hover:text-green-600' icon={faSearch} />
                 </div>
-                <div className={`absolute w-full bg-gray-100 top-[60px] z-50 shadow-lg ${showSearchDropdown ? '' : 'hidden'}`}>
+                <div className={`absolute w-full bg-gray-100 top-[60px] max-h-[300px] overflow-y-scroll z-50 shadow-lg ${showSearchDropdown ? '' : 'hidden'}`}>
                   {
                     searchList.map((item, i) => {
                       return <div key={i} onMouseDown={() => handleSelectContactUser(item.id)} className=' w-full h-[60px] flex flex-row gap-x-4 items-center px-2 cursor-pointer hover:bg-slate-50'>
-                        <img src={`${item.avatar}`} className=' w-[40px] h-[40px] rounded-full' />
+                        <img src={`${item.avatar}`} className=' w-[40px] h-[40px] rounded-full object-cover' />
                         <p className=' text-[16px] font-poppins font-bold line-clamp-1 text-left'>{item.name}</p>
                       </div>
                     })

@@ -1,5 +1,5 @@
 import React, { useState, } from 'react';
-import imageSrc from '../../assets/images/signin_image.png';
+import imageSrc from '../../assets/images/CGM3.png';
 import logoSrc from '../../assets/images/logo.png';
 import NormalInput from '../../components/general/NormalInput';
 import GradientButton from '../../components/general/GradientButton';
@@ -58,64 +58,72 @@ export default function ManagementSignIn() {
 
   const handleNextPage = (uid) => {
     // console.log(uid);
-    var user = ref(db, 'officeManagers/' + uid);
-    onValue(user, (snapshot) => {
-      const data = snapshot.val();
-      if (data != null) {
-        if (data.permitted == false) {
-          getAuth().signOut().then(() => {
-            setShowToast(true);
-            setTimeout(() => {
-              setShowToast(false);
-            }, 3000);
-          })
+    onValue(ref(db, 'users/' + uid), (snapshot) => {
+      let data = snapshot.val();
+      if (data == null) {
+        getAuth().currentUser.delete().then(() => {
           return;
-        }
-        else {
-          setUserType("om");
-          localStorage.setItem("userType", "om");
-          const path = '/omportal';
-          navigate(path);
-          return;
-        }
+        });
       }
-    });
-    user = ref(db, 'humanResources/' + uid);
-    onValue(user, (snapshot) => {
-      const data = snapshot.val();
-      if (data != null) {
-        console.log(data);
-        if (data.permitted == false) {
-          getAuth().signOut().then(() => {
-            setShowToast(true);
-            setTimeout(() => {
-              setShowToast(false);
-            }, 3000);
-          })
-          return;
-        }
-        else {
-          setUserType("hr");
-          localStorage.setItem("userType", "hr");
-          const path = '/hrportal';
-          navigate(path);
-          return;
-        }
+      else {
+        var user = ref(db, 'officeManagers/' + uid);
+        onValue(user, (snapshot) => {
+          let data = snapshot.val();
+          if (data != null) {
+            if (data.permitted == false) {
+              getAuth().signOut().then(() => {
+                setShowToast(true);
+                setTimeout(() => {
+                  setShowToast(false);
+                }, 3000);
+              })
+              return;
+            }
+            else {
+              setUserType("om");
+              localStorage.setItem("userType", "om");
+              const path = '/omportal';
+              navigate(path);
+              return;
+            }
+          }
+        });
+        user = ref(db, 'humanResources/' + uid);
+        onValue(user, (snapshot) => {
+          const data = snapshot.val();
+          if (data != null) {
+            console.log(data);
+            if (data.permitted == false) {
+              getAuth().signOut().then(() => {
+                setShowToast(true);
+                setTimeout(() => {
+                  setShowToast(false);
+                }, 3000);
+              })
+              return;
+            }
+            else {
+              setUserType("hr");
+              localStorage.setItem("userType", "hr");
+              const path = '/hrportal';
+              navigate(path);
+              return;
+            }
+          }
+        });
+        user = ref(db, 'admins/' + uid);
+        onValue(user, (snapshot) => {
+          const data = snapshot.val();
+          if (data != null) {
+            setUserType("admin");
+            localStorage.setItem("userType", "admin");
+            const path = '/aportal';
+            navigate(path);
+            return;
+          }
+        });
       }
-    });
-    user = ref(db, 'admins/' + uid);
-    onValue(user, (snapshot) => {
-      const data = snapshot.val();
-      if (data != null) {
-        setUserType("admin");
-        localStorage.setItem("userType", "admin");
-        const path = '/aportal';
-        navigate(path);
-        return;
-      }
-    });
-    // const path = '/';
-    // navigate(path);
+    })
   }
 
   const handleChange = (e) => {
