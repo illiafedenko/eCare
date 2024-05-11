@@ -11,17 +11,14 @@ import MultiTimeSelect from '../../components/general/MultiTimeSelect';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, onValue, ref, set } from 'firebase/database';
 
-const options = [
-  { value: "fox", label: "🦊 Fox" },
-  { value: "Butterfly", label: "🦋 Butterfly" },
-  { value: "Honeybee", label: "🐝 Honeybee" }
-];
-
 export default function CGProfile() {
 
   const [times, setTimes] = useState();
   const [week, setWeek] = useState([]);
   const [weekHours, setWeekHours] = useState(JSON.stringify([[], [], [], [], [], [], []]));
+  const [showToast, setShowToast] = useState(false);
+  const [toastText, setToastText] = useState("");
+  const [toastState, setToastState] = useState(true);
 
   const db = getDatabase();
 
@@ -58,6 +55,12 @@ export default function CGProfile() {
         set(ref(db, `cgAvailabilities/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : false);
       }
     }
+    setToastText("Changes are saved exactly!");
+    setToastState(true);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000);
   }
 
   const getAvailabilities = async () => {
@@ -113,7 +116,7 @@ export default function CGProfile() {
           <div className=' w-full bg-white rounded-[20px] px-[20px] md:px-[40px] lg:px-[60px] py-[48px]'>
             <div className=' w-full  flex flex-col gap-y-10'>
               {/* main part */}
-              <p className=' text-gray-600 font-poppins text-[24px] font-semibold'>Set the availabilites for the next week</p>
+              <p className=' text-gray-600 font-poppins text-[24px] text-left font-semibold'>Set the availabilites for the next week</p>
               <div className=' flex flex-col gap-y-10'>
                 {
                   week.map((item, i) => {
@@ -154,6 +157,14 @@ export default function CGProfile() {
           </div>
         </div>
       </div>
+      {
+        showToast ?
+          <div className={`fixed bottom-0 right-0 mb-4 mr-4 ${toastState ? `bg-green-500` : `bg-red-500`} text-white py-2 px-4 rounded`}>
+            {toastText}
+          </div>
+          :
+          <></>
+      }
     </div>
   )
 }
