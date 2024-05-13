@@ -64,7 +64,7 @@ export default function CGPortalNavBar(props) {
         <div className=' h-[50px] mr-2 xl:hidden border-r-[1px] border-gray-100'></div>
         <p className=' text-[24px] hidden sm:block font-poppins font-semibold'>{props.current}</p>
       </div>
-      <div className=' hidden md:flex flex-grow max-w-[500px] h-[50px] relative'>
+      {/* <div className=' hidden md:flex flex-grow max-w-[500px] h-[50px] relative'>
         <input
           className=' w-full text-[18px] px-4 h-full border-[1px] border-gray-300 bg-gray-50 focus:border-blue-500 outline-none rounded-[8px]'
           placeholder="Search for anything"
@@ -73,7 +73,7 @@ export default function CGPortalNavBar(props) {
         <div className=' absolute w-[36px] h-full flex flex-col items-center justify-center right-0 top-0'>
           <FontAwesomeIcon className=' w-4 h-4 text-gray-500' icon={faSearch} />
         </div>
-      </div>
+      </div> */}
       <div className=' flex flex-col text-left text-[20px] font-poppins'>
         <p>Good morning 👋🏽,</p>
         <p className=' text-green-600 text-right'>{userName}</p>

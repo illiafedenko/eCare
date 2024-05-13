@@ -10,6 +10,7 @@ import HorizontalMouseDraggableCardList from '../../components/special/Horizonta
 import SeniorInfoViewCard from '../../components/special/SeniorInfoViewCard';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import CareGiverInfoViewCard from '../../components/special/CareGiverInfoViewCard';
+import SeniorHomeSchedules from './SeniorHomeSchedules';
 
 export default function SeniorHome() {
 
@@ -21,15 +22,19 @@ export default function SeniorHome() {
   return (
     <div className=" w-full h-screen flex flex-row relative ">
       <SideBar portalname="sportal" menu={dummyData.SMenu} current="home" />
-      <div onClick={handleSidebarShow} id="blur_board" className=' w-full h-screen absolute hidden left-0 top-0 backdrop-blur-[1px] z-[5]'></div>
+      <div onClick={() => handleSidebarShow()} id="blur_board" className=' w-full h-screen absolute hidden left-0 top-0 backdrop-blur-[1px] z-[5]'></div>
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Home" name="John Doe" />
         <div className=' w-full h-full relative overflow-x-hidden bg-gray-100 pt-[48px] pl-[32px] pr-[8px]'>
-          <p className=' text-[24px] pb-4 font-poppins font-bold text-left'>Your Agenda</p>
+          <div className=' w-full bg-white px-[40px] py-[40px] rounded-[24px]'>
+            <p className=' text-[20px] text-gray-600 pb-4 font-poppins font-bold text-left'>Your Schedules in this week</p>
+            <SeniorHomeSchedules />
+          </div>
+          {/* <p className=' text-[20px] text-gray-600 pb-4 font-poppins font-bold text-left'>Your Schedules in this week</p>
           <div id="slider_area" className=' w-full h-[96px] relative overflow-hidden'>
             <HorizontalMouseDraggableCardList />
           </div>
-          <p className=' text-[24px] mt-[48px] font-poppins font-bold text-left'>Your Seniors</p>
+          <p className=' text-[20px] text-gray-600 mt-[48px] font-poppins font-bold text-left'>Your Caregivers</p>
           <div className=' w-full mt-[80px] grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-x-[24px] gap-y-[48px]'>
             {
               dummyData.careGivers.map((careGiver, i) => {
@@ -40,7 +45,7 @@ export default function SeniorHome() {
                 )
               })
             }
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

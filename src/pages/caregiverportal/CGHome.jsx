@@ -9,6 +9,7 @@ import dummyData from '../../dummydata';
 import HorizontalMouseDraggableCardList from '../../components/special/HorizontalMouseDraggableCardList';
 import SeniorInfoViewCard from '../../components/special/SeniorInfoViewCard';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
+import CGHomeSchedules from './CGHomeSchedules';
 
 export default function CGHome() {
 
@@ -28,21 +29,9 @@ export default function CGHome() {
       <div className=' flex-grow h-full flex flex-col'>
         <CGPortalNavBar current="Home" name="John Doe" />
         <div className=' w-full h-full relative overflow-x-hidden bg-gray-100 pt-[48px] pl-[32px] pr-[8px]'>
-          <p className=' text-[24px] pb-4 font-poppins font-bold text-left'>Your Agenda</p>
-          <div id="slider_area" className=' w-full h-[96px] relative overflow-hidden'>
-            <HorizontalMouseDraggableCardList />
-          </div>
-          <p className=' text-[24px] mt-[48px] font-poppins font-bold text-left'>Your Seniors</p>
-          <div className=' w-full mt-[80px] grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-x-[24px] gap-y-[48px]'>
-            {
-              dummyData.seniors.map((senior, i) => {
-                return (
-                  <div key={i} className=' w-full flex flex-col items-center'>
-                    <SeniorInfoViewCard id={i} senior={senior} />
-                  </div>
-                )
-              })
-            }
+          <div className=' w-full bg-white px-[40px] py-[40px] rounded-[24px]'>
+            <p className=' text-[20px] text-gray-600 pb-4 font-poppins font-bold text-left'>Your Schedules in this week</p>
+            <CGHomeSchedules />
           </div>
         </div>
       </div>
@@ -56,3 +45,18 @@ export default function CGHome() {
 
 
 
+/* <div id="slider_area" className=' w-full h-[96px] relative overflow-hidden'>
+            <HorizontalMouseDraggableCardList />
+          </div>
+          <p className=' text-[24px] mt-[48px] font-poppins font-bold text-left'>Your Seniors</p>
+          <div className=' w-full mt-[80px] grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-x-[24px] gap-y-[48px]'>
+            {
+              dummyData.seniors.map((senior, i) => {
+                return (
+                  <div key={i} className=' w-full flex flex-col items-center'>
+                    <SeniorInfoViewCard id={i} senior={senior} />
+                  </div>
+                )
+              })
+            }
+          </div> */
