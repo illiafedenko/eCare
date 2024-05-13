@@ -39,7 +39,7 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
     false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
   ]))
   const [cgAbleTimes, setCgAbleTimes] = useState(JSON.stringify([
-    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]))
   const [totalHours, setTotalHours] = useState(0);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -52,7 +52,7 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
   }, [selectedTimes])
 
   const onSelectTime = (idx) => {
-    if ((id == 0 && idx <= currentHour) || JSON.parse(cgAbleTimes)[idx] == false) return;
+    if ((id == 0 && idx <= currentHour) || JSON.parse(cgAbleTimes)[idx] != 1) return;
     var temp = JSON.parse(selectedTimes);
     var h = temp[idx] ? -1 : 1;
     if (day == "Sat" || day == "Sun") {
@@ -93,7 +93,7 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
   const getHours = async () => {
     try {
       getAuth().onAuthStateChanged(async (user) => {
-        onValue(ref(db, 'schedules/' + sID + '-' + cgID + '/' + date), (snapshot) => {
+        onValue(ref(db, 'schedules/' + sID + '-' + cgID+ '-0' + '/' + date ), (snapshot) => {
           if (snapshot.val() != null)
             setSelectedTimes(JSON.stringify(snapshot.val()));
         })
@@ -138,7 +138,7 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
       <div className={`absolute w-full top-[41px] max-h-[200px] overflow-y-scroll shadow-lg left-0 z-20  ${showDropDown ? '' : 'hidden'}`}>
         {
           options.map((item, i) => {
-            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className={`w-full h-[36px] px-4 flex flex-row items-center justify-between ${(id == 0 && i <= currentHour) || JSON.parse(cgAbleTimes)[i] == false ? 'bg-gray-200' : 'bg-gray-50 hover:bg-gray-100'}`}>
+            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className={`w-full h-[36px] px-4 flex flex-row items-center justify-between ${(id == 0 && i <= currentHour) || JSON.parse(cgAbleTimes)[i] != 1 ? 'bg-gray-200' : 'bg-gray-50 hover:bg-gray-100'}`}>
               <p className=' font-poppins text-gray-700'>{item.text}</p>
               <FontAwesomeIcon className={`text-[12px] text-green-600 ${JSON.parse(selectedTimes)[i] ? '' : 'hidden'}`} icon={faCheck} />
             </div>

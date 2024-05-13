@@ -126,7 +126,7 @@ export default function SeniorScheduleSelf() {
 
   const getMySchedules = async () => {
     var temp = JSON.parse(mySchedules);
-    onValue(ref(db, 'schedules/' + myID + '-' + currentContactID), (snapshot) => {
+    onValue(ref(db, 'schedules/' + myID + '-' + currentContactID + '-0'), (snapshot) => {
       if (snapshot.val() != null) {
         for (let i = 0; i < dates.length; i++) {
           let day = dates[i].date.toString();
@@ -214,12 +214,15 @@ export default function SeniorScheduleSelf() {
 
   const onSave = () => {
     for (let i = 0; i < dates.length; i++) {
-      if (JSON.parse(mySchedules)[i] == null) {
+      if (JSON.parse(mySchedules)[i] == null || JSON.parse(mySchedules)[i].filter(element => element === true).length == 0) {
         continue;
       }
       else {
         for (let j = 0; j < 24; j++) {
-          set(ref(db, `schedules/${myID}-${currentContactID}/${dates[i].date}/${j}`), JSON.parse(mySchedules)[i][j] != null ? JSON.parse(mySchedules)[i][j] : false);
+          set(ref(db, `schedules/${myID}-${currentContactID}-0/${dates[i].date}/${j}`), JSON.parse(mySchedules)[i][j] != null ? JSON.parse(mySchedules)[i][j] : false);
+          if (JSON.parse(mySchedules)[i][j]) {
+            set(ref(db, `cgAvailabilities/${currentContactID}/${dates[i].date}/${j}`), 2);
+          }
         }
       }
     }
@@ -232,7 +235,6 @@ export default function SeniorScheduleSelf() {
   }
 
   const onCalculator = (data) => {
-    console.log(data);
     switch (data.type) {
       case 1:
         setWeekdayHours(weekdayHours + data.sign);
@@ -321,9 +323,9 @@ export default function SeniorScheduleSelf() {
                                     ? j <= currentHour ?
                                       <div key={j} className={`h-full ${item ? 'bg-gray-300' : ''}`}></div>
                                       :
-                                      <div key={j} className={`h-full ${item ? 'bg-green-300' : ''}`}></div>
+                                      <div key={j} className={`h-full ${item == 1 ? 'bg-green-300' : item == 2 ? 'bg-red-300' : ''}`}></div>
                                     :
-                                    <div key={j} className={`h-full ${item ? 'bg-green-300' : ''}`}></div>
+                                    <div key={j} className={`h-full ${item == 1 ? 'bg-green-300' : item == 2 ? 'bg-red-300' : ''}`}></div>
                                 })
                                 : <></>
                             }

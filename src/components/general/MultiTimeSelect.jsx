@@ -36,19 +36,24 @@ export default function MultiTimeSelect({ id, onChange, date }) {
   ]
 
   const [selectedTimes, setSelectedTimes] = useState(JSON.stringify([
-    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]))
+  const [originSelectedTimes, setOriginSelectedTimes] = useState(JSON.stringify([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   ]))
   const [totalHours, setTotalHours] = useState(0);
   const [showDropDown, setShowDropDown] = useState(false);
 
   useEffect(() => {
-    setTotalHours(JSON.parse(selectedTimes).filter(element => element === true).length);
+    setTotalHours(JSON.parse(selectedTimes).filter(element => element > 0).length);
     onChange(id, JSON.parse(selectedTimes));
   }, [selectedTimes])
 
   const onSelectTime = (idx) => {
+    console.log(JSON.parse(originSelectedTimes)[idx]);
+    if (JSON.parse(originSelectedTimes)[idx] > 1) return;
     var temp = JSON.parse(selectedTimes);
-    temp[idx] = !temp[idx];
+    temp[idx] = 1 - temp[idx];
     setSelectedTimes(JSON.stringify(temp));
   }
 
@@ -60,8 +65,10 @@ export default function MultiTimeSelect({ id, onChange, date }) {
     try {
       getAuth().onAuthStateChanged(async (user) => {
         onValue(ref(db, 'cgAvailabilities/' + user.uid + '/' + date), (snapshot) => {
-          if (snapshot.val() != null)
+          if (snapshot.val() != null) {
             setSelectedTimes(JSON.stringify(snapshot.val()));
+            setOriginSelectedTimes(JSON.stringify(snapshot.val()));
+          }
         })
       })
     } catch (error) {
@@ -87,9 +94,9 @@ export default function MultiTimeSelect({ id, onChange, date }) {
       <div className={`absolute w-full top-[41px] max-h-[200px] overflow-y-scroll shadow-lg left-0 z-20  ${showDropDown ? '' : 'hidden'}`}>
         {
           options.map((item, i) => {
-            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className=' w-full h-[36px] px-4 flex flex-row items-center justify-between bg-gray-50 hover:bg-gray-100'>
+            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className={`w-full h-[36px] px-4 flex flex-row items-center justify-between ${JSON.parse(selectedTimes)[i] == 2 ? 'bg-gray-200' : 'bg-gray-50 hover:bg-gray-100'}`}>
               <p className=' font-poppins text-gray-700'>{item.text}</p>
-              <FontAwesomeIcon className={`text-[12px] text-green-600 ${JSON.parse(selectedTimes)[i] ? '' : 'hidden'}`} icon={faCheck} />
+              <FontAwesomeIcon className={`text-[12px] text-green-600 ${JSON.parse(selectedTimes)[i] ? '' : 'hidden'} `} icon={faCheck} />
             </div>
           })
         }

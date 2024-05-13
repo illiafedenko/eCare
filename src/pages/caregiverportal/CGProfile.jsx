@@ -31,6 +31,7 @@ export default function CGProfile() {
   }, [JSON.stringify(times)])
 
   useEffect(() => {
+    console.log("weekHours:", weekHours);
   }, [weekHours])
 
   const onHandleSelectTimes = (id, value) => {
@@ -52,7 +53,7 @@ export default function CGProfile() {
   const onSave = () => {
     for (let i = 0; i < 7; i++) {
       for (let j = 0; j < 24; j++) {
-        set(ref(db, `cgAvailabilities/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : false);
+        set(ref(db, `cgAvailabilities/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : 0);
       }
     }
     setToastText("Changes are saved exactly!");
@@ -70,8 +71,14 @@ export default function CGProfile() {
           let temp = JSON.parse(weekHours);
           for (let i = 0; i < 7; i++) {
             let day = week[i].date.toString();
-            temp[i] = snapshot.val()[week[i].date.toString()];
+            if (snapshot.val()[day] == undefined) {
+              temp[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
+            else {
+              temp[i] = snapshot.val()[day];
+            }
           }
+          console.log("temp:", temp);
           setWeekHours(JSON.stringify(temp));
         })
       })
@@ -138,9 +145,12 @@ export default function CGProfile() {
                         </div>
                         <div className=' w-full grid grid-cols-24 h-[6px] bg-gray-100'>
                           {
-                            JSON.parse(weekHours)[i].map((item, i) => {
-                              return <div key={i} className={`h-full ${item ? 'bg-green-300' : ''}`}></div>
-                            })
+                            JSON.parse(weekHours)[i] != [] ?
+                              JSON.parse(weekHours)[i].map((item, i) => {
+                                return <div key={i} className={`h-full ${item == 1 ? 'bg-green-300' : item == 2 ? 'bg-blue-300' : ''}`}></div>
+                              })
+                              :
+                              <></>
                           }
                         </div>
                       </div>

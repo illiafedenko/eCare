@@ -74,7 +74,6 @@ export default function SeniorScheduleHelp() {
   }, [JSON.stringify(times)])
 
   useEffect(() => {
-    console.log("->", weekHours);
   }, [weekHours])
 
   const onHandleSelectTimes = (id, value) => {
@@ -96,8 +95,11 @@ export default function SeniorScheduleHelp() {
 
   const onSave = () => {
     for (let i = 0; i < week.length; i++) {
+      if (JSON.parse(weekHours)[i] == null || JSON.parse(weekHours)[i].filter(element => element > 0).length == 0) {
+        continue;
+      }
       for (let j = 0; j < 24; j++) {
-        set(ref(db, `seniorRequests/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : false);
+        set(ref(db, `seniorRequests/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : 0);
       }
     }
     setToastText("Changes are saved exactly!");
@@ -115,7 +117,11 @@ export default function SeniorScheduleHelp() {
           let temp = JSON.parse(weekHours);
           for (let i = 0; i < week.length; i++) {
             let day = week[i].date.toString();
-            temp[i] = snapshot.val()[day];
+            if (snapshot.val()[day] != null) {
+              temp[i] = snapshot.val()[day];
+            } else {
+              temp[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            }
           }
           setWeekHours(JSON.stringify(temp));
         })
@@ -126,7 +132,6 @@ export default function SeniorScheduleHelp() {
   }
 
   const onCalculator = (data) => {
-    console.log(data);
     switch (data.type) {
       case 1:
         setWeekdayHours(weekdayHours + data.sign);
@@ -153,7 +158,7 @@ export default function SeniorScheduleHelp() {
     <div className=' mt-[40px]'>
       <div className=' w-full flex flex-col text-left gap-y-10'>
         {/* main part */}
-        <p className=' text-gray-600 font-poppins text-[24px] text-left font-semibold'>Set date and time</p>
+        <p className=' text-[24px] font-poppins font-bold'>Set date and time</p>
         <div className=' flex flex-col gap-y-10'>
           {
             week.map((item, i) => {
@@ -176,7 +181,7 @@ export default function SeniorScheduleHelp() {
                   <div className=' w-full grid grid-cols-24 h-[6px] bg-gray-100'>
                     {
                       JSON.parse(weekHours)[i].map((item, i) => {
-                        return <div key={i} className={`h-full ${item ? 'bg-green-300' : ''}`}></div>
+                        return <div key={i} className={`h-full ${item == 1 ? 'bg-green-300' : item == 2 ? 'bg-blue-300' : ''}`}></div>
                       })
                     }
                   </div>

@@ -35,27 +35,23 @@ export default function SeniorRequestTimeSelector({ id, onChange, onCalc, day, d
     { text: "11PM - 12AM", value: 23 },
   ]
 
-  const [selectedTimes, setSelectedTimes] = useState(JSON.stringify([
-    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-  ]))
-  const [originTimes, setOriginTimes] = useState(JSON.stringify([
-    false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false,
-  ]))
+  const [selectedTimes, setSelectedTimes] = useState(JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
+  const [originTimes, setOriginTimes] = useState(JSON.stringify([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
   const [totalHours, setTotalHours] = useState(0);
   const [showDropDown, setShowDropDown] = useState(false);
 
   const [currentHour, setCurrentHour] = useState();
 
   useEffect(() => {
-    setTotalHours(JSON.parse(selectedTimes).filter(element => element === true).length);
+    setTotalHours(JSON.parse(selectedTimes).filter(element => element > 0).length);
     onChange(id, JSON.parse(selectedTimes));
   }, [selectedTimes])
 
   const onSelectTime = (idx) => {
     if (id == 0 && idx <= currentHour) return;
-    if (JSON.parse(originTimes)[idx]) return;
+    if (JSON.parse(originTimes)[idx] > 0) return;
     var temp = JSON.parse(selectedTimes);
-    var h = temp[idx] ? -1 : 1;
+    var h = temp[idx] == 1 ? -1 : 1;
     if (day == "Sat" || day == "Sun") {
       onCalc({
         "type": 3,
@@ -76,7 +72,7 @@ export default function SeniorRequestTimeSelector({ id, onChange, onCalc, day, d
         });
       }
     }
-    temp[idx] = !temp[idx];
+    temp[idx] = 1 - temp[idx];
     setSelectedTimes(JSON.stringify(temp));
   }
 
@@ -123,7 +119,7 @@ export default function SeniorRequestTimeSelector({ id, onChange, onCalc, day, d
       <div className={`absolute w-full top-[41px] max-h-[200px] overflow-y-scroll shadow-lg left-0 z-20  ${showDropDown ? '' : 'hidden'}`}>
         {
           options.map((item, i) => {
-            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className={`w-full h-[36px] px-4 flex flex-row items-center justify-between ${(id == 0 && i <= currentHour) || JSON.parse(originTimes)[i] ? 'bg-gray-200' : 'bg-gray-50 hover:bg-gray-100'}`}>
+            return <div onClick={(e) => { e.stopPropagation(); onSelectTime(i); }} key={i} className={`w-full h-[36px] px-4 flex flex-row items-center justify-between ${(id == 0 && i <= currentHour) || JSON.parse(originTimes)[i] > 0 ? 'bg-gray-200' : 'bg-gray-50 hover:bg-gray-100'}`}>
               <p className=' font-poppins text-gray-700'>{item.text}</p>
               <FontAwesomeIcon className={`text-[12px] text-green-600 ${JSON.parse(selectedTimes)[i] ? '' : 'hidden'}`} icon={faCheck} />
             </div>
