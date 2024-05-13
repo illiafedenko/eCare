@@ -19,6 +19,7 @@ import { useParams } from 'react-router';
 import HumanResources from './usermanagement/HumanResources';
 import SchedulesTable from './scheduleManagement/SchedulesTable';
 import RequestTable from './scheduleManagement/RequestTable';
+import { set } from 'firebase/database';
 
 export default function AdminSchedule() {
 
@@ -38,8 +39,10 @@ export default function AdminSchedule() {
   }
 
   useEffect(() => {
-    setCurrentTap(tabID);
-    console.log(tabID);
+    if (tabID == undefined)
+      setCurrentTap(0);
+    else
+      setCurrentTap(tabID);
   }, [])
 
   const setTap = (id) => {
