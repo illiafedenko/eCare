@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from '../../components/special/SideBar';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
-import NotificationCard from '../../components/special/NotificationCard';
 import dummyData from '../../dummydata';
-import CareGIverInfo from '../../components/special/CareGIverInfo';
-import { faBagShopping, faLocationPin, faSave, faStar, faTransgenderAlt } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Select from "react-tailwindcss-select";
 import MultiTimeSelect from '../../components/general/MultiTimeSelect';
 import { getAuth } from 'firebase/auth';
 import { getDatabase, onValue, ref, set } from 'firebase/database';

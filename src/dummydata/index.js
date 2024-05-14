@@ -425,12 +425,12 @@ const dummyData = {
 			icon: faMessage,
 			badge: 2
 		},
-		{
-			title: "Notifications",
-			id: "notification",
-			icon: faBell,
-			badge: 3
-		},
+		// {
+		// 	title: "Notifications",
+		// 	id: "notification",
+		// 	icon: faBell,
+		// 	badge: 3
+		// },
 		{
 			title: "Schedule",
 			id: "schedule",
@@ -455,6 +455,12 @@ const dummyData = {
 			title: "Schedule",
 			id: "schedule",
 			icon: faCalendarAlt,
+			badge: null
+		},
+		{
+			title: "Training",
+			id: "training",
+			icon: faChalkboardTeacher,
 			badge: null
 		},
 	],
