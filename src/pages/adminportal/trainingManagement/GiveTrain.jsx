@@ -3,7 +3,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { getDatabase, onValue, ref, remove, set } from 'firebase/database'
 import { getStorage, ref as storageRef, deleteObject } from 'firebase/storage';
 import React, { useState, useEffect } from 'react'
-import { useStateManager } from 'react-select';
 
 export default function GiveTrain() {
 
