@@ -19,7 +19,7 @@ export default function SeniorRouter() {
           <Routes>
             {/* <Route exact path="/all" element={<CGMeetAll />} /> */}
             <Route exact path="/" element={<SeniorHome />} />
-            <Route exact path="/profile" element={<SeniorProfile />} />
+            <Route exact path="/subscription" element={<SeniorProfile />} />
             <Route exact path="/notification" element={<SeniorNotificatioins />} />
             <Route exact path="/setting" element={<SeniorSetting />} />
             <Route exact path="/logout" element={<SeniorLogout />} />

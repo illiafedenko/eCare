@@ -45,7 +45,13 @@ export default function MultiTimeSelect({ id, onChange, date }) {
   const [showDropDown, setShowDropDown] = useState(false);
 
   useEffect(() => {
-    setTotalHours(JSON.parse(selectedTimes).filter(element => element > 0).length);
+    console.log("---------->", JSON.parse(selectedTimes));
+    var tempAry = []
+    var temp = JSON.parse(selectedTimes);
+    for (let i = 0; i < temp.length; i++) {
+      tempAry.push(JSON.parse(selectedTimes)[i]);
+    }
+    setTotalHours(tempAry.filter(element => element > 0).length);
     onChange(id, JSON.parse(selectedTimes));
   }, [selectedTimes])
 

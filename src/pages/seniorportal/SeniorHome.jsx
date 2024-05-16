@@ -30,22 +30,6 @@ export default function SeniorHome() {
             <p className=' text-[20px] text-gray-600 pb-4 font-poppins font-bold text-left'>Your Schedules in this week</p>
             <SeniorHomeSchedules />
           </div>
-          {/* <p className=' text-[20px] text-gray-600 pb-4 font-poppins font-bold text-left'>Your Schedules in this week</p>
-          <div id="slider_area" className=' w-full h-[96px] relative overflow-hidden'>
-            <HorizontalMouseDraggableCardList />
-          </div>
-          <p className=' text-[20px] text-gray-600 mt-[48px] font-poppins font-bold text-left'>Your Caregivers</p>
-          <div className=' w-full mt-[80px] grid sm:grid-cols-2 lg:grid-cols-3 justify-center gap-x-[24px] gap-y-[48px]'>
-            {
-              dummyData.careGivers.map((careGiver, i) => {
-                return (
-                  <div key={i} className=' w-full flex flex-col items-center'>
-                    <CareGiverInfoViewCard id={i} careGiver={careGiver} />
-                  </div>
-                )
-              })
-            }
-          </div> */}
         </div>
       </div>
     </div>

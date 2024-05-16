@@ -413,17 +413,17 @@ const dummyData = {
 			icon: faHomeLg,
 			badge: null
 		},
-		// {
-		// 	title: "My Profile",
-		// 	id: "profile",
-		// 	icon: faUserDoctor,
-		// 	badge: null
-		// },
 		{
 			title: "Chat",
 			id: "chat",
 			icon: faMessage,
 			badge: 2
+		},
+		{
+			title: "My Subscription",
+			id: "subscription",
+			icon: faUserDoctor,
+			badge: null
 		},
 		// {
 		// 	title: "Notifications",

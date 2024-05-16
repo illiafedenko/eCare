@@ -140,7 +140,7 @@ export default function CGProfile() {
                         </div>
                         <div className=' w-full grid grid-cols-24 h-[6px] bg-gray-100'>
                           {
-                            JSON.parse(weekHours)[i] != [] ?
+                            JSON.parse(weekHours)[i].length > 0 ?
                               JSON.parse(weekHours)[i].map((item, i) => {
                                 return <div key={i} className={`h-full ${item == 1 ? 'bg-green-300' : item == 2 ? 'bg-blue-300' : ''}`}></div>
                               })

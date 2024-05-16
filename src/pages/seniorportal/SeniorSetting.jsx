@@ -2,8 +2,6 @@ import React, { useState, useRef } from 'react'
 import SideBar from '../../components/special/SideBar';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import dummyData from '../../dummydata';
-import AvatarMiniButtonUpload from '../../components/general/AvatarMiniButtonUpload';
-import SettingInput from '../../components/general/SettingInput';
 import SeniorSettingNormalInfor from '../../components/special/SeniorSettingNormalInfor';
 import SeniorChangePassword from '../../components/special/SeniorChangePassword';
 import SeniorSettingPreferences from '../../components/special/SeniorSettingPreferences';

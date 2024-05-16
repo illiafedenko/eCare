@@ -12,7 +12,7 @@ export default function RequestTableRow({ sID, date, hours }) {
   const [showList, setShowList] = useState(false);
 
   useEffect(() => {
-    console.log("Hours:", hours);
+    console.log(date, hours);
     getData();
     getCaregivers();
   }, [])
@@ -55,6 +55,8 @@ export default function RequestTableRow({ sID, date, hours }) {
 
   const onSave = () => {
     if (caregiver == null) return;
+    console.log("hours", hours);
+
     for (let i = 0; i < 24; i++) {
       set(ref(db, `schedules/${sID}-${JSON.parse(caregiver).id}-0/${date}/${i}`), hours[i] ? true : false);
       if (hours[i]) {
@@ -62,6 +64,7 @@ export default function RequestTableRow({ sID, date, hours }) {
         set(ref(db, `seniorRequests/${sID}/${date}/${i}`), 2);
       }
     }
+    /**/
   }
 
   return (

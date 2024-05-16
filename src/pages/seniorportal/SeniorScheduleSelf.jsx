@@ -94,6 +94,11 @@ export default function SeniorScheduleSelf() {
     }
   }, [dates])
 
+  useEffect(() => {
+    console.log(":", cgAvailabilities);
+  }, [cgAvailabilities])
+
+
   const getData = async () => {
     try {
       getAuth().onAuthStateChanged(async (user) => {
@@ -173,6 +178,7 @@ export default function SeniorScheduleSelf() {
         let d = dates[i].date;
         temp[i] = cgas[d];
       }
+      console.log(temp);
       setCgAvailabilities(JSON.stringify(temp));
     })
 
