@@ -463,6 +463,12 @@ const dummyData = {
 			icon: faChalkboardTeacher,
 			badge: null
 		},
+		{
+			title: "Subscription",
+			id: "subscription",
+			icon: faUserDoctor,
+			badge: null
+		},
 	],
 
 	chatImageList: [

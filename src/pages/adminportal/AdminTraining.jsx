@@ -3,7 +3,7 @@ import logoImage from '../../assets/images/logo.png';
 import avatar from '../../assets/images/caregiver6.png'
 import dashboardIcon from '../../assets/images/dashboardicon.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDashboard, faDatabase, faMeteor, faTh, faThLarge, faThermometer4, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faDashboard, faDatabase, faMeteor, faTh, faThLarge, faThermometer4, faSearch, faSubscript, faUserPlus, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../../components/special/SideBar';
 import dummyData from '../../dummydata';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
@@ -64,12 +64,12 @@ export default function AdminTraining() {
         <div className=' w-full h-[calc(100vh-100px)] overflow-y-auto bg-gray-50 py-10 px-10'>
           <div className=' w-full flex flex-col gap-x-5'>
             {/* tab  */}
-            <div className=' flex-col flex gap-y-10 bg-white py-10 sm:px-10 px-5  border-[1px] border-gray-200 rounded-[12px]'>
+            <div className=' flex-col flex gap-y-10 bg-white py-10 sm:px-10 px-5 border-gray-200 rounded-[20px]'>
               <div className=" sm:border-b  border-gray-200 dark:border-neutral-700 mx-2">
                 <nav className="flex sm:flex-row flex-col sm:space-x-1 space-y-3 sm:space-y-0 text-left leading-none" aria-label="Tabs" role="tablist">
                   <div onClick={() => setTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
                     <p className=' font-semibold'>Courses</p>
-                    {/* <FontAwesomeIcon icon={faFilm} className=' text-[12px]' /> */}
+                    {/* <FontAwesomeIcon icon={faUserDoctor} className=' text-[12px]' /> */}
                   </div>
                   <div onClick={() => setTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
                     <p className=' font-semibold'>Upload</p>

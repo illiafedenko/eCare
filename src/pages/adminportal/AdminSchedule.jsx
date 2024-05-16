@@ -60,7 +60,7 @@ export default function AdminSchedule() {
         <div className=' w-full h-[calc(100vh-100px)] overflow-y-auto bg-gray-50 py-10 px-10'>
           <div className=' w-full flex flex-col gap-x-5'>
             {/* tab  */}
-            <div className=' flex-col flex gap-y-10 bg-white py-10 sm:px-10 px-5  border-[1px] border-gray-200 rounded-[12px]'>
+            <div className=' flex-col flex gap-y-10 bg-white py-10 sm:px-10 px-5 border-gray-200 rounded-[20px]'>
               <div className=" sm:border-b  border-gray-200 dark:border-neutral-700 mx-2">
                 <nav className="flex sm:flex-row flex-col sm:space-x-1 space-y-3 sm:space-y-0 text-left leading-none" aria-label="Tabs" role="tablist">
                   <div onClick={() => setTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>

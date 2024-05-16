@@ -72,8 +72,8 @@ export default function AdminHome() {
         <CGPortalNavBar current="Home" name="John Doe" />
         <div className=' w-full h-[calc(100vh-100px)] overflow-y-auto bg-gray-50 pt-[48px] px-[32px]'>
           <div className=' grid md:grid-cols-1 grid-cols-1 h-[500px] sm:gap-x-[40px] gap-y-[40px] '>
-            <div className=' bg-white rounded-[40px] px-[40px] py-[40px] lg:min-h-[300px] max-h-[400px]'><LineChart /></div>
-            <div className=' w-full flex flex-col gap-y-5 bg-white rounded-[40px] px-[40px] py-[40px]'>
+            <div className=' bg-white rounded-[20px] px-[40px] py-[40px] lg:min-h-[300px] max-h-[400px]'><LineChart /></div>
+            <div className=' w-full flex flex-col gap-y-5 bg-white rounded-[20px] px-[40px] py-[40px]'>
               <p className=' text-left font-poppins text-gray-500 font-bold'>Schedules in Today</p>
               <div className=' w-full flex flex-col gap-y-3'>
                 {
