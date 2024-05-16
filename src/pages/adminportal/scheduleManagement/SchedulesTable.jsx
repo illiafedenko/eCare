@@ -42,13 +42,11 @@ export default function SchedulesTable() {
         let checkAry = {};
         let i = 0;
         snapshot.forEach((item) => {
-          console.log("item:", item.key, item.val());
           let sID = item.key.split("-")[0];
           let cgID = item.key.split("-")[1];
           for (let prop in item.val()) {
             i++;
             if (item.val().hasOwnProperty(prop)) {  // Check to make sure the property is not from the prototype chain
-              console.log(`Key: ${prop}, Value: ${item.val()[prop]}`);
               tmpAry.push({
                 no: i,
                 key: item.key,
@@ -74,7 +72,6 @@ export default function SchedulesTable() {
   }, [])
 
   useEffect(() => {
-    console.log(scheduleList);
   }, [scheduleList])
 
 
@@ -107,7 +104,6 @@ export default function SchedulesTable() {
 
   useEffect(() => {
     if (!checkList) return;
-    console.log(JSON.parse(checkList));
   }, [checkList])
 
   useEffect(() => {

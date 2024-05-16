@@ -18,12 +18,15 @@ import HumanResources from './usermanagement/HumanResources';
 import SchedulesTable from './scheduleManagement/SchedulesTable';
 import RequestTable from './scheduleManagement/RequestTable';
 import { set } from 'firebase/database';
+import AdminAddTraining from './trainingManagement/AdminAddTraining';
+import CourseTable from './trainingManagement/CourseTable';
+import GiveTrain from './trainingManagement/GiveTrain';
 
 export default function AdminTraining() {
 
   const navigate = useNavigate();
 
-  const [currentTap, setCurrentTap] = useState(0);
+  const [currentTap, setCurrentTap] = useState();
   const tabID = useParams().id;
 
   const handleSidebarShow = () => {
@@ -32,20 +35,23 @@ export default function AdminTraining() {
   }
 
   const handleAddUser = () => {
-    console.log(123);
-    navigate("/aportal/users/add/");
+    // console.log(123);
+    // navigate("/aportal/training/add/");
   }
 
   useEffect(() => {
-    if (tabID == undefined)
+    if (tabID == undefined) {
       setCurrentTap(0);
+      navigate("/aportal/training/0");
+    }
     else
       setCurrentTap(tabID);
   }, [])
 
   const setTap = (id) => {
-    // navigate('/aportal/users/' + id);
+    // console.log(id);
     setCurrentTap(id);
+    navigate('/aportal/training/' + id);
   }
 
 
@@ -62,22 +68,28 @@ export default function AdminTraining() {
               <div className=" sm:border-b  border-gray-200 dark:border-neutral-700 mx-2">
                 <nav className="flex sm:flex-row flex-col sm:space-x-1 space-y-3 sm:space-y-0 text-left leading-none" aria-label="Tabs" role="tablist">
                   <div onClick={() => setTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
+                    <p className=' font-semibold'>Courses</p>
+                    {/* <FontAwesomeIcon icon={faFilm} className=' text-[12px]' /> */}
+                  </div>
+                  <div onClick={() => setTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
                     <p className=' font-semibold'>Upload</p>
                     {/* <FontAwesomeIcon icon={faUser} className=' text-[12px]' /> */}
                   </div>
-                  <div onClick={() => setTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
-                    <p className=' font-semibold'>Teach</p>
+                  <div onClick={() => setTap(2)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 sm:border-b-2 [&:not(:sm)]:border-l-2 border-green-600  ${currentTap == 2 ? 'text-green-600' : '[&:not(:hover)]:border-transparent '} `}>
+                    <p className=' font-semibold'>Train</p>
                     {/* <FontAwesomeIcon icon={faUser} className=' text-[12px]' /> */}
                   </div>
-
                 </nav>
               </div>
               <div>
                 <div className={`${currentTap == 0 ? '' : ' hidden '}`}>
-                  <SchedulesTable />
+                  <CourseTable />
                 </div>
                 <div className={`${currentTap == 1 ? '' : ' hidden '}`}>
-                  <RequestTable />
+                  <AdminAddTraining />
+                </div>
+                <div className={`${currentTap == 2 ? '' : ' hidden '}`}>
+                  <GiveTrain />
                 </div>
               </div>
               <div>
