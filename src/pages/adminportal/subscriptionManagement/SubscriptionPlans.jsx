@@ -51,7 +51,7 @@ export default function SubscriptionPlans() {
         {
           planList.length >= 0 ?
             planList.map((item, i) => {
-              return <AdminSubscriptionModel id={item.id} name={item.name} period={item.period} hourly={item.hourly} hours={item.hours} key={i} />
+              return <AdminSubscriptionModel level={i} id={item.id} name={item.name} period={item.period} hourly={item.hourly} hours={item.hours} key={i} />
             })
             :
             <>No subscription plans</>

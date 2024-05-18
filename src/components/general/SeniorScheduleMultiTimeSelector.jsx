@@ -57,6 +57,8 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
     var h = temp[idx] ? -1 : 1;
     if (day == "Sat" || day == "Sun") {
       onCalc({
+        "id": id,
+        "date": date,
         "type": 3,
         "sign": h
       });
@@ -64,12 +66,16 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
     else {
       if (idx >= 8 && idx < 16) {
         onCalc({
+          "id": id,
+          "date": date,
           "type": 1,
           "sign": h
         });
       }
       else {
         onCalc({
+          "id": id,
+          "date": date,
           "type": 2,
           "sign": h
         });
@@ -93,7 +99,7 @@ export default function SeniorScheduleMultiTimeSelector({ id, onChange, onCalc, 
   const getHours = async () => {
     try {
       getAuth().onAuthStateChanged(async (user) => {
-        onValue(ref(db, 'schedules/' + sID + '-' + cgID+ '-0' + '/' + date ), (snapshot) => {
+        onValue(ref(db, 'schedules/' + sID + '-' + cgID + '-0' + '/' + date), (snapshot) => {
           if (snapshot.val() != null)
             setSelectedTimes(JSON.stringify(snapshot.val()));
         })

@@ -34,6 +34,11 @@ export default function SeniorScheduleHelp() {
   const [afterDayHours, setAfterDayHours] = useState(0);
   const [weekendDayHours, setWeekendDayHours] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [basicHourly, setBasicHourly] = useState([0, 0, 0]);
+  const [myCurrentPlanList, setMyCurrentPlanList] = useState([]);
+  const [myCurrentPlanIDList, setMyCurrentPlanIDList] = useState([]);
+  const [usedHoursList, setUsedHoursList] = useState([]);
+  const [myAddedSchedules, setMyAddedSchedules] = useState(JSON.stringify([]));
 
 
 
@@ -45,6 +50,61 @@ export default function SeniorScheduleHelp() {
       "date": date.toLocaleDateString('en-US', optionsDate).replace(/\//g, '-')
     };
   }
+
+
+  const judgeLater = (expireDate) => {
+    var dateArray = expireDate.split('-');
+    var todayArray = formatDate(new Date()).date.split('-');
+    var newDateStr = dateArray[2] + dateArray[0] + dateArray[1];
+    var newTodayStr = todayArray[2] + todayArray[0] + todayArray[1];
+    return newDateStr >= newTodayStr;
+  }
+
+  const getMyCurrentPlans = async () => {
+    // setMyAddedSchedules(JSON.stringify([]));
+    getAuth().onAuthStateChanged(async (user) => {
+      try {
+        onValue(ref(db, 'subscriptions/' + user.uid), (snapshot) => {
+          var temp = [];
+          var uha = [];
+          var idAry = [];
+          snapshot.forEach((item) => {
+            if (judgeLater(item.val().end)) {
+              temp.push(item.val());
+              uha.push(item.val().used);
+              idAry.push(item.key);
+            }
+          })
+          setMyCurrentPlanIDList([...idAry]);
+          setMyCurrentPlanList([...temp]);
+          setUsedHoursList([...uha]);
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    })
+  }
+
+  useEffect(() => {
+    console.log(myCurrentPlanList, myCurrentPlanIDList);
+  }, [myCurrentPlanList])
+
+
+  const getBasicHourly = async () => {
+    try {
+      onValue(ref(db, 'subscriptionPlans'), (snapshot) => {
+        var temp = [];
+        snapshot.forEach((item) => {
+          temp.push(item.val());
+        })
+        var hourlyAry = [temp[0].hourly, temp[0].hourly1, temp[0].hourly2];
+        setBasicHourly([...hourlyAry]);
+      })
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
 
   function getDatesThroughNextWeekend() {
     const today = new Date();
@@ -84,12 +144,19 @@ export default function SeniorScheduleHelp() {
 
   useEffect(() => {
     setWeek(getDatesThroughNextWeekend());
+    getBasicHourly();
+    getMyCurrentPlans();
   }, [])
 
   useEffect(() => {
-    console.log(week);
+    if (week == undefined) return;
     if (week.length > 0) {
       getAvailabilities();
+      var temp = [];
+      for (let i = 0; i < week.length; i++) {
+        temp.push([0, 0, 0])
+      }
+      setMyAddedSchedules(JSON.stringify(temp));
     }
   }, [week])
 
@@ -101,6 +168,9 @@ export default function SeniorScheduleHelp() {
       for (let j = 0; j < 24; j++) {
         set(ref(db, `seniorRequests/${localStorage.getItem("userID")}/${week[i].date}/${j}`), JSON.parse(weekHours)[i][j] != null ? JSON.parse(weekHours)[i][j] : 0);
       }
+    }
+    for (let i = 0; i < myCurrentPlanIDList.length; i++) {
+      set(ref(db, `subscriptions/${myID}/${myCurrentPlanIDList[i]}/used`), usedHoursList[i]);
     }
     setToastText("Changes are saved exactly!");
     setToastState(true);
@@ -131,27 +201,96 @@ export default function SeniorScheduleHelp() {
     }
   }
 
+
   const onCalculator = (data) => {
-    switch (data.type) {
-      case 1:
-        setWeekdayHours(weekdayHours + data.sign);
-        setTotalPrice(totalPrice + data.sign * 27.5);
-        break;
-
-      case 2:
-        setAfterDayHours(afterDayHours + data.sign);
-        setTotalPrice(totalPrice + data.sign * 29);
-        break;
-
-      case 3:
-        setWeekendDayHours(weekendDayHours + data.sign);
-        setTotalPrice(totalPrice + data.sign * 29);
-        break;
-
-      default:
-        break;
-    }
+    console.log(data);
+    var temp = JSON.parse(myAddedSchedules);
+    console.log(temp);
+    temp[data.id][data.type - 1] += 1 * data.sign;
+    // console.log("temp:", temp);
+    setMyAddedSchedules(JSON.stringify(temp));
   }
+
+  useEffect(() => {
+    console.log(myAddedSchedules);
+    onCalcPrice();
+  }, [myAddedSchedules])
+
+
+  const onCalcPrice = () => {
+    console.log(JSON.parse(myAddedSchedules));
+    var temp = JSON.parse(myAddedSchedules);
+    // console.log(temp);
+    var calcArray = [];
+    var basicArray = [0, 0, 0];
+    for (let i = 0; i < myCurrentPlanList.length; i++) {
+      calcArray.push({
+        hourly: myCurrentPlanList[i].hourly,
+        added: [0, 0, 0],
+        used: myCurrentPlanList[i].used,
+        limit: myCurrentPlanList[i].limit,
+      })
+    }
+    for (let i = 0; i < temp.length; i++) {
+      for (let j = 0; j < myCurrentPlanList.length; j++) {
+        if (getInRange(week[i].date, { st: myCurrentPlanList[j].start, en: myCurrentPlanList[j].end })) {
+          calcArray[j].added[0] += temp[i][0];
+          calcArray[j].added[1] += temp[i][1];
+          calcArray[j].added[2] += temp[i][2];
+          temp[i] = [0, 0, 0];
+        }
+      }
+    }
+    for (let i = 0; i < temp.length; i++) {
+      basicArray[0] += temp[i][0];
+      basicArray[1] += temp[i][1];
+      basicArray[2] += temp[i][2];
+      temp[i] = [0, 0, 0];
+    }
+    var tempUHA = usedHoursList;
+    for (let i = 0; i < calcArray.length; i++) {
+      var limit = calcArray[i].limit;
+      var cnt = calcArray[i].used;
+      for (let j = 0; j < 3; j++) {
+        for (let k = 0; k < calcArray[i].added[j]; k++) {
+          if (cnt < limit) {
+            cnt++;
+          } else {
+            basicArray[j]++;
+          }
+        }
+      }
+      tempUHA[i] = cnt;
+    }
+    console.log("used-", tempUHA);
+    setUsedHoursList([...tempUHA]);
+    setWeekdayHours(basicArray[0]);
+    setAfterDayHours(basicArray[1]);
+    setWeekendDayHours(basicArray[2]);
+    var tp = 0;
+    for (let i = 0; i < 3; i++) {
+      tp += basicArray[i] * basicHourly[i];
+    }
+    setTotalPrice(tp);
+  }
+
+  useEffect(() => {
+    console.log("used;", usedHoursList);
+  }, [usedHoursList])
+
+  const getInRange = (d, { st, en }) => {
+    var dayAry = d.split('-');
+    var stAry = st.split('-');
+    var enAry = en.split('-');
+
+    var dayStr = dayAry[2] + dayAry[0] + dayAry[1];
+    var stStr = stAry[2] + stAry[0] + stAry[1];
+    var enStr = enAry[2] + enAry[0] + enAry[1];
+    if (dayStr >= stStr && dayStr <= enStr) return true;
+    else return false;
+  }
+
+
 
 
   return (
@@ -191,10 +330,10 @@ export default function SeniorScheduleHelp() {
           }
         </div>
         <div className=' font-poppins font-semi'>
-          <p className=' text-[20px]'>Bill</p>
-          <div className=' flex flex-row'><p className=' w-24'>Weekday:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{weekdayHours}hrs</p><p>$27.5/hr</p><p>${weekdayHours * 27.5}</p></div></div>
-          <div className=' flex flex-row'><p className=' w-24'>After Hour:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{afterDayHours}hrs</p><p>$29/hr</p><p>${afterDayHours * 29}</p></div></div>
-          <div className=' flex flex-row'><p className=' w-24'>Weekend:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{weekendDayHours}hrs</p><p>$29/hr</p><p>${weekendDayHours * 29}</p></div></div>
+          <p className=' text-[20px]'>Bill <span className=' text-[12px]'>(Out of subscriptions)</span></p>
+          <div className=' flex flex-row'><p className=' w-24'>Weekday:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{weekdayHours}hrs</p><p>${basicHourly[0]}/hr</p><p>${weekdayHours * basicHourly[0]}</p></div></div>
+          <div className=' flex flex-row'><p className=' w-24'>After Hour:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{afterDayHours}hrs</p><p>${basicHourly[1]}/hr</p><p>${afterDayHours * basicHourly[1]}</p></div></div>
+          <div className=' flex flex-row'><p className=' w-24'>Weekend:</p><div className=' w-52 grid grid-cols-3 gap-x-1 text-right'><p>{weekendDayHours}hrs</p><p>${basicHourly[2]}/hr</p><p>${weekendDayHours * basicHourly[2]}</p></div></div>
           <div className=' flex flex-row'><p className=' w-24'>Total:</p><div><p className=' w-52 text-right'>${totalPrice}</p></div></div>
         </div>
         <div className=' w-full flex flex-row justify-end'>

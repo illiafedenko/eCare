@@ -9,10 +9,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DateTimeComponent from '../../components/special/DateTimeComponent';
 import SeniorScheduleSelf from './SeniorScheduleSelf';
 import SeniorScheduleHelp from './SeniorScheduleHelp';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 export default function SeniorSchedule() {
 
   const [currentTap, setCurrentTap] = useState(0);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -33,6 +38,30 @@ export default function SeniorSchedule() {
     setShowMore(!showMore)
   }
 
+  useEffect(() => {
+    const currentPath = location.pathname.split('/');
+    const lastPath = currentPath[currentPath.length - 1];
+    if (lastPath == "self") {
+      setCurrentTap(0);
+    } else if (lastPath == "help") {
+      setCurrentTap(1);
+    } else {
+      navigate('/sportal/schedule/self');
+    }
+    console.log()
+  }, [])
+
+
+  const onSelf = () => {
+    setCurrentTap(0);
+    navigate('/sportal/schedule/self');
+  }
+
+  const onHelp = () => {
+    setCurrentTap(1);
+    navigate('/sportal/schedule/help');
+  }
+
   return (
     <div className=" w-full h-screen flex flex-row relative ">
       <SideBar portalname="sportal" menu={dummyData.SMenu} current="schedule" />
@@ -44,11 +73,11 @@ export default function SeniorSchedule() {
             {/* tab  */}
             <div className="border-b border-gray-200 dark:border-neutral-700">
               <nav className="flex space-x-1" aria-label="Tabs" role="tablist">
-                <div onClick={() => setCurrentTap(0)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                <div onClick={() => onSelf()} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 0 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
                   <p className=' font-semibold'>Myself</p>
                   <FontAwesomeIcon icon={faUser} className=' text-[12px]' />
                 </div>
-                <div onClick={() => setCurrentTap(1)} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
+                <div onClick={() => onHelp()} className={`flex flex-row gap-x-2 px-5 items-center cursor-pointer text-gray-500 hover:text-green-600 border-b-2 border-green-600  ${currentTap == 1 ? 'text-green-600' : '[&:not(:hover)]:border-b-transparent'} `}>
                   <p className=' font-semibold'>Need help</p>
                   <FontAwesomeIcon icon={faGear} className=' text-[12px]' />
                 </div>
@@ -56,10 +85,10 @@ export default function SeniorSchedule() {
             </div>
             <div>
               <div className={`${currentTap == 0 ? '' : ' hidden'}`}>
-                <SeniorScheduleSelf />
+                <SeniorScheduleSelf key={'self' + currentTap} />
               </div>
               <div className={`${currentTap == 1 ? '' : ' hidden'}`}>
-                <SeniorScheduleHelp />
+                <SeniorScheduleHelp key={'help' + currentTap} />
               </div>
             </div>
           </div>

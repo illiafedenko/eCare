@@ -26,6 +26,7 @@ export default function AdminRouter() {
         <Route exact path="/subscription" element={<AdminSubscription />} />
         <Route exact path="/subscription/add" element={<AdminAddSubscription />} />
         <Route exact path="/subscription/edit/:planID" element={<AdminEditSubscription />} />
+        <Route exact path="/subscription/edit/basic/:planID" element={<AdminEditSubscription />} />
         <Route exact path="/setting" element={<AdminSetting />} />
         <Route exact path="/logout" element={<AdminLogOut />} />
       </Routes>

@@ -54,6 +54,8 @@ export default function SeniorRequestTimeSelector({ id, onChange, onCalc, day, d
     var h = temp[idx] == 1 ? -1 : 1;
     if (day == "Sat" || day == "Sun") {
       onCalc({
+        "id": id,
+        "date": date,
         "type": 3,
         "sign": h
       });
@@ -61,12 +63,16 @@ export default function SeniorRequestTimeSelector({ id, onChange, onCalc, day, d
     else {
       if (idx >= 8 && idx < 16) {
         onCalc({
+          "id": id,
+          "date": date,
           "type": 1,
           "sign": h
         });
       }
       else {
         onCalc({
+          "id": id,
+          "date": date,
           "type": 2,
           "sign": h
         });

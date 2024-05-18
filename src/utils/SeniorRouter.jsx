@@ -24,6 +24,8 @@ export default function SeniorRouter() {
             <Route exact path="/setting" element={<SeniorSetting />} />
             <Route exact path="/logout" element={<SeniorLogout />} />
             <Route exact path="/schedule" element={<SeniorSchedule />} />
+            <Route exact path="/schedule/self" element={<SeniorSchedule />} />
+            <Route exact path="/schedule/help" element={<SeniorSchedule />} />
             <Route exact path="/chat" element={<SeniorChat />} />
             <Route exact path="/chat/:opponentID" element={<SeniorChat />} />
           </Routes>

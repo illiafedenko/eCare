@@ -7,17 +7,18 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase, ref, push, set, onValue } from 'firebase/database';
 import { useParams } from 'react-router';
 
-export default function EditPlan() {
+export default function EditBasicPlan() {
 
   const planID = useParams().planID;
-  console.log(planID);
+  console.log("basic ID", planID);
 
   const [input, setInput] = useState(null);
 
   const [valid, setValid] = useState({
     name: true,
     hourly: true,
-    hours: true,
+    hourly1: true,
+    hourly2: true,
   })
 
   const db = getDatabase();
@@ -39,17 +40,13 @@ export default function EditPlan() {
     onValue(ref(db, 'subscriptionPlans/' + planID), (snapshot) => {
       console.log(snapshot.val());
       if (snapshot != null) {
-        console.log({
-          name: snapshot.val().name,
-          hourly: snapshot.val().hourly,
-          period: snapshot.val().period,
-          hours: snapshot.val().hours,
-        })
         setInput({
           name: snapshot.val().name,
-          hourly: snapshot.val().hourly,
           period: snapshot.val().period,
           hours: snapshot.val().hours,
+          hourly: snapshot.val().hourly,
+          hourly1: snapshot.val().hourly1,
+          hourly2: snapshot.val().hourly2,
         })
       }
     })
@@ -66,11 +63,14 @@ export default function EditPlan() {
   const handleSave = () => {
     if (validateAll()) {
       setLoading(true);
+      console.log(input);
       set(ref(db, 'subscriptionPlans/' + planID), {
         no: new Date().getTime(),
         name: input.name,
         period: input.period,
         hourly: input.hourly,
+        hourly1: input.hourly1,
+        hourly2: input.hourly2,
         hours: input.hours
       })
       setLoading(false);
@@ -84,7 +84,7 @@ export default function EditPlan() {
   }
 
   const validateAll = () => {
-    if (validate("name") & validate("hourly") & validate("hours")) {
+    if (validate("hourly") & validate("hourly1") & validate("hourly2")) {
       return true;
     }
     else {
@@ -93,16 +93,7 @@ export default function EditPlan() {
   }
 
   const validate = (name, value = input[name]) => {
-    const zipcodeRegex = /^\d{5}$/;
-    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-    const dateRegex = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d{2}$/;
     switch (name) {
-
-      case "name":
-        var isValid = value = "" ? false : true;
-        setValid((prev) => ({ ...prev, [name]: isValid }));
-        return isValid;
-        break;
 
       case "hourly":
         var isValid = !Number.isFinite(Number(value)) || value == "" ? false : true;
@@ -110,8 +101,14 @@ export default function EditPlan() {
         return isValid;
         break;
 
-      case "hours":
-        var isValid = !Number.isInteger(Number(value)) || value == "" || Number(value) <= 0 ? false : true;
+      case "hourly1":
+        var isValid = !Number.isFinite(Number(value)) || value == "" ? false : true;
+        setValid((prev) => ({ ...prev, [name]: isValid }));
+        return isValid;
+        break;
+
+      case "hourly2":
+        var isValid = !Number.isFinite(Number(value)) || value == "" ? false : true;
         setValid((prev) => ({ ...prev, [name]: isValid }));
         return isValid;
         break;
@@ -127,20 +124,10 @@ export default function EditPlan() {
     planID != undefined && input != undefined ?
       <div className='flex-grow flex flex-col gap-y-5'>
         <div className=' w-full grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-4'>
-          <SettingInput onChange={(e) => handleInputChange(e)} label="Plan Name" type="text" name="name" placeholder="ex: Silver, Gold..." value={input.name} invalid={valid.name ? false : true} required />
-          <div className=' w-full'>
-            <p className='mb-1 text-left  font-raleway' >Period</p>
-            <select name="period"
-              className="appearance-none rounded-[4px] w-full py-3 px-3 border-gray-300 focus:border-blue-500 border-[2px] text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-              value={input.period}
-              onChange={(e) => handleInputChange(e)}
-            >
-              <option value='w'>Weekly</option>
-              <option value='m'>Monthly</option>
-            </select>
-          </div>
-          <SettingInput onChange={(e) => handleInputChange(e)} label="Hourly" type="text" name="hourly" placeholder="29.5" value={input.hourly} invalid={valid.hourly ? false : true} required />
-          <SettingInput onChange={(e) => handleInputChange(e)} label="Hours" type="text" name="hours" placeholder="xxxxx" value={input.hours} invalid={valid.hours ? false : true} required />
+          <SettingInput onChange={(e) => handleInputChange(e)} label="Plan Name" type="text" name="name" placeholder="ex: Silver, Gold..." value={input.name} invalid={valid.name ? false : true} required disabled={true} />
+          <SettingInput onChange={(e) => handleInputChange(e)} label="Normal Hourly" type="text" name="hourly" placeholder="29.5" value={input.hourly} invalid={valid.hourly ? false : true} required />
+          <SettingInput onChange={(e) => handleInputChange(e)} label="After Work Hourly" type="text" name="hourly1" placeholder="29.5" value={input.hourly1} invalid={valid.hourly1 ? false : true} required />
+          <SettingInput onChange={(e) => handleInputChange(e)} label="Weekend Hourly" type="text" name="hourly2" placeholder="29.5" value={input.hourly2} invalid={valid.hourly2 ? false : true} required />
         </div>
         <div className=' w-full flex flex-col items-center mt-[20px]'>
           <button onClick={() => handleSave()} className=' w-1/2 min-w-[200px] max-w-[300px] h-[48px] text-[20px] leading-none font-poppins font-light text-white bg-green-500 hover:bg-green-600 border-none outline-none focus:outline-none '>Save</button>

@@ -4,13 +4,17 @@ import { getDatabase, ref, remove } from 'firebase/database';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function AdminSubscriptionModel({ id, name, period, hourly, hours }) {
+export default function AdminSubscriptionModel({ level, id, name, period, hourly, hours }) {
 
   const navigate = useNavigate();
   const db = getDatabase();
 
   const onEditPlan = () => {
-    navigate('/aportal/subscription/edit/' + id);
+    if (level == 0) {
+      navigate('/aportal/subscription/edit/basic/' + id);
+    } else {
+      navigate('/aportal/subscription/edit/' + id);
+    }
   }
 
   const onDeletPlan = () => {
@@ -38,7 +42,12 @@ export default function AdminSubscriptionModel({ id, name, period, hourly, hours
         </div>
         <div className=' w-full flex flex-row justify-end gap-x-5'>
           <FontAwesomeIcon onClick={() => onEditPlan()} icon={faEdit} className=' text-[20px] text-yellow-400 hover:text-yellow-500 cursor-pointer' />
-          <FontAwesomeIcon onClick={() => onDeletPlan()} icon={faTrashAlt} className=' text-[20px] text-red-400 hover:text-red-500 cursor-pointer' />
+          {
+            level > 0 ?
+              <FontAwesomeIcon onClick={() => onDeletPlan()} icon={faTrashAlt} className=' text-[20px] text-red-400 hover:text-red-500 cursor-pointer' />
+              :
+              <FontAwesomeIcon icon={faTrashAlt} className=' text-[20px] text-gray-400 cursor-pointer' />
+          }
         </div>
       </div>
     </div>

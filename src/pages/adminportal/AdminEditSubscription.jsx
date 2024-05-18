@@ -6,10 +6,13 @@ import dummyData from '../../dummydata';
 import CGPortalNavBar from '../../components/special/CGPortalNavBar';
 import { useNavigate } from 'react-router'
 import EditPlan from './subscriptionManagement/EditPlan';
+import { useLocation } from "react-router-dom";
+import EditBasicPlan from './subscriptionManagement/EditBasicPlan';
 
 export default function AdminEditSubscription() {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSidebarShow = () => {
     document.getElementById("left_sidebar").classList.toggle("hidden");
@@ -17,7 +20,7 @@ export default function AdminEditSubscription() {
   }
 
   useEffect(() => {
-
+    console.log("Current URL:", location.pathname.split('/').length);
   }, [])
 
   return (
@@ -31,7 +34,12 @@ export default function AdminEditSubscription() {
             {/* tab  */}
             <div className=' flex-col flex gap-y-10 bg-white py-10 sm:px-10 px-5 border-gray-200 rounded-[20px]'>
               <div>
-                <EditPlan />
+                {
+                  location.pathname.split('/').length == 5 ?
+                    <EditPlan />
+                    :
+                    <EditBasicPlan />
+                }
               </div>
             </div>
           </div>
