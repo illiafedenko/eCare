@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getDatabase, ref, remove, onValue, push, set } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51N8SXtCMs7Z45UINXDbYf0BKSDz4vA9JgDiIIpv3LUz649H7oI4nTQlrZVSTQX3hen9VNXCE2BKBj99QqAmI93ey00gHVm1ZUI');
 
 export default function SeniorSubscriptionModel({ level, id, name, period, hourly, hours }) {
 
@@ -131,16 +134,36 @@ export default function SeniorSubscriptionModel({ level, id, name, period, hourl
 
   const onPay = () => {
     setShowModal(false);
-    const newSubscription = push(ref(db, 'subscriptions/' + myID));
-    set(newSubscription, {
-      start: formatDate(firstDate).date,
-      end: formatDate(lastDate).date,
-      limit: hours,
-      used: 0,
-      name: name,
-      period: period,
-      hourly: hourly
+    redirectToCheckout();
+    // const newSubscription = push(ref(db, 'subscriptions/' + myID));
+    // set(newSubscription, {
+    //   start: formatDate(firstDate).date,
+    //   end: formatDate(lastDate).date,
+    //   limit: hours,
+    //   used: 0,
+    //   name: name,
+    //   period: period,
+    //   hourly: hourly
+    // });
+  }
+
+
+
+  const redirectToCheckout = async () => {
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{
+        price: 'price_1PHg6oCMs7Z45UINhYyFHTBa',
+        quantity: 1
+      }],
+      mode: 'payment',
+      successUrl: 'https://docs.stripe.com/',
+      cancelUrl: 'https://docs.stripe.com/',
     });
+
+    if (error) {
+      console.log(error);
+    }
   }
 
   return (
